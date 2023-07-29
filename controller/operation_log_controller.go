@@ -25,6 +25,7 @@ func NewOperationLogController() IOperationLogController {
 }
 
 // 获取操作日志列表
+// @router /log/operation/list [get]
 func (oc OperationLogController) GetOperationLogs(c *gin.Context) {
 	var req vo.OperationLogListRequest
 	// 绑定参数
@@ -48,6 +49,7 @@ func (oc OperationLogController) GetOperationLogs(c *gin.Context) {
 }
 
 // 批量删除操作日志
+// @router /log/operation/delete/batch [post]
 func (oc OperationLogController) BatchDeleteOperationLogByIds(c *gin.Context) {
 	var req vo.DeleteOperationLogRequest
 	// 参数绑定

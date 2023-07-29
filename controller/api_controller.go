@@ -30,6 +30,7 @@ func NewApiController() IApiController {
 }
 
 // 获取接口列表
+// @router /api/list [get]
 func (ac ApiController) GetApis(c *gin.Context) {
 	var req vo.ApiListRequest
 	// 参数绑定
@@ -55,6 +56,7 @@ func (ac ApiController) GetApis(c *gin.Context) {
 }
 
 // 获取接口树(按接口Category字段分类)
+// @router /api/tree [get]
 func (ac ApiController) GetApiTree(c *gin.Context) {
 	tree, err := ac.ApiRepository.GetApiTree()
 	if err != nil {
@@ -67,6 +69,7 @@ func (ac ApiController) GetApiTree(c *gin.Context) {
 }
 
 // 创建接口
+// @router /api/create [post]
 func (ac ApiController) CreateApi(c *gin.Context) {
 	var req vo.CreateApiRequest
 	// 参数绑定
@@ -109,6 +112,7 @@ func (ac ApiController) CreateApi(c *gin.Context) {
 }
 
 // 更新接口
+// @router /api/update/:apiId [post]
 func (ac ApiController) UpdateApiById(c *gin.Context) {
 	var req vo.UpdateApiRequest
 	// 参数绑定
@@ -156,6 +160,7 @@ func (ac ApiController) UpdateApiById(c *gin.Context) {
 }
 
 // 批量删除接口
+// @router /api/delete/batch [post]
 func (ac ApiController) BatchDeleteApiByIds(c *gin.Context) {
 	var req vo.DeleteApiRequest
 	// 参数绑定

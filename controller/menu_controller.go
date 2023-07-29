@@ -33,6 +33,7 @@ func NewMenuController() IMenuController {
 }
 
 // 获取菜单列表
+//@router /list [get]
 func (mc MenuController) GetMenus(c *gin.Context) {
 	menus, err := mc.MenuRepository.GetMenus()
 	if err != nil {
@@ -43,6 +44,7 @@ func (mc MenuController) GetMenus(c *gin.Context) {
 }
 
 // 获取菜单树
+//@router /menu/tree [get]
 func (mc MenuController) GetMenuTree(c *gin.Context) {
 	menuTree, err := mc.MenuRepository.GetMenuTree()
 	if err != nil {
@@ -53,6 +55,7 @@ func (mc MenuController) GetMenuTree(c *gin.Context) {
 }
 
 // 创建菜单
+//@router /menu [post]
 func (mc MenuController) CreateMenu(c *gin.Context) {
 	var req vo.CreateMenuRequest
 	// 参数绑定
@@ -102,6 +105,7 @@ func (mc MenuController) CreateMenu(c *gin.Context) {
 }
 
 // 更新菜单
+//@router /update/:menuId [put]
 func (mc MenuController) UpdateMenuById(c *gin.Context) {
 	var req vo.UpdateMenuRequest
 	// 参数绑定
@@ -160,6 +164,7 @@ func (mc MenuController) UpdateMenuById(c *gin.Context) {
 }
 
 // 批量删除菜单
+//@router /delete/batch [delete]
 func (mc MenuController) BatchDeleteMenuByIds(c *gin.Context) {
 	var req vo.DeleteMenuRequest
 	// 参数绑定
@@ -183,6 +188,7 @@ func (mc MenuController) BatchDeleteMenuByIds(c *gin.Context) {
 }
 
 // 根据用户ID获取用户的可访问菜单列表
+//@router /access/list/user/:userId [get]
 func (mc MenuController) GetUserMenusByUserId(c *gin.Context) {
 	// 获取路径中的userId
 	userId, _ := strconv.Atoi(c.Param("userId"))
@@ -200,6 +206,7 @@ func (mc MenuController) GetUserMenusByUserId(c *gin.Context) {
 }
 
 // 根据用户ID获取用户的可访问菜单树
+//@router /access/tree/:userId [get]
 func (mc MenuController) GetUserMenuTreeByUserId(c *gin.Context) {
 	// 获取路径中的userId
 	userId, _ := strconv.Atoi(c.Param("userId"))
