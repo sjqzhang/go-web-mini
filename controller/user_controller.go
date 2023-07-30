@@ -25,6 +25,7 @@ type IUserController interface {
 }
 
 //@middleware auth
+//@router /api
 type UserController struct {
 	UserRepository repository.IUserRepository
 }
@@ -38,9 +39,9 @@ func NewUserController() IUserController {
 
 // 获取当前登录用户信息
 //@middleware
-//@router /api/user/info [post]
+//@router /user/info [post]
 func (uc UserController) GetUserInfo(c *gin.Context) {
-	user, err := uc.UserRepository.GetCurrentUser(c)
+	user, err := uc.UserRepository.GetCurrentUser(nil, c)
 	if err != nil {
 		response.Fail(c, nil, "获取当前用户信息失败: "+err.Error())
 		return
@@ -52,7 +53,7 @@ func (uc UserController) GetUserInfo(c *gin.Context) {
 }
 
 // 获取用户列表
-//@router /api/user/list [get]
+//@router /user/list [get]
 func (uc UserController) GetUsers(c *gin.Context) {
 	var req vo.UserListRequest
 	// 参数绑定
@@ -68,7 +69,7 @@ func (uc UserController) GetUsers(c *gin.Context) {
 	}
 
 	// 获取
-	users, total, err := uc.UserRepository.GetUsers(&req)
+	users, total, err := uc.UserRepository.GetUsers(nil, &req)
 	if err != nil {
 		response.Fail(c, nil, "获取用户列表失败: "+err.Error())
 		return
@@ -77,7 +78,7 @@ func (uc UserController) GetUsers(c *gin.Context) {
 }
 
 // 更新用户登录密码
-//@router /api/user/changePwd [put]
+//@router /user/changePwd [put]
 func (uc UserController) ChangePwd(c *gin.Context) {
 	var req vo.ChangePwdRequest
 
@@ -109,7 +110,7 @@ func (uc UserController) ChangePwd(c *gin.Context) {
 	req.NewPassword = string(decodeNewPassword)
 
 	// 获取当前用户
-	user, err := uc.UserRepository.GetCurrentUser(c)
+	user, err := uc.UserRepository.GetCurrentUser(nil, c)
 	if err != nil {
 		response.Fail(c, nil, err.Error())
 		return
@@ -123,7 +124,7 @@ func (uc UserController) ChangePwd(c *gin.Context) {
 		return
 	}
 	// 更新密码
-	err = uc.UserRepository.ChangePwd(user.Username, util.GenPasswd(req.NewPassword))
+	err = uc.UserRepository.ChangePwd(nil, user.Username, util.GenPasswd(req.NewPassword))
 	if err != nil {
 		response.Fail(c, nil, "更新密码失败: "+err.Error())
 		return
@@ -132,7 +133,7 @@ func (uc UserController) ChangePwd(c *gin.Context) {
 }
 
 // 创建用户
-//@router /api/user [post]
+//@router /user [post]
 func (uc UserController) CreateUser(c *gin.Context) {
 	var req vo.CreateUserRequest
 	// 参数绑定
@@ -163,7 +164,7 @@ func (uc UserController) CreateUser(c *gin.Context) {
 	}
 
 	// 当前用户角色排序最小值（最高等级角色）以及当前用户
-	currentRoleSortMin, ctxUser, err := uc.UserRepository.GetCurrentUserMinRoleSort(c)
+	currentRoleSortMin, ctxUser, err := uc.UserRepository.GetCurrentUserMinRoleSort(nil, c)
 	if err != nil {
 		response.Fail(c, nil, err.Error())
 		return
@@ -173,7 +174,7 @@ func (uc UserController) CreateUser(c *gin.Context) {
 	reqRoleIds := req.RoleIds
 	// 根据角色id获取角色
 	rr := repository.NewRoleRepository()
-	roles, err := rr.GetRolesByIds(reqRoleIds)
+	roles, err := rr.GetRolesByIds(c,reqRoleIds)
 	if err != nil {
 		response.Fail(c, nil, "根据角色ID获取角色信息失败: "+err.Error())
 		return
@@ -211,7 +212,7 @@ func (uc UserController) CreateUser(c *gin.Context) {
 		Roles:        roles,
 	}
 
-	err = uc.UserRepository.CreateUser(&user)
+	err = uc.UserRepository.CreateUser(nil, &user)
 	if err != nil {
 		response.Fail(c, nil, "创建用户失败: "+err.Error())
 		return
@@ -221,7 +222,7 @@ func (uc UserController) CreateUser(c *gin.Context) {
 }
 
 // 更新用户
-//@router /api/user/:userId [patch]
+//@router /user/update/:userId [patch]
 func (uc UserController) UpdateUserById(c *gin.Context) {
 	var req vo.CreateUserRequest
 	// 参数绑定
@@ -244,14 +245,14 @@ func (uc UserController) UpdateUserById(c *gin.Context) {
 	}
 
 	// 根据path中的userId获取用户信息
-	oldUser, err := uc.UserRepository.GetUserById(uint(userId))
+	oldUser, err := uc.UserRepository.GetUserById(nil, uint(userId))
 	if err != nil {
 		response.Fail(c, nil, "获取需要更新的用户信息失败: "+err.Error())
 		return
 	}
 
 	// 获取当前用户
-	ctxUser, err := uc.UserRepository.GetCurrentUser(c)
+	ctxUser, err := uc.UserRepository.GetCurrentUser(nil, c)
 	if err != nil {
 		response.Fail(c, nil, err.Error())
 		return
@@ -273,7 +274,7 @@ func (uc UserController) UpdateUserById(c *gin.Context) {
 	reqRoleIds := req.RoleIds
 	// 根据角色id获取角色
 	rr := repository.NewRoleRepository()
-	roles, err := rr.GetRolesByIds(reqRoleIds)
+	roles, err := rr.GetRolesByIds(c,reqRoleIds)
 	if err != nil {
 		response.Fail(c, nil, "根据角色ID获取角色信息失败: "+err.Error())
 		return
@@ -329,7 +330,7 @@ func (uc UserController) UpdateUserById(c *gin.Context) {
 		// 如果是更新别人
 		// 用户不能更新比自己角色等级高的或者相同等级的用户
 		// 根据path中的userIdID获取用户角色排序最小值
-		minRoleSorts, err := uc.UserRepository.GetUserMinRoleSortsByIds([]uint{uint(userId)})
+		minRoleSorts, err := uc.UserRepository.GetUserMinRoleSortsByIds(nil, []uint{uint(userId)})
 		if err != nil || len(minRoleSorts) == 0 {
 			response.Fail(c, nil, "根据用户ID获取用户角色排序最小值失败")
 			return
@@ -360,7 +361,7 @@ func (uc UserController) UpdateUserById(c *gin.Context) {
 	}
 
 	// 更新用户
-	err = uc.UserRepository.UpdateUser(&user)
+	err = uc.UserRepository.UpdateUser(nil, &user)
 	if err != nil {
 		response.Fail(c, nil, "更新用户失败: "+err.Error())
 		return
@@ -370,7 +371,7 @@ func (uc UserController) UpdateUserById(c *gin.Context) {
 }
 
 // 批量删除用户
-//@router /api/user/delete/batch [delete]
+//@router /user/delete/batch [delete]
 func (uc UserController) BatchDeleteUserByIds(c *gin.Context) {
 	var req vo.DeleteUserRequest
 	// 参数绑定
@@ -388,14 +389,14 @@ func (uc UserController) BatchDeleteUserByIds(c *gin.Context) {
 	// 前端传来的用户ID
 	reqUserIds := req.UserIds
 	// 根据用户ID获取用户角色排序最小值
-	roleMinSortList, err := uc.UserRepository.GetUserMinRoleSortsByIds(reqUserIds)
+	roleMinSortList, err := uc.UserRepository.GetUserMinRoleSortsByIds(nil, reqUserIds)
 	if err != nil || len(roleMinSortList) == 0 {
 		response.Fail(c, nil, "根据用户ID获取用户角色排序最小值失败")
 		return
 	}
 
 	// 当前用户角色排序最小值（最高等级角色）以及当前用户
-	minSort, ctxUser, err := uc.UserRepository.GetCurrentUserMinRoleSort(c)
+	minSort, ctxUser, err := uc.UserRepository.GetCurrentUserMinRoleSort(nil, c)
 	if err != nil {
 		response.Fail(c, nil, err.Error())
 		return
@@ -416,7 +417,7 @@ func (uc UserController) BatchDeleteUserByIds(c *gin.Context) {
 		}
 	}
 
-	err = uc.UserRepository.BatchDeleteUserByIds(reqUserIds)
+	err = uc.UserRepository.BatchDeleteUserByIds(nil, reqUserIds)
 	if err != nil {
 		response.Fail(c, nil, "删除用户失败: "+err.Error())
 		return

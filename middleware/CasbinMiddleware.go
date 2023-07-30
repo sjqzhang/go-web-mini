@@ -19,7 +19,7 @@ var checkLock sync.Mutex
 func CasbinMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ur := gdi.Get(&repository.UserRepository{}).(*repository.UserRepository)
-		user, err := ur.GetCurrentUser(c)
+		user, err := ur.GetCurrentUser(nil, c)
 		if err != nil {
 			response.Response(c, 401, 401, nil, "用户未登录")
 			c.Abort()

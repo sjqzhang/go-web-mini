@@ -20,6 +20,7 @@ type IApiController interface {
 }
 
 //@middleware auth, casbin,rateLimiter
+//@router /api [get]
 type ApiController struct {
 	ApiRepository repository.IApiRepository
 }
@@ -31,7 +32,8 @@ func NewApiController() IApiController {
 }
 
 // 获取接口列表
-// @router /api/api/list [get]
+// @router /api/list [get]
+//@middleware xx
 func (ac ApiController) GetApis(c *gin.Context) {
 	var req vo.ApiListRequest
 	// 参数绑定
@@ -46,7 +48,7 @@ func (ac ApiController) GetApis(c *gin.Context) {
 		return
 	}
 	// 获取
-	apis, total, err := ac.ApiRepository.GetApis(&req)
+	apis, total, err := ac.ApiRepository.GetApis(c, &req)
 	if err != nil {
 		response.Fail(c, nil, "获取接口列表失败")
 		return
@@ -57,9 +59,9 @@ func (ac ApiController) GetApis(c *gin.Context) {
 }
 
 // 获取接口树(按接口Category字段分类)
-// @router /api/api/tree [get]
+// @router /api/tree [get]
 func (ac ApiController) GetApiTree(c *gin.Context) {
-	tree, err := ac.ApiRepository.GetApiTree()
+	tree, err := ac.ApiRepository.GetApiTree(c)
 	if err != nil {
 		response.Fail(c, nil, "获取接口树失败")
 		return
@@ -70,7 +72,7 @@ func (ac ApiController) GetApiTree(c *gin.Context) {
 }
 
 // 创建接口
-// @router /api/api/create [post]
+// @router /create [post]
 func (ac ApiController) CreateApi(c *gin.Context) {
 	var req vo.CreateApiRequest
 	// 参数绑定
@@ -87,7 +89,7 @@ func (ac ApiController) CreateApi(c *gin.Context) {
 
 	// 获取当前用户
 	ur := repository.NewUserRepository()
-	ctxUser, err := ur.GetCurrentUser(c)
+	ctxUser, err := ur.GetCurrentUser(nil, c)
 	if err != nil {
 		response.Fail(c, nil, "获取当前用户信息失败")
 		return
@@ -102,7 +104,7 @@ func (ac ApiController) CreateApi(c *gin.Context) {
 	}
 
 	// 创建接口
-	err = ac.ApiRepository.CreateApi(&api)
+	err = ac.ApiRepository.CreateApi(nil, &api)
 	if err != nil {
 		response.Fail(c, nil, "创建接口失败: "+err.Error())
 		return
@@ -113,7 +115,7 @@ func (ac ApiController) CreateApi(c *gin.Context) {
 }
 
 // 更新接口
-// @router /api/api/update/:apiId [patch]
+// @router /api/update/:apiId [patch]
 func (ac ApiController) UpdateApiById(c *gin.Context) {
 	var req vo.UpdateApiRequest
 	// 参数绑定
@@ -137,7 +139,7 @@ func (ac ApiController) UpdateApiById(c *gin.Context) {
 
 	// 获取当前用户
 	ur := repository.NewUserRepository()
-	ctxUser, err := ur.GetCurrentUser(c)
+	ctxUser, err := ur.GetCurrentUser(nil, c)
 	if err != nil {
 		response.Fail(c, nil, "获取当前用户信息失败")
 		return
@@ -151,7 +153,7 @@ func (ac ApiController) UpdateApiById(c *gin.Context) {
 		Creator:  ctxUser.Username,
 	}
 
-	err = ac.ApiRepository.UpdateApiById(uint(apiId), &api)
+	err = ac.ApiRepository.UpdateApiById(nil, uint(apiId), &api)
 	if err != nil {
 		response.Fail(c, nil, "更新接口失败: "+err.Error())
 		return
@@ -161,7 +163,7 @@ func (ac ApiController) UpdateApiById(c *gin.Context) {
 }
 
 // 批量删除接口
-// @router /api/api/delete/batch [delete]
+// @router /api/delete/batch [delete]
 func (ac ApiController) BatchDeleteApiByIds(c *gin.Context) {
 	var req vo.DeleteApiRequest
 	// 参数绑定
@@ -177,7 +179,7 @@ func (ac ApiController) BatchDeleteApiByIds(c *gin.Context) {
 	}
 
 	// 删除接口
-	err := ac.ApiRepository.BatchDeleteApiByIds(req.ApiIds)
+	err := ac.ApiRepository.BatchDeleteApiByIds(nil, req.ApiIds)
 	if err != nil {
 		response.Fail(c, nil, "删除接口失败: "+err.Error())
 		return
