@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/sjqzhang/gdi"
 	"go-web-mini/common"
 	"go-web-mini/config"
 	"go-web-mini/repository"
@@ -12,10 +13,12 @@ import (
 
 var checkLock sync.Mutex
 
+
+
 // Casbin中间件, 基于RBAC的权限访问控制模型
 func CasbinMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		ur := repository.NewUserRepository()
+		ur := gdi.Get(&repository.UserRepository{}).(*repository.UserRepository)
 		user, err := ur.GetCurrentUser(c)
 		if err != nil {
 			response.Response(c, 401, 401, nil, "用户未登录")
