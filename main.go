@@ -56,7 +56,7 @@ func main() {
 
 	routerMap, _ := gdi.GetRouterInfo("controller")
 
-	ctrls, err := gdi.AutoRegisterByPackNamePatten(`controller*`)
+	ctrls, err := gdi.AutoRegisterByPackagePatten(`controller*`)
 
 	if err != nil {
 		fmt.Println(err)
@@ -114,7 +114,7 @@ func main() {
 	// 这里开启3个goroutine处理channel将日志记录到数据库
 	logRepository := repository.NewOperationLogRepository()
 	for i := 0; i < 3; i++ {
-		go logRepository.SaveOperationLogChannel(middleware.OperationLogChan)
+		go logRepository.SaveOperationLogChannel(nil, middleware.OperationLogChan)
 	}
 
 	// 注册所有路由

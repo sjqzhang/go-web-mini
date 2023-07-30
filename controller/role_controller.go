@@ -51,7 +51,7 @@ func (rc RoleController) GetRoles(c *gin.Context) {
 	}
 
 	// 获取角色列表
-	roles, total, err := rc.RoleRepository.GetRoles(&req)
+	roles, total, err := rc.RoleRepository.GetRoles(c,&req)
 	if err != nil {
 		response.Fail(c, nil, "获取角色列表失败: "+err.Error())
 		return
@@ -77,7 +77,7 @@ func (rc RoleController) CreateRole(c *gin.Context) {
 
 	// 获取当前用户最高角色等级
 	uc := repository.NewUserRepository()
-	sort, ctxUser, err := uc.GetCurrentUserMinRoleSort(c)
+	sort, ctxUser, err := uc.GetCurrentUserMinRoleSort(nil, c)
 	if err != nil {
 		response.Fail(c, nil, "获取当前用户最高角色等级失败: "+err.Error())
 		return
@@ -99,7 +99,7 @@ func (rc RoleController) CreateRole(c *gin.Context) {
 	}
 
 	// 创建角色
-	err = rc.RoleRepository.CreateRole(&role)
+	err = rc.RoleRepository.CreateRole(c,&role)
 	if err != nil {
 		response.Fail(c, nil, "创建角色失败: "+err.Error())
 		return
@@ -132,7 +132,7 @@ func (rc RoleController) UpdateRoleById(c *gin.Context) {
 
 	// 当前用户角色排序最小值（最高等级角色）以及当前用户
 	ur := repository.NewUserRepository()
-	minSort, ctxUser, err := ur.GetCurrentUserMinRoleSort(c)
+	minSort, ctxUser, err := ur.GetCurrentUserMinRoleSort(nil, c)
 	if err != nil {
 		response.Fail(c, nil, err.Error())
 		return
@@ -140,7 +140,7 @@ func (rc RoleController) UpdateRoleById(c *gin.Context) {
 
 	// 不能更新比自己角色等级高或相等的角色
 	// 根据path中的角色ID获取该角色信息
-	roles, err := rc.RoleRepository.GetRolesByIds([]uint{uint(roleId)})
+	roles, err := rc.RoleRepository.GetRolesByIds(c,[]uint{uint(roleId)})
 	if err != nil {
 		response.Fail(c, nil, err.Error())
 		return
@@ -170,7 +170,7 @@ func (rc RoleController) UpdateRoleById(c *gin.Context) {
 	}
 
 	// 更新角色
-	err = rc.RoleRepository.UpdateRoleById(uint(roleId), &role)
+	err = rc.RoleRepository.UpdateRoleById(c,uint(roleId), &role)
 	if err != nil {
 		response.Fail(c, nil, "更新角色失败: "+err.Error())
 		return
@@ -223,7 +223,7 @@ func (rc RoleController) UpdateRoleById(c *gin.Context) {
 	// 1.可以帮助用户更新拥有该角色的用户信息缓存,使用下面方法
 	// err = ur.UpdateUserInfoCacheByRoleId(uint(roleId))
 	// 2.直接清理缓存，让活跃的用户自己重新缓存最新用户信息
-	ur.ClearUserInfoCache()
+	ur.ClearUserInfoCache(nil)
 
 	response.Success(c, nil, "更新角色成功")
 }
@@ -237,7 +237,7 @@ func (rc RoleController) GetRoleMenusById(c *gin.Context) {
 		response.Fail(c, nil, "角色ID不正确")
 		return
 	}
-	menus, err := rc.RoleRepository.GetRoleMenusById(uint(roleId))
+	menus, err := rc.RoleRepository.GetRoleMenusById(c,uint(roleId))
 	if err != nil {
 		response.Fail(c, nil, "获取角色的权限菜单失败: "+err.Error())
 		return
@@ -267,7 +267,7 @@ func (rc RoleController) UpdateRoleMenusById(c *gin.Context) {
 		return
 	}
 	// 根据path中的角色ID获取该角色信息
-	roles, err := rc.RoleRepository.GetRolesByIds([]uint{uint(roleId)})
+	roles, err := rc.RoleRepository.GetRolesByIds(c,[]uint{uint(roleId)})
 	if err != nil {
 		response.Fail(c, nil, err.Error())
 		return
@@ -279,7 +279,7 @@ func (rc RoleController) UpdateRoleMenusById(c *gin.Context) {
 
 	// 当前用户角色排序最小值（最高等级角色）以及当前用户
 	ur := repository.NewUserRepository()
-	minSort, ctxUser, err := ur.GetCurrentUserMinRoleSort(c)
+	minSort, ctxUser, err := ur.GetCurrentUserMinRoleSort(nil, c)
 	if err != nil {
 		response.Fail(c, nil, err.Error())
 		return
@@ -295,7 +295,7 @@ func (rc RoleController) UpdateRoleMenusById(c *gin.Context) {
 
 	// 获取当前用户所拥有的权限菜单
 	mr := repository.NewMenuRepository()
-	ctxUserMenus, err := mr.GetUserMenusByUserId(ctxUser.ID)
+	ctxUserMenus, err := mr.GetUserMenusByUserId(nil, ctxUser.ID)
 	if err != nil {
 		response.Fail(c, nil, "获取当前用户的可访问菜单列表失败: "+err.Error())
 		return
@@ -333,7 +333,7 @@ func (rc RoleController) UpdateRoleMenusById(c *gin.Context) {
 	} else {
 		// 管理员随意设置
 		// 根据menuIds查询查询菜单
-		menus, err := mr.GetMenus()
+		menus, err := mr.GetMenus(nil)
 		if err != nil {
 			response.Fail(c, nil, "获取菜单列表失败: "+err.Error())
 			return
@@ -349,7 +349,7 @@ func (rc RoleController) UpdateRoleMenusById(c *gin.Context) {
 
 	roles[0].Menus = reqMenus
 
-	err = rc.RoleRepository.UpdateRoleMenus(roles[0])
+	err = rc.RoleRepository.UpdateRoleMenus(c,roles[0])
 	if err != nil {
 		response.Fail(c, nil, "更新角色的权限菜单失败: "+err.Error())
 		return
@@ -369,7 +369,7 @@ func (rc RoleController) GetRoleApisById(c *gin.Context) {
 		return
 	}
 	// 根据path中的角色ID获取该角色信息
-	roles, err := rc.RoleRepository.GetRolesByIds([]uint{uint(roleId)})
+	roles, err := rc.RoleRepository.GetRolesByIds(c,[]uint{uint(roleId)})
 	if err != nil {
 		response.Fail(c, nil, err.Error())
 		return
@@ -380,7 +380,7 @@ func (rc RoleController) GetRoleApisById(c *gin.Context) {
 	}
 	// 根据角色keyword获取casbin中policy
 	keyword := roles[0].Keyword
-	apis, err := rc.RoleRepository.GetRoleApisByRoleKeyword(keyword)
+	apis, err := rc.RoleRepository.GetRoleApisByRoleKeyword(c,keyword)
 	if err != nil {
 		response.Fail(c, nil, err.Error())
 		return
@@ -411,7 +411,7 @@ func (rc RoleController) UpdateRoleApisById(c *gin.Context) {
 		return
 	}
 	// 根据path中的角色ID获取该角色信息
-	roles, err := rc.RoleRepository.GetRolesByIds([]uint{uint(roleId)})
+	roles, err := rc.RoleRepository.GetRolesByIds(c,[]uint{uint(roleId)})
 	if err != nil {
 		response.Fail(c, nil, err.Error())
 		return
@@ -423,7 +423,7 @@ func (rc RoleController) UpdateRoleApisById(c *gin.Context) {
 
 	// 当前用户角色排序最小值（最高等级角色）以及当前用户
 	ur := repository.NewUserRepository()
-	minSort, ctxUser, err := ur.GetCurrentUserMinRoleSort(c)
+	minSort, ctxUser, err := ur.GetCurrentUserMinRoleSort(nil, c)
 	if err != nil {
 		response.Fail(c, nil, err.Error())
 		return
@@ -453,7 +453,7 @@ func (rc RoleController) UpdateRoleApisById(c *gin.Context) {
 	apiIds := req.ApiIds
 	// 根据apiID获取接口详情
 	ar := repository.NewApiRepository()
-	apis, err := ar.GetApisById(apiIds)
+	apis, err := ar.GetApisById(nil, apiIds)
 	if err != nil {
 		response.Fail(c, nil, "根据接口ID获取接口信息失败")
 		return
@@ -477,7 +477,7 @@ func (rc RoleController) UpdateRoleApisById(c *gin.Context) {
 	}
 
 	// 更新角色的权限接口
-	err = rc.RoleRepository.UpdateRoleApis(roles[0].Keyword, reqRolePolicies)
+	err = rc.RoleRepository.UpdateRoleApis(c,roles[0].Keyword, reqRolePolicies)
 	if err != nil {
 		response.Fail(c, nil, err.Error())
 		return
@@ -505,7 +505,7 @@ func (rc RoleController) BatchDeleteRoleByIds(c *gin.Context) {
 
 	// 获取当前用户最高等级角色
 	ur := repository.NewUserRepository()
-	minSort, _, err := ur.GetCurrentUserMinRoleSort(c)
+	minSort, _, err := ur.GetCurrentUserMinRoleSort(nil, c)
 	if err != nil {
 		response.Fail(c, nil, err.Error())
 		return
@@ -514,7 +514,7 @@ func (rc RoleController) BatchDeleteRoleByIds(c *gin.Context) {
 	// 前端传来需要删除的角色ID
 	roleIds := req.RoleIds
 	// 获取角色信息
-	roles, err := rc.RoleRepository.GetRolesByIds(roleIds)
+	roles, err := rc.RoleRepository.GetRolesByIds(c,roleIds)
 	if err != nil {
 		response.Fail(c, nil, "获取角色信息失败: "+err.Error())
 		return
@@ -533,14 +533,14 @@ func (rc RoleController) BatchDeleteRoleByIds(c *gin.Context) {
 	}
 
 	// 删除角色
-	err = rc.RoleRepository.BatchDeleteRoleByIds(roleIds)
+	err = rc.RoleRepository.BatchDeleteRoleByIds(c,roleIds)
 	if err != nil {
 		response.Fail(c, nil, "删除角色失败")
 		return
 	}
 
 	// 删除角色成功直接清理缓存，让活跃的用户自己重新缓存最新用户信息
-	ur.ClearUserInfoCache()
+	ur.ClearUserInfoCache(nil)
 	response.Success(c, nil, "删除角色成功")
 
 }

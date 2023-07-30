@@ -81,7 +81,7 @@ func login(c *gin.Context) (interface{}, error) {
 
 	// 密码校验
 	userRepository := repository.NewUserRepository()
-	user, err := userRepository.Login(u)
+	user, err := userRepository.Login(nil, u)
 	if err != nil {
 		return nil, err
 	}

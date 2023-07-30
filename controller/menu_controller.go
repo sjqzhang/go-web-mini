@@ -37,7 +37,7 @@ func NewMenuController() IMenuController {
 // 获取菜单列表
 //@router /api/menu/list [get]
 func (mc MenuController) GetMenus(c *gin.Context) {
-	menus, err := mc.MenuRepository.GetMenus()
+	menus, err := mc.MenuRepository.GetMenus(nil)
 	if err != nil {
 		response.Fail(c, nil, "获取菜单列表失败: "+err.Error())
 		return
@@ -48,7 +48,7 @@ func (mc MenuController) GetMenus(c *gin.Context) {
 // 获取菜单树
 //@router /api/menu/tree [get]
 func (mc MenuController) GetMenuTree(c *gin.Context) {
-	menuTree, err := mc.MenuRepository.GetMenuTree()
+	menuTree, err := mc.MenuRepository.GetMenuTree(nil)
 	if err != nil {
 		response.Fail(c, nil, "获取菜单树失败: "+err.Error())
 		return
@@ -74,7 +74,7 @@ func (mc MenuController) CreateMenu(c *gin.Context) {
 
 	// 获取当前用户
 
-	ctxUser, err := mc.UserRepository.GetCurrentUser(c)
+	ctxUser, err := mc.UserRepository.GetCurrentUser(nil, c)
 	if err != nil {
 		response.Fail(c, nil, "获取当前用户信息失败")
 		return
@@ -98,7 +98,7 @@ func (mc MenuController) CreateMenu(c *gin.Context) {
 		Creator:    ctxUser.Username,
 	}
 
-	err = mc.MenuRepository.CreateMenu(&menu)
+	err = mc.MenuRepository.CreateMenu(nil, &menu)
 	if err != nil {
 		response.Fail(c, nil, "创建菜单失败: "+err.Error())
 		return
@@ -133,7 +133,7 @@ func (mc MenuController) UpdateMenuById(c *gin.Context) {
 	ur :=mc.UserRepository //repository.NewUserRepository()
 
 	fmt.Println(ur==nil)
-	ctxUser, err := ur.GetCurrentUser(c)
+	ctxUser, err := ur.GetCurrentUser(nil, c)
 	if err != nil {
 		response.Fail(c, nil, "获取当前用户信息失败")
 		return
@@ -157,7 +157,7 @@ func (mc MenuController) UpdateMenuById(c *gin.Context) {
 		Creator:    ctxUser.Username,
 	}
 
-	err = mc.MenuRepository.UpdateMenuById(uint(menuId), &menu)
+	err = mc.MenuRepository.UpdateMenuById(nil, uint(menuId), &menu)
 	if err != nil {
 		response.Fail(c, nil, "更新菜单失败: "+err.Error())
 		return
@@ -182,7 +182,7 @@ func (mc MenuController) BatchDeleteMenuByIds(c *gin.Context) {
 		response.Fail(c, nil, errStr)
 		return
 	}
-	err := mc.MenuRepository.BatchDeleteMenuByIds(req.MenuIds)
+	err := mc.MenuRepository.BatchDeleteMenuByIds(nil, req.MenuIds)
 	if err != nil {
 		response.Fail(c, nil, "删除菜单失败: "+err.Error())
 		return
@@ -201,7 +201,7 @@ func (mc MenuController) GetUserMenusByUserId(c *gin.Context) {
 		return
 	}
 
-	menus, err := mc.MenuRepository.GetUserMenusByUserId(uint(userId))
+	menus, err := mc.MenuRepository.GetUserMenusByUserId(nil, uint(userId))
 	if err != nil {
 		response.Fail(c, nil, "获取用户的可访问菜单列表失败: "+err.Error())
 		return
@@ -219,7 +219,7 @@ func (mc MenuController) GetUserMenuTreeByUserId(c *gin.Context) {
 		return
 	}
 
-	menuTree, err := mc.MenuRepository.GetUserMenuTreeByUserId(uint(userId))
+	menuTree, err := mc.MenuRepository.GetUserMenuTreeByUserId(nil, uint(userId))
 	if err != nil {
 		response.Fail(c, nil, "获取用户的可访问菜单树失败: "+err.Error())
 		return

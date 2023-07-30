@@ -11,7 +11,7 @@ import (
 	p11 "go-web-mini/vo"
 )
 
-//go:embed repository config controller dto response routes util vo common middleware model
+//go:embed util common controller dto repository routes vo config middleware model response
 var gdiEmbededFiles embed.FS
 
 func init() {

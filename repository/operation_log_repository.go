@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"context"
 	"fmt"
 	"go-web-mini/common"
 	"go-web-mini/model"
@@ -9,9 +10,9 @@ import (
 )
 
 type IOperationLogRepository interface {
-	GetOperationLogs(req *vo.OperationLogListRequest) ([]model.OperationLog, int64, error)
-	BatchDeleteOperationLogByIds(ids []uint) error
-	SaveOperationLogChannel(olc <-chan *model.OperationLog) //处理OperationLogChan将日志记录到数据库
+	GetOperationLogs(ctx context.Context, req *vo.OperationLogListRequest) ([]model.OperationLog, int64, error)
+	BatchDeleteOperationLogByIds(ctx context.Context, ids []uint) error
+	SaveOperationLogChannel(ctx context.Context, olc <-chan *model.OperationLog) //处理OperationLogChan将日志记录到数据库
 }
 
 type OperationLogRepository struct {
@@ -21,7 +22,7 @@ func NewOperationLogRepository() IOperationLogRepository {
 	return OperationLogRepository{}
 }
 
-func (o OperationLogRepository) GetOperationLogs(req *vo.OperationLogListRequest) ([]model.OperationLog, int64, error) {
+func (o OperationLogRepository) GetOperationLogs(ctx context.Context, req *vo.OperationLogListRequest) ([]model.OperationLog, int64, error) {
 	var list []model.OperationLog
 	db := common.DB.Model(&model.OperationLog{}).Order("start_time DESC")
 
@@ -60,14 +61,14 @@ func (o OperationLogRepository) GetOperationLogs(req *vo.OperationLogListRequest
 
 }
 
-func (o OperationLogRepository) BatchDeleteOperationLogByIds(ids []uint) error {
+func (o OperationLogRepository) BatchDeleteOperationLogByIds(ctx context.Context, ids []uint) error {
 	err := common.DB.Where("id IN (?)", ids).Unscoped().Delete(&model.OperationLog{}).Error
 	return err
 }
 
 //var Logs []model.OperationLog //全局变量多个线程需要加锁，所以每个线程自己维护一个
 //处理OperationLogChan将日志记录到数据库
-func (o OperationLogRepository) SaveOperationLogChannel(olc <-chan *model.OperationLog) {
+func (o OperationLogRepository) SaveOperationLogChannel(ctx context.Context, olc <-chan *model.OperationLog) {
 	// 只会在线程开启的时候执行一次
 	Logs := make([]model.OperationLog, 0)
 

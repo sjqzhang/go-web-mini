@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"go-web-mini/common"
@@ -10,15 +11,15 @@ import (
 )
 
 type IRoleRepository interface {
-	GetRoles(req *vo.RoleListRequest) ([]model.Role, int64, error)       // 获取角色列表
-	GetRolesByIds(roleIds []uint) ([]*model.Role, error)                 // 根据角色ID获取角色
-	CreateRole(role *model.Role) error                                   // 创建角色
-	UpdateRoleById(roleId uint, role *model.Role) error                  // 更新角色
-	GetRoleMenusById(roleId uint) ([]*model.Menu, error)                 // 获取角色的权限菜单
-	UpdateRoleMenus(role *model.Role) error                              // 更新角色的权限菜单
-	GetRoleApisByRoleKeyword(roleKeyword string) ([]*model.Api, error)   // 根据角色关键字获取角色的权限接口
-	UpdateRoleApis(roleKeyword string, reqRolePolicies [][]string) error // 更新角色的权限接口（先全部删除再新增）
-	BatchDeleteRoleByIds(roleIds []uint) error                           // 删除角色
+	GetRoles(ctx context.Context, req *vo.RoleListRequest) ([]model.Role, int64, error)       // 获取角色列表
+	GetRolesByIds(ctx context.Context,roleIds []uint) ([]*model.Role, error)                 // 根据角色ID获取角色
+	CreateRole(ctx context.Context,role *model.Role) error                                   // 创建角色
+	UpdateRoleById(ctx context.Context,roleId uint, role *model.Role) error                  // 更新角色
+	GetRoleMenusById(ctx context.Context,roleId uint) ([]*model.Menu, error)                 // 获取角色的权限菜单
+	UpdateRoleMenus(ctx context.Context,role *model.Role) error                              // 更新角色的权限菜单
+	GetRoleApisByRoleKeyword(ctx context.Context,roleKeyword string) ([]*model.Api, error)   // 根据角色关键字获取角色的权限接口
+	UpdateRoleApis(ctx context.Context,roleKeyword string, reqRolePolicies [][]string) error // 更新角色的权限接口（先全部删除再新增）
+	BatchDeleteRoleByIds(ctx context.Context,roleIds []uint) error                           // 删除角色
 }
 
 type RoleRepository struct {
@@ -29,7 +30,7 @@ func NewRoleRepository() IRoleRepository {
 }
 
 // 获取角色列表
-func (r RoleRepository) GetRoles(req *vo.RoleListRequest) ([]model.Role, int64, error) {
+func (r RoleRepository) GetRoles(ctx context.Context,req *vo.RoleListRequest) ([]model.Role, int64, error) {
 	var list []model.Role
 	db := common.DB.Model(&model.Role{}).Order("created_at DESC")
 
@@ -63,39 +64,39 @@ func (r RoleRepository) GetRoles(req *vo.RoleListRequest) ([]model.Role, int64, 
 }
 
 //根据角色ID获取角色
-func (r RoleRepository) GetRolesByIds(roleIds []uint) ([]*model.Role, error) {
+func (r RoleRepository) GetRolesByIds(ctx context.Context,roleIds []uint) ([]*model.Role, error) {
 	var list []*model.Role
 	err := common.DB.Where("id IN (?)", roleIds).Find(&list).Error
 	return list, err
 }
 
 // 创建角色
-func (r RoleRepository) CreateRole(role *model.Role) error {
+func (r RoleRepository) CreateRole(ctx context.Context,role *model.Role) error {
 	err := common.DB.Create(role).Error
 	return err
 }
 
 // 更新角色
-func (r RoleRepository) UpdateRoleById(roleId uint, role *model.Role) error {
+func (r RoleRepository) UpdateRoleById(ctx context.Context,roleId uint, role *model.Role) error {
 	err := common.DB.Model(&model.Role{}).Where("id = ?", roleId).Updates(role).Error
 	return err
 }
 
 // 获取角色的权限菜单
-func (r RoleRepository) GetRoleMenusById(roleId uint) ([]*model.Menu, error) {
+func (r RoleRepository) GetRoleMenusById(ctx context.Context,roleId uint) ([]*model.Menu, error) {
 	var role model.Role
 	err := common.DB.Where("id = ?", roleId).Preload("Menus").First(&role).Error
 	return role.Menus, err
 }
 
 // 更新角色的权限菜单
-func (r RoleRepository) UpdateRoleMenus(role *model.Role) error {
+func (r RoleRepository) UpdateRoleMenus(ctx context.Context,role *model.Role) error {
 	err := common.DB.Model(role).Association("Menus").Replace(role.Menus)
 	return err
 }
 
 // 根据角色关键字获取角色的权限接口
-func (r RoleRepository) GetRoleApisByRoleKeyword(roleKeyword string) ([]*model.Api, error) {
+func (r RoleRepository) GetRoleApisByRoleKeyword(ctx context.Context,roleKeyword string) ([]*model.Api, error) {
 	policies := common.CasbinEnforcer.GetFilteredPolicy(0, roleKeyword)
 
 	// 获取所有接口
@@ -123,7 +124,7 @@ func (r RoleRepository) GetRoleApisByRoleKeyword(roleKeyword string) ([]*model.A
 }
 
 // 更新角色的权限接口（先全部删除再新增）
-func (r RoleRepository) UpdateRoleApis(roleKeyword string, reqRolePolicies [][]string) error {
+func (r RoleRepository) UpdateRoleApis(ctx context.Context,roleKeyword string, reqRolePolicies [][]string) error {
 	// 先获取path中的角色ID对应角色已有的police(需要先删除的)
 	err := common.CasbinEnforcer.LoadPolicy()
 	if err != nil {
@@ -149,7 +150,7 @@ func (r RoleRepository) UpdateRoleApis(roleKeyword string, reqRolePolicies [][]s
 }
 
 // 删除角色
-func (r RoleRepository) BatchDeleteRoleByIds(roleIds []uint) error {
+func (r RoleRepository) BatchDeleteRoleByIds(ctx context.Context,roleIds []uint) error {
 	var roles []*model.Role
 	err := common.DB.Where("id IN (?)", roleIds).Find(&roles).Error
 	if err != nil {

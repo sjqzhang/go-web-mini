@@ -45,7 +45,7 @@ func OperationLogMiddleware() gin.HandlerFunc {
 
 		// 获取接口描述
 		apiRepository := repository.NewApiRepository()
-		apiDesc, _ := apiRepository.GetApiDescByPath(path, method)
+		apiDesc, _ := apiRepository.GetApiDescByPath(nil, path, method)
 
 		operationLog := model.OperationLog{
 			Username:   username,

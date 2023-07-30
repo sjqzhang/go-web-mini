@@ -40,7 +40,7 @@ func (oc OperationLogController) GetOperationLogs(c *gin.Context) {
 		return
 	}
 	// 获取
-	logs, total, err := oc.operationLogRepository.GetOperationLogs(&req)
+	logs, total, err := oc.operationLogRepository.GetOperationLogs(nil, &req)
 	if err != nil {
 		response.Fail(c, nil, "获取操作日志列表失败: "+err.Error())
 		return
@@ -65,7 +65,7 @@ func (oc OperationLogController) BatchDeleteOperationLogByIds(c *gin.Context) {
 	}
 
 	// 删除接口
-	err := oc.operationLogRepository.BatchDeleteOperationLogByIds(req.OperationLogIds)
+	err := oc.operationLogRepository.BatchDeleteOperationLogByIds(nil, req.OperationLogIds)
 	if err != nil {
 		response.Fail(c, nil, "删除日志失败: "+err.Error())
 		return
