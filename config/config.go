@@ -33,7 +33,7 @@ func InitConfig() {
 
 	viper.SetConfigName("config")
 	viper.SetConfigType("yml")
-	viper.AddConfigPath(workDir + "./")
+	viper.AddConfigPath(workDir + "")
 	// 读取配置信息
 	err = viper.ReadInConfig()
 

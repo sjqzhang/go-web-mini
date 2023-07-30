@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"go-web-mini/common"
@@ -21,9 +22,10 @@ type IMenuController interface {
 	GetUserMenusByUserId(c *gin.Context)    // 获取用户的可访问菜单列表
 	GetUserMenuTreeByUserId(c *gin.Context) // 获取用户的可访问菜单树
 }
-
+//@middleware auth
 type MenuController struct {
 	MenuRepository repository.IMenuRepository
+	UserRepository  repository.IUserRepository
 }
 
 func NewMenuController() IMenuController {
@@ -33,7 +35,7 @@ func NewMenuController() IMenuController {
 }
 
 // 获取菜单列表
-//@router /list [get]
+//@router /api/menu/list [get]
 func (mc MenuController) GetMenus(c *gin.Context) {
 	menus, err := mc.MenuRepository.GetMenus()
 	if err != nil {
@@ -44,7 +46,7 @@ func (mc MenuController) GetMenus(c *gin.Context) {
 }
 
 // 获取菜单树
-//@router /menu/tree [get]
+//@router /api/menu/tree [get]
 func (mc MenuController) GetMenuTree(c *gin.Context) {
 	menuTree, err := mc.MenuRepository.GetMenuTree()
 	if err != nil {
@@ -71,8 +73,8 @@ func (mc MenuController) CreateMenu(c *gin.Context) {
 	}
 
 	// 获取当前用户
-	ur := repository.NewUserRepository()
-	ctxUser, err := ur.GetCurrentUser(c)
+
+	ctxUser, err := mc.UserRepository.GetCurrentUser(c)
 	if err != nil {
 		response.Fail(c, nil, "获取当前用户信息失败")
 		return
@@ -105,7 +107,7 @@ func (mc MenuController) CreateMenu(c *gin.Context) {
 }
 
 // 更新菜单
-//@router /update/:menuId [put]
+//@router /api/menu/update/:menuId [patch]
 func (mc MenuController) UpdateMenuById(c *gin.Context) {
 	var req vo.UpdateMenuRequest
 	// 参数绑定
@@ -128,7 +130,9 @@ func (mc MenuController) UpdateMenuById(c *gin.Context) {
 	}
 
 	// 获取当前用户
-	ur := repository.NewUserRepository()
+	ur :=mc.UserRepository //repository.NewUserRepository()
+
+	fmt.Println(ur==nil)
 	ctxUser, err := ur.GetCurrentUser(c)
 	if err != nil {
 		response.Fail(c, nil, "获取当前用户信息失败")
@@ -164,7 +168,7 @@ func (mc MenuController) UpdateMenuById(c *gin.Context) {
 }
 
 // 批量删除菜单
-//@router /delete/batch [delete]
+//@router /api/menu/delete/batch [delete]
 func (mc MenuController) BatchDeleteMenuByIds(c *gin.Context) {
 	var req vo.DeleteMenuRequest
 	// 参数绑定
@@ -188,7 +192,7 @@ func (mc MenuController) BatchDeleteMenuByIds(c *gin.Context) {
 }
 
 // 根据用户ID获取用户的可访问菜单列表
-//@router /access/list/user/:userId [get]
+//@router /api/access/list/user/:userId [get]
 func (mc MenuController) GetUserMenusByUserId(c *gin.Context) {
 	// 获取路径中的userId
 	userId, _ := strconv.Atoi(c.Param("userId"))
@@ -206,7 +210,7 @@ func (mc MenuController) GetUserMenusByUserId(c *gin.Context) {
 }
 
 // 根据用户ID获取用户的可访问菜单树
-//@router /access/tree/:userId [get]
+//@router /api/menu/access/tree/:userId [get]
 func (mc MenuController) GetUserMenuTreeByUserId(c *gin.Context) {
 	// 获取路径中的userId
 	userId, _ := strconv.Atoi(c.Param("userId"))

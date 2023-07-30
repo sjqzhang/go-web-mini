@@ -24,6 +24,7 @@ type IUserController interface {
 	BatchDeleteUserByIds(c *gin.Context) // 批量删除用户
 }
 
+//@middleware auth
 type UserController struct {
 	UserRepository repository.IUserRepository
 }
@@ -36,7 +37,8 @@ func NewUserController() IUserController {
 }
 
 // 获取当前登录用户信息
-//@router /user/info [get]
+//@middleware
+//@router /api/user/info [post]
 func (uc UserController) GetUserInfo(c *gin.Context) {
 	user, err := uc.UserRepository.GetCurrentUser(c)
 	if err != nil {
@@ -50,7 +52,7 @@ func (uc UserController) GetUserInfo(c *gin.Context) {
 }
 
 // 获取用户列表
-//@router /user/list [get]
+//@router /api/user/list [get]
 func (uc UserController) GetUsers(c *gin.Context) {
 	var req vo.UserListRequest
 	// 参数绑定
@@ -75,7 +77,7 @@ func (uc UserController) GetUsers(c *gin.Context) {
 }
 
 // 更新用户登录密码
-//@router /user/changePwd [put]
+//@router /api/user/changePwd [put]
 func (uc UserController) ChangePwd(c *gin.Context) {
 	var req vo.ChangePwdRequest
 
@@ -130,7 +132,7 @@ func (uc UserController) ChangePwd(c *gin.Context) {
 }
 
 // 创建用户
-//@router /user [post]
+//@router /api/user [post]
 func (uc UserController) CreateUser(c *gin.Context) {
 	var req vo.CreateUserRequest
 	// 参数绑定
@@ -219,7 +221,7 @@ func (uc UserController) CreateUser(c *gin.Context) {
 }
 
 // 更新用户
-//@router /user/:userId [patch]
+//@router /api/user/:userId [patch]
 func (uc UserController) UpdateUserById(c *gin.Context) {
 	var req vo.CreateUserRequest
 	// 参数绑定
@@ -368,7 +370,7 @@ func (uc UserController) UpdateUserById(c *gin.Context) {
 }
 
 // 批量删除用户
-//@router /user/delete/batch [delete]
+//@router /api/user/delete/batch [delete]
 func (uc UserController) BatchDeleteUserByIds(c *gin.Context) {
 	var req vo.DeleteUserRequest
 	// 参数绑定
