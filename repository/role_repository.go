@@ -25,9 +25,9 @@ type IRoleRepository interface {
 type RoleRepository struct {
 }
 
-func NewRoleRepository() IRoleRepository {
-	return RoleRepository{}
-}
+//func NewRoleRepository() IRoleRepository {
+//	return RoleRepository{}
+//}
 
 // 获取角色列表
 func (r RoleRepository) GetRoles(ctx context.Context,req *vo.RoleListRequest) ([]model.Role, int64, error) {

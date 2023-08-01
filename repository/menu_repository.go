@@ -21,9 +21,9 @@ type IMenuRepository interface {
 type MenuRepository struct {
 }
 
-func NewMenuRepository() IMenuRepository {
-	return MenuRepository{}
-}
+//func NewMenuRepository() IMenuRepository {
+//	return MenuRepository{}
+//}
 
 // 获取菜单列表
 func (m MenuRepository) GetMenus(ctx context.Context) ([]*model.Menu, error) {

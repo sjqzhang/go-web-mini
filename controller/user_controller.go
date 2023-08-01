@@ -28,14 +28,15 @@ type IUserController interface {
 //@router /api
 type UserController struct {
 	UserRepository repository.IUserRepository
+	rr 		   repository.IRoleRepository
 }
 
 // 构造函数
-func NewUserController() IUserController {
-	userRepository := repository.NewUserRepository()
-	userController := UserController{UserRepository: userRepository}
-	return userController
-}
+//func NewUserController() IUserController {
+//	userRepository := repository.NewUserRepository()
+//	userController := UserController{UserRepository: userRepository}
+//	return userController
+//}
 
 // 获取当前登录用户信息
 //@middleware
@@ -173,8 +174,8 @@ func (uc UserController) CreateUser(c *gin.Context) {
 	// 获取前端传来的用户角色id
 	reqRoleIds := req.RoleIds
 	// 根据角色id获取角色
-	rr := repository.NewRoleRepository()
-	roles, err := rr.GetRolesByIds(c,reqRoleIds)
+	//rr := repository.NewRoleRepository()
+	roles, err := uc.rr.GetRolesByIds(c,reqRoleIds)
 	if err != nil {
 		response.Fail(c, nil, "根据角色ID获取角色信息失败: "+err.Error())
 		return
@@ -273,8 +274,8 @@ func (uc UserController) UpdateUserById(c *gin.Context) {
 	// 获取前端传来的用户角色id
 	reqRoleIds := req.RoleIds
 	// 根据角色id获取角色
-	rr := repository.NewRoleRepository()
-	roles, err := rr.GetRolesByIds(c,reqRoleIds)
+	//rr := repository.NewRoleRepository()
+	roles, err := uc.rr.GetRolesByIds(c,reqRoleIds)
 	if err != nil {
 		response.Fail(c, nil, "根据角色ID获取角色信息失败: "+err.Error())
 		return

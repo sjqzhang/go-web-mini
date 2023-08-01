@@ -25,9 +25,9 @@ type IApiRepository interface {
 type ApiRepository struct {
 }
 
-func NewApiRepository() IApiRepository {
-	return ApiRepository{}
-}
+//func NewApiRepository() IApiRepository {
+//	return ApiRepository{}
+//}
 
 // 获取接口列表
 func (a ApiRepository) GetApis(ctx context.Context, req *vo.ApiListRequest) ([]*model.Api, int64, error) {

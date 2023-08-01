@@ -41,9 +41,9 @@ type UserRepository struct {
 var userInfoCache = cache.New(24*time.Hour, 48*time.Hour)
 
 // UserRepository构造函数
-func NewUserRepository() IUserRepository {
-	return UserRepository{}
-}
+//func NewUserRepository() IUserRepository {
+//	return UserRepository{}
+//}
 
 // 登录
 func (ur UserRepository) Login(ctx context.Context, user *model.User) (*model.User, error) {
@@ -138,7 +138,6 @@ func (ur UserRepository) GetCurrentUserMinRoleSort(ctx context.Context, c *gin.C
 
 // 获取单个用户
 func (ur UserRepository) GetUserById(ctx context.Context, id uint) (model.User, error) {
-	fmt.Println("GetUserById---")
 	var user model.User
 	err := common.DB.Where("id = ?", id).Preload("Roles").First(&user).Error
 	return user, err

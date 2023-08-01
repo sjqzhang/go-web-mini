@@ -19,21 +19,21 @@ type IApiController interface {
 	BatchDeleteApiByIds(c *gin.Context) // 批量删除接口
 }
 
-//@middleware auth, casbin,rateLimiter
+//@middleware auth
 //@router /api [get]
 type ApiController struct {
 	ApiRepository repository.IApiRepository
+	ur            repository.IUserRepository
 }
 
-func NewApiController() IApiController {
-	apiRepository := repository.NewApiRepository()
-	apiController := ApiController{ApiRepository: apiRepository}
-	return apiController
-}
+//func NewApiController() IApiController {
+//	apiRepository := repository.NewApiRepository()
+//	apiController := ApiController{ApiRepository: apiRepository}
+//	return apiController
+//}
 
 // 获取接口列表
 // @router /api/list [get]
-//@middleware xx
 func (ac ApiController) GetApis(c *gin.Context) {
 	var req vo.ApiListRequest
 	// 参数绑定
@@ -88,8 +88,8 @@ func (ac ApiController) CreateApi(c *gin.Context) {
 	}
 
 	// 获取当前用户
-	ur := repository.NewUserRepository()
-	ctxUser, err := ur.GetCurrentUser(nil, c)
+	//ur := repository.NewUserRepository()
+	ctxUser, err := ac.ur.GetCurrentUser(nil, c)
 	if err != nil {
 		response.Fail(c, nil, "获取当前用户信息失败")
 		return
@@ -138,8 +138,8 @@ func (ac ApiController) UpdateApiById(c *gin.Context) {
 	}
 
 	// 获取当前用户
-	ur := repository.NewUserRepository()
-	ctxUser, err := ur.GetCurrentUser(nil, c)
+	//ur := repository.NewUserRepository()
+	ctxUser, err := ac.ur.GetCurrentUser(nil, c)
 	if err != nil {
 		response.Fail(c, nil, "获取当前用户信息失败")
 		return

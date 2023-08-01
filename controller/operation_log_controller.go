@@ -18,11 +18,11 @@ type OperationLogController struct {
 	operationLogRepository repository.IOperationLogRepository
 }
 
-func NewOperationLogController() IOperationLogController {
-	operationLogRepository := repository.NewOperationLogRepository()
-	operationLogController := OperationLogController{operationLogRepository: operationLogRepository}
-	return operationLogController
-}
+//func NewOperationLogController() IOperationLogController {
+//	operationLogRepository := repository.NewOperationLogRepository()
+//	operationLogController := OperationLogController{operationLogRepository: operationLogRepository}
+//	return operationLogController
+//}
 
 // 获取操作日志列表
 // @router /api/log/operation/list [get]

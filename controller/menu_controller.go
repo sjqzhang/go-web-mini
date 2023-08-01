@@ -28,11 +28,11 @@ type MenuController struct {
 	UserRepository  repository.IUserRepository
 }
 
-func NewMenuController() IMenuController {
-	menuRepository := repository.NewMenuRepository()
-	menuController := MenuController{MenuRepository: menuRepository}
-	return menuController
-}
+//func NewMenuController() IMenuController {
+//	menuRepository := repository.NewMenuRepository()
+//	menuController := MenuController{MenuRepository: menuRepository}
+//	return menuController
+//}
 
 // 获取菜单列表
 //@router /api/menu/list [get]
