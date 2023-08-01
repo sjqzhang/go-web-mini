@@ -1,6 +1,7 @@
 package common
 
 import (
+	"context"
 	"fmt"
 	"go-web-mini/config"
 	"go-web-mini/model"
@@ -10,6 +11,25 @@ import (
 
 // 全局mysql数据库变量
 var DB *gorm.DB
+
+var dbKey = "db"
+var GinContextKey = "ginContext"
+
+//func BindContext(ctx context.Context, db *gorm.DB) context.Context {
+//	//if db == nil {
+//	//	panic("db is nil")
+//	//}
+//	//return context.WithValue(ctx, , db)
+//}
+func GetDB(ctx context.Context) *gorm.DB {
+
+	db := ctx.Value("db")
+
+	if db == nil {
+		panic("db is nil")
+	}
+	return db.(*gorm.DB)
+}
 
 // 初始化mysql数据库
 func InitMysql() {
@@ -67,5 +87,6 @@ func dbAutoMigrate() {
 		&model.Menu{},
 		&model.Api{},
 		&model.OperationLog{},
+		&model.News{},
 	)
 }
