@@ -16,6 +16,9 @@ import (
 
 // 初始化jwt中间件
 func InitAuth() (*jwt.GinJWTMiddleware, error) {
+
+	fmt.Println("ssdfasdfasdf")
+
 	authMiddleware, err := jwt.New(&jwt.GinJWTMiddleware{
 		Realm:           config.Conf.Jwt.Realm,                                 // jwt标识
 		Key:             []byte(config.Conf.Jwt.Key),                           // 服务端密钥

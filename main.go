@@ -53,6 +53,7 @@ func main() {
 	}
 	middlewaresMaping["auth"] = auth.MiddlewareFunc()
 	middlewaresMaping["casbin"] = middleware.CasbinMiddleware()
+	middlewaresMaping["transition"] = middleware.TransitionMiddleware()
 
 	routerMap, _ := gdi.GetRouterInfo("controller")
 
@@ -67,6 +68,9 @@ func main() {
 
 	for _, o := range ctrls {
 		ctrlName := o.Elem().Type().Name()
+		if ctrlName=="NewsController" {
+			//fmt.Println(ctrlName)
+		}
 
 		for i := 0; i < o.NumMethod(); i++ {
 			if o.NumMethod() == 0 {
