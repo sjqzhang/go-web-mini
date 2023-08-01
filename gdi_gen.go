@@ -11,11 +11,11 @@ import (
 	p11 "go-web-mini/vo"
 )
 
-//go:embed config middleware repository routes vo common controller dto model response util
-var gdiEmbededFiles embed.FS
+//go:embed dto model repository response routes util common controller middleware vo config
+var gdiEmbedFiles embed.FS
 
 func init() {
-	gdi.SetEmbedFs(&gdiEmbededFiles)
+	gdi.SetEmbedFs(&gdiEmbedFiles)
 	_ = gdi.GDIPool{}
 	gdi.PlaceHolder((*p2.SystemConfig)(nil))
 	gdi.PlaceHolder((*p2.LogsConfig)(nil))

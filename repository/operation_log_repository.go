@@ -18,9 +18,9 @@ type IOperationLogRepository interface {
 type OperationLogRepository struct {
 }
 
-func NewOperationLogRepository() IOperationLogRepository {
-	return OperationLogRepository{}
-}
+//func NewOperationLogRepository() IOperationLogRepository {
+//	return OperationLogRepository{}
+//}
 
 func (o OperationLogRepository) GetOperationLogs(ctx context.Context, req *vo.OperationLogListRequest) ([]model.OperationLog, int64, error) {
 	var list []model.OperationLog

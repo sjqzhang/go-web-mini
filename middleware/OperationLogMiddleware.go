@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/sjqzhang/gdi"
 	"go-web-mini/config"
 	"go-web-mini/model"
 	"go-web-mini/repository"
@@ -13,6 +14,7 @@ import (
 var OperationLogChan = make(chan *model.OperationLog, 30)
 
 func OperationLogMiddleware() gin.HandlerFunc {
+	apiRepository :=gdi.Get(&repository.ApiRepository{}).(*repository.ApiRepository)
 	return func(c *gin.Context) {
 		// 开始时间
 		startTime := time.Now()
@@ -44,7 +46,7 @@ func OperationLogMiddleware() gin.HandlerFunc {
 		method := c.Request.Method
 
 		// 获取接口描述
-		apiRepository := repository.NewApiRepository()
+		//apiRepository :=repository.NewApiRepository()
 		apiDesc, _ := apiRepository.GetApiDescByPath(nil, path, method)
 
 		operationLog := model.OperationLog{

@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"github.com/sjqzhang/gdi"
 	"go-web-mini/common"
 	"go-web-mini/config"
@@ -42,89 +41,20 @@ func main() {
 
 	gdi.GenGDIRegisterFile(true)
 
-	middlewaresMaping := make(map[string]gin.HandlerFunc)
 
-	//middlewaresMaping["ratelimit"]=middleware.RateLimitMiddleware(time.Millisecond*time.Duration(config.Conf.RateLimit.FillInterval),config.Conf.RateLimit.Capacity)
-	middlewaresMaping["cors"] = middleware.CORSMiddleware()
-	middlewaresMaping["operationlog"] = middleware.OperationLogMiddleware()
-	auth, err := middleware.InitAuth()
-	if err != nil {
-		panic(err)
-	}
-	middlewaresMaping["auth"] = auth.MiddlewareFunc()
-	middlewaresMaping["casbin"] = middleware.CasbinMiddleware()
-	middlewaresMaping["transition"] = middleware.TransitionMiddleware()
 
-	routerMap, _ := gdi.GetRouterInfo("controller")
 
-	ctrls, err := gdi.AutoRegisterByPackagePatten(`controller*`)
 
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	r := gin.Default()
-
-	for _, o := range ctrls {
-		ctrlName := o.Elem().Type().Name()
-		if ctrlName=="NewsController" {
-			//fmt.Println(ctrlName)
-		}
-
-		for i := 0; i < o.NumMethod(); i++ {
-			if o.NumMethod() == 0 {
-				continue
-			}
-			if !o.Type().Method(i).IsExported() {
-				continue
-			}
-			var v gdi.RouterInfo
-			var ok bool
-			methodName := o.Type().Method(i).Name
-			key := fmt.Sprintf("%v.%v", ctrlName, methodName)
-			if v, ok = routerMap[key]; !ok {
-				v.Method = "POST"
-				v.Uri = fmt.Sprintf("/%v/%v", ctrlName, methodName)
-				v.Handler = methodName
-			}
-
-			x := o.Method(i).Interface()
-
-			switch x.(type) {
-			case func(*gin.Context):
-				{
-					var mds []gin.HandlerFunc
-
-					for _, m := range v.Middlewares {
-						if f, ok := middlewaresMaping[m]; ok {
-							mds = append(mds, f)
-						}
-					}
-					mds = append(mds, x.(func(*gin.Context)))
-
-					r.Handle(v.Method, v.Uri, mds...)
-
-				}
-
-			}
-		}
-
-	}
-
-	gdi.Init()
+	// 注册所有路由
+	r := routes.InitRoutes()
 
 	// 操作日志中间件处理日志时没有将日志发送到rabbitmq或者kafka中, 而是发送到了channel中
 	// 这里开启3个goroutine处理channel将日志记录到数据库
-	logRepository := repository.NewOperationLogRepository()
+	logRepository := gdi.Get(&repository.OperationLogRepository{}).(*repository.OperationLogRepository)
 	for i := 0; i < 3; i++ {
 		go logRepository.SaveOperationLogChannel(nil, middleware.OperationLogChan)
 	}
 
-	// 注册所有路由
-	//r := routes.InitRoutes()
-
-	routes.InitRoutes(r, auth)
 
 	host := "localhost"
 	port := config.Conf.System.Port

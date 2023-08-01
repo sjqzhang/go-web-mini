@@ -437,7 +437,7 @@ func InitData() {
 		},
 		{
 			Method:   "PATCH",
-			Path:     "/api/update/:roleId",
+			Path:     "/api/update/:apiId",
 			Category: "api",
 			Desc:     "更新接口",
 			Creator:  "系统",

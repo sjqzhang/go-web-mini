@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"errors"
 	"go-web-mini/common"
 	"go-web-mini/model"
 )
@@ -16,14 +15,6 @@ type TestRepository struct {
 }
 
 func (r *TestRepository) CreateNews(ctx context.Context, user *model.News) error {
-	db:=common.GetDB(ctx)
-	db.Create(user)
-
-
-
-	//panic("sdfas")
-
-	return nil
-
-	return errors.New("sdfasdf")
+	db := common.GetDB(ctx)
+	return db.Create(user).Error
 }

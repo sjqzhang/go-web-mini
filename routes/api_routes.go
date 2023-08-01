@@ -3,12 +3,13 @@ package routes
 import (
 	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/gin-gonic/gin"
+	"github.com/sjqzhang/gdi"
 	"go-web-mini/controller"
 	"go-web-mini/middleware"
 )
 
 func InitApiRoutes(r *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddleware) gin.IRoutes {
-	apiController := controller.NewApiController()
+	apiController := gdi.Get(&controller.ApiController{}).(*controller.ApiController)
 	router := r.Group("/api")
 	// 开启jwt认证中间件
 	router.Use(authMiddleware.MiddlewareFunc())

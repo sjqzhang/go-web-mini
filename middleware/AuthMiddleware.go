@@ -4,6 +4,7 @@ import (
 	"fmt"
 	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/gin-gonic/gin"
+	"github.com/sjqzhang/gdi"
 	"go-web-mini/common"
 	"go-web-mini/config"
 	"go-web-mini/model"
@@ -16,8 +17,6 @@ import (
 
 // 初始化jwt中间件
 func InitAuth() (*jwt.GinJWTMiddleware, error) {
-
-	fmt.Println("ssdfasdfasdf")
 
 	authMiddleware, err := jwt.New(&jwt.GinJWTMiddleware{
 		Realm:           config.Conf.Jwt.Realm,                                 // jwt标识
@@ -83,7 +82,7 @@ func login(c *gin.Context) (interface{}, error) {
 	}
 
 	// 密码校验
-	userRepository := repository.NewUserRepository()
+	userRepository := gdi.Get(&repository.UserRepository{}).(*repository.UserRepository) //repository.NewUserRepository()
 	user, err := userRepository.Login(nil, u)
 	if err != nil {
 		return nil, err

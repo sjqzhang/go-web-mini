@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"go-web-mini/common"
 	"gorm.io/gorm"
@@ -11,7 +10,6 @@ import (
 // CORS跨域中间件
 func TransitionMiddleware() gin.HandlerFunc {
 
-	fmt.Println("sdfasdf")
 	return func(c *gin.Context) {
 
 		db := common.DB.Session(&gorm.Session{SkipDefaultTransaction: false})
