@@ -17,7 +17,7 @@ type {{.Table.TableName}}Repository struct {
 func (r *{{.Table.TableName}}Repository) List(ctx context.Context, query *model.{{.Table.TableName}}Query) ([]*model.{{.Table.TableName}}, error) {
 	db := common.GetDB(ctx)
 	var list []*model.{{.Table.TableName}}
-	err := db.Debug().Offset(query.PageNum * query.PageSize).Limit(query.PageSize).Find(&list).Error
+	err := db.Debug().Offset((query.PageNum-1) * query.PageSize).Limit(query.PageSize).Find(&list).Error
 	return list, err
 }
 

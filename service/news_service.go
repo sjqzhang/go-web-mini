@@ -20,35 +20,53 @@ func NewsQueryPage(param dto.NewsPageDTO) []vo.NewsVO{
 */
 
 type NewsService struct {
-	NewsRepository repository.NewsRepository
+	newsRepository repository.NewsRepository
 }
 
-func (s *NewsService) List(ctx context.Context, req *vo.ListNewsRequest) ([]*model.News, error) {
+func (s *NewsService) List(ctx context.Context, req *vo.ListNewsRequest) ([]*vo.News, error) {
 	var query model.NewsQuery
 	err := copier.Copy(&query, req)
 	if err != nil {
 		return nil, err
 	}
-	return s.NewsRepository.List(ctx, &query)
+    var resp []*vo.News
+    objs,err:= s.newsRepository.List(ctx, &query)
+    if err != nil {
+        return nil, err
+    }
+    err = copier.Copy(&resp, objs)
+    return resp, err
 }
 
-func (s *NewsService) Create(ctx *gin.Context, req *vo.CreateNewsRequest) (*model.News, error) {
+func (s *NewsService) Create(ctx *gin.Context, req *vo.CreateNewsRequest) (*vo.News, error) {
 	var obj model.News
 	err := copier.Copy(&obj, req)
 	if err != nil {
 		return nil, err
 	}
-	return s.NewsRepository.Create(ctx, &obj)
+	var resp *vo.News
+	_,err= s.newsRepository.Create(ctx, &obj)
+	if err != nil {
+        return nil, err
+    }
+    err = copier.Copy(&resp, &obj)
+    return resp, err
 }
 
 
-func (s *NewsService) Update(ctx *gin.Context, req *vo.UpdateNewsRequest) (*model.News, error) {
+func (s *NewsService) Update(ctx *gin.Context, req *vo.UpdateNewsRequest) (*vo.News, error) {
 	var obj model.News
 	err := copier.Copy(&obj, req)
 	if err != nil {
 		return nil, err
 	}
-	return s.NewsRepository.Update(ctx, &obj)
+	var resp *vo.News
+	_,err= s.newsRepository.Update(ctx, &obj)
+	if err != nil {
+        return nil, err
+    }
+    err = copier.Copy(&resp, &obj)
+    return resp, err
 }
 
 
@@ -58,7 +76,7 @@ func (s *NewsService) Delete(ctx *gin.Context, req *vo.DeleteNewsRequest) (int64
 	if err != nil {
 		return 0, err
 	}
-	return s.NewsRepository.Delete(ctx, &obj)
+	return s.newsRepository.Delete(ctx, &obj)
 }
 
 

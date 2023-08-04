@@ -17,7 +17,7 @@ type NewsRepository struct {
 func (r *NewsRepository) List(ctx context.Context, query *model.NewsQuery) ([]*model.News, error) {
 	db := common.GetDB(ctx)
 	var list []*model.News
-	err := db.Debug().Offset(query.PageNum * query.PageSize).Limit(query.PageSize).Find(&list).Error
+	err := db.Debug().Offset((query.PageNum-1) * query.PageSize).Limit(query.PageSize).Find(&list).Error
 	return list, err
 }
 

@@ -20,35 +20,53 @@ func {{.Table.TableName}}QueryPage(param dto.{{.Table.TableName}}PageDTO) []vo.{
 */
 
 type {{.Table.TableName}}Service struct {
-	{{.Table.TableName}}Repository repository.{{.Table.TableName}}Repository
+	{{.Table.Uri}}Repository repository.{{.Table.TableName}}Repository
 }
 
-func (s *{{.Table.TableName}}Service) List(ctx context.Context, req *vo.List{{.Table.TableName}}Request) ([]*model.{{.Table.TableName}}, error) {
+func (s *{{.Table.TableName}}Service) List(ctx context.Context, req *vo.List{{.Table.TableName}}Request) ([]*vo.{{.Table.TableName}}, error) {
 	var query model.{{.Table.TableName}}Query
 	err := copier.Copy(&query, req)
 	if err != nil {
 		return nil, err
 	}
-	return s.{{.Table.TableName}}Repository.List(ctx, &query)
+    var resp []*vo.News
+    objs,err:= s.{{.Table.Uri}}Repository.List(ctx, &query)
+    if err != nil {
+        return nil, err
+    }
+    err = copier.Copy(&resp, objs)
+    return resp, err
 }
 
-func (s *{{.Table.TableName}}Service) Create(ctx *gin.Context, req *vo.Create{{.Table.TableName}}Request) (*model.{{.Table.TableName}}, error) {
+func (s *{{.Table.TableName}}Service) Create(ctx *gin.Context, req *vo.Create{{.Table.TableName}}Request) (*vo.{{.Table.TableName}}, error) {
 	var obj model.{{.Table.TableName}}
 	err := copier.Copy(&obj, req)
 	if err != nil {
 		return nil, err
 	}
-	return s.{{.Table.TableName}}Repository.Create(ctx, &obj)
+	var resp *vo.{{.Table.TableName}}
+	_,err= s.{{.Table.Uri}}Repository.Create(ctx, &obj)
+	if err != nil {
+        return nil, err
+    }
+    err = copier.Copy(&resp, &obj)
+    return resp, err
 }
 
 
-func (s *{{.Table.TableName}}Service) Update(ctx *gin.Context, req *vo.Update{{.Table.TableName}}Request) (*model.{{.Table.TableName}}, error) {
+func (s *{{.Table.TableName}}Service) Update(ctx *gin.Context, req *vo.Update{{.Table.TableName}}Request) (*vo.{{.Table.TableName}}, error) {
 	var obj model.News
 	err := copier.Copy(&obj, req)
 	if err != nil {
 		return nil, err
 	}
-	return s.{{.Table.TableName}}Repository.Update(ctx, &obj)
+	var resp *vo.{{.Table.TableName}}
+	_,err= s.{{.Table.Uri}}Repository.Update(ctx, &obj)
+	if err != nil {
+        return nil, err
+    }
+    err = copier.Copy(&resp, &obj)
+    return resp, err
 }
 
 
@@ -58,7 +76,7 @@ func (s *{{.Table.TableName}}Service) Delete(ctx *gin.Context, req *vo.Delete{{.
 	if err != nil {
 		return 0, err
 	}
-	return s.{{.Table.TableName}}Repository.Delete(ctx, &obj)
+	return s.{{.Table.Uri}}Repository.Delete(ctx, &obj)
 }
 
 
