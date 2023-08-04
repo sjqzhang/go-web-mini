@@ -13,7 +13,8 @@ type IOperationLogController interface {
 	GetOperationLogs(c *gin.Context)             // 获取操作日志列表
 	BatchDeleteOperationLogByIds(c *gin.Context) //批量删除操作日志
 }
-
+//@middleware auth
+// @router /api
 type OperationLogController struct {
 	operationLogRepository repository.IOperationLogRepository
 }
@@ -25,7 +26,7 @@ type OperationLogController struct {
 //}
 
 // 获取操作日志列表
-// @router /api/log/operation/list [get]
+// @router /log/operation/list [get]
 func (oc OperationLogController) GetOperationLogs(c *gin.Context) {
 	var req vo.OperationLogListRequest
 	// 绑定参数
@@ -49,7 +50,7 @@ func (oc OperationLogController) GetOperationLogs(c *gin.Context) {
 }
 
 // 批量删除操作日志
-// @router /api/log/operation/delete/batch [delete]
+// @router /log/operation/delete/batch [delete]
 func (oc OperationLogController) BatchDeleteOperationLogByIds(c *gin.Context) {
 	var req vo.DeleteOperationLogRequest
 	// 参数绑定

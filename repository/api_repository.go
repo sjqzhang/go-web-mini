@@ -109,6 +109,7 @@ func (a ApiRepository) GetApiTree(context.Context) ([]*dto.ApiTreeDto, error) {
 // 创建接口
 func (a ApiRepository) CreateApi(ctx context.Context, api *model.Api) error {
 	err := common.DB.Create(api).Error
+
 	return err
 }
 

@@ -2,47 +2,60 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-web-mini/model"
-	"go-web-mini/repository"
+	"go-web-mini/service"
 	"go-web-mini/vo"
 )
 
-type ITestController interface {
-
-	CreateNews(c *gin.Context)           // 创建用户
-
-}
-
-
-//@middleware auth,transition,transition
-//@router /create [post]
-func (cc *NewsController) CreateNews(c *gin.Context) {
-
-	   var test vo.CreateNewsRequest
-	   c.ShouldBind(&test)
-
-	   var m model.News
-	   m.Title= test.Title
-	   m.Content= test.Content
-
-		cc.TestRepository.CreateNews(c,&m)
-}
-//@router /create2 [post]
-
-func (cc *NewsController) CreateNews2(c *gin.Context) {
-
-	var test vo.CreateNewsRequest
-	c.ShouldBind(&test)
-
-	var m model.News
-	m.Title= test.Title
-	m.Content= test.Content
-
-	cc.TestRepository.CreateNews(c,&m)
-}
-
 //@middleware auth
-//@router /api/news [get]
+//@router /api/news
 type NewsController struct {
-	TestRepository repository.ITestRepository
+   NewsService service.NewsService
 }
+/*
+// NewsQueryPage 分页查询
+func (NewsController NewsController) NewsQueryPage(ctx *gin.Context) {
+
+    var param dto.NewsPageDTO
+
+    // 绑定参数
+    err := ctx.ShouldBindJSON(&param)
+
+    if err != nil {
+        ctx.JSON(http.StatusBadRequest, gin.H{"message": "请求参数错误"})
+        return
+    }
+
+    // 查询新增
+    ctx.JSON(http.StatusOK, gin.H{"data": service.NewsQueryPage(param)})
+}
+*/
+
+// 查询接口
+//@middleware auth,transition
+// @router /list [get]
+func (c *NewsController) List(ctx *gin.Context, req *vo.ListNewsRequest) (interface{}, error) {
+	return c.NewsService.List(ctx, req)
+}
+
+// 创建接口
+//@middleware auth,transition
+// @router /create [post]
+func (c *NewsController) Create(ctx *gin.Context, req *vo.CreateNewsRequest) (interface{}, error) {
+	return c.NewsService.Create(ctx, req)
+}
+
+// 删除接口
+//@middleware auth,transition
+// @router /delete/:id [delete]
+func (c *NewsController) Delete(ctx *gin.Context, req *vo.DeleteNewsRequest) (interface{}, error) {
+	return c.NewsService.Delete(ctx, req)
+}
+
+// 更新接口
+//@middleware auth,transition
+// @router /update [post]
+func (c *NewsController) Update(ctx *gin.Context, req *vo.UpdateNewsRequest) (interface{}, error) {
+	return c.NewsService.Update(ctx, req)
+}
+
+
