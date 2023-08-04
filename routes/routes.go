@@ -3,7 +3,6 @@ package routes
 import (
 	"fmt"
 	"github.com/sjqzhang/gdi"
-
 	//"fmt"
 	"github.com/gin-gonic/gin"
 	"go-web-mini/common"
@@ -80,14 +79,12 @@ func InitRoutes() *gin.Engine {
 	middlewaresMaping["casbin"] = middleware.CasbinMiddleware()
 	middlewaresMaping["transition"] = middleware.TransitionMiddleware()
 
-
-
 	if err != nil {
 		fmt.Println(err)
-        panic(err)
+		panic(err)
 	}
 
-	for _, o := range ctrls {//自动绑定路由
+	for _, o := range ctrls { //自动绑定路由
 		ctrlName := o.Elem().Type().Name()
 
 		for i := 0; i < o.NumMethod(); i++ {
@@ -109,22 +106,34 @@ func InitRoutes() *gin.Engine {
 
 			x := o.Method(i).Interface()
 
+			if o.Method(i).Type().NumIn() > 2 {
+				continue
+			}
+
+			if o.Method(i).Type().NumIn() == 2 {
+				if o.Method(i).Type().In(0).String() != "*gin.Context" {
+					continue
+				}
+			}
+
+			var mds []gin.HandlerFunc
+			for _, m := range v.Middlewares {
+				if f, ok := middlewaresMaping[m]; ok {
+					mds = append(mds, f)
+				}
+			}
+
+
 			switch x.(type) {
 			case func(*gin.Context):
 				{
-					var mds []gin.HandlerFunc
-
-					for _, m := range v.Middlewares {
-						if f, ok := middlewaresMaping[m]; ok {
-							mds = append(mds, f)
-						}
-					}
 					mds = append(mds, x.(func(*gin.Context)))
-
 					r.Handle(v.Method, v.Uri, mds...)
 
 				}
-
+			default:
+				mds = append(mds, middleware.BinderMiddleware(o.Method(i)))
+				r.Handle(v.Method, v.Uri, mds...)
 			}
 		}
 

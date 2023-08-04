@@ -24,6 +24,7 @@ type IRoleController interface {
 	BatchDeleteRoleByIds(c *gin.Context) // 批量删除角色
 }
 //@middleware auth
+//@router /api
 type RoleController struct {
 	RoleRepository repository.IRoleRepository
 	mr repository.IMenuRepository
@@ -39,7 +40,7 @@ type RoleController struct {
 //}
 
 // 获取角色列表
-//@router /api/role/list [get]
+//@router /role/list [get]
 func (rc RoleController) GetRoles(c *gin.Context) {
 	var req vo.RoleListRequest
 	// 参数绑定
@@ -64,7 +65,7 @@ func (rc RoleController) GetRoles(c *gin.Context) {
 }
 
 // 创建角色
-// @router /api/role/create [post]
+// @router /role/create [post]
 func (rc RoleController) CreateRole(c *gin.Context) {
 	var req vo.CreateRoleRequest
 	// 参数绑定
@@ -113,7 +114,7 @@ func (rc RoleController) CreateRole(c *gin.Context) {
 }
 
 // 更新角色
-// @router /api/role/update/:roleId [patch]
+// @router /role/update/:roleId [patch]
 func (rc RoleController) UpdateRoleById(c *gin.Context) {
 	var req vo.CreateRoleRequest
 	// 参数绑定
@@ -233,7 +234,7 @@ func (rc RoleController) UpdateRoleById(c *gin.Context) {
 }
 
 // 获取角色的权限菜单
-//@router /api/role/menus/get/:roleId [get]
+//@router /role/menus/get/:roleId [get]
 func (rc RoleController) GetRoleMenusById(c *gin.Context) {
 	// 获取path中的roleId
 	roleId, _ := strconv.Atoi(c.Param("roleId"))
@@ -250,7 +251,7 @@ func (rc RoleController) GetRoleMenusById(c *gin.Context) {
 }
 
 // 更新角色的权限菜单
-//@router /api/role/menus/update/:roleId [patch]
+//@router /role/menus/update/:roleId [patch]
 func (rc RoleController) UpdateRoleMenusById(c *gin.Context) {
 	var req vo.UpdateRoleMenusRequest
 	// 参数绑定
@@ -364,7 +365,7 @@ func (rc RoleController) UpdateRoleMenusById(c *gin.Context) {
 }
 
 // 获取角色的权限接口
-//@router /api/role/apis/get/:roleId [get]
+//@router /role/apis/get/:roleId [get]
 func (rc RoleController) GetRoleApisById(c *gin.Context) {
 	// 获取path中的roleId
 	roleId, _ := strconv.Atoi(c.Param("roleId"))
@@ -393,7 +394,7 @@ func (rc RoleController) GetRoleApisById(c *gin.Context) {
 }
 
 // 更新角色的权限接口
-//@router /api/role/apis/update/:roleId/ [patch]
+//@router /role/apis/update/:roleId/ [patch]
 func (rc RoleController) UpdateRoleApisById(c *gin.Context) {
 	var req vo.UpdateRoleApisRequest
 	// 参数绑定
@@ -492,7 +493,7 @@ func (rc RoleController) UpdateRoleApisById(c *gin.Context) {
 }
 
 // 批量删除角色
-//@router /api/role/delete/batch/ [delete]
+//@router /role/delete/batch/ [delete]
 func (rc RoleController) BatchDeleteRoleByIds(c *gin.Context) {
 	var req vo.DeleteRoleRequest
 	// 参数绑定

@@ -1,9 +1,37 @@
 package model
 
-import "gorm.io/gorm"
+import (
 
+    "time"
+
+)
+
+
+// News 
 type News struct {
-	gorm.Model
-	Title   string `gorm:"type:varchar(256);not " json:"title"`
-	Content string `gorm:"size:255;not null" json:"content"`
+    Model
+    
+     
+     
+     
+     
+    Title string `json:"title"` 
+     
+    Content string `json:"content"` 
+     
 }
+
+// News 
+type NewsQuery struct {
+ 
+    Id *int64 `json:"id" gorm:"primary_key"` 
+    CreatedAt *time.Time `json:"created_at"` 
+    UpdatedAt *time.Time `json:"updated_at"` 
+    DeletedAt *time.Time `json:"deleted_at"` 
+    Title *string `json:"title"` 
+    Content *string `json:"content"` 
+
+          PageNum  int   `json:"pageNum" form:"pageNum"`
+          PageSize int   `json:"pageSize" form:"pageSize"`
+}
+

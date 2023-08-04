@@ -26,7 +26,7 @@ func GetDB(ctx context.Context) *gorm.DB {
 	db := ctx.Value("db")
 
 	if db == nil {
-		panic("db is nil")
+		return DB
 	}
 	return db.(*gorm.DB)
 }
@@ -63,6 +63,7 @@ func InitMysql() {
 		//	TablePrefix: config.Conf.Mysql.TablePrefix + "_",
 		//},
 	})
+	db=db.Debug()
 	if err != nil {
 		Log.Panicf("初始化mysql数据库异常: %v", err)
 		panic(fmt.Errorf("初始化mysql数据库异常: %v", err))
