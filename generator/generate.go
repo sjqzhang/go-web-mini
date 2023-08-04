@@ -282,6 +282,10 @@ func handleFields(fields []FieldResult) {
 		// 如果是主键，设置
 		if f.ColumnKey == "PRI" {
 			fields[i].KeyStr = " gorm:\"primary_key\""
+			if f.ColumnName == "id" {
+				fields[i].KeyStr = " gorm:\"primary_key;AUTO_INCREMENT\""
+				fields[i].CamelField = "ID"
+			}
 		}
 	}
 }

@@ -8,7 +8,7 @@ import (
 // 查询News 
 type News struct {
  
-    Id *int64 `json:"id" gorm:"primary_key"` 
+    ID *int64 `json:"id" gorm:"primary_key;AUTO_INCREMENT"` 
      
     CreatedAt *time.Time `json:"created_at"` 
      
@@ -19,6 +19,8 @@ type News struct {
     Title *string `json:"title"` 
      
     Content *string `json:"content"` 
+     
+    Creator *string `json:"creator"` 
      
 }
 
@@ -34,6 +36,9 @@ type ListNewsRequest struct {
     
      
     Content *string `json:"content"` 
+    
+     
+    Creator *string `json:"creator"` 
     
      
      PageNum  *uint   `json:"pageNum" form:"pageNum"`
@@ -54,6 +59,9 @@ type CreateNewsRequest struct {
     Content *string `json:"content"` 
     
      
+    Creator *string `json:"creator"` 
+    
+     
 }
 
 
@@ -69,6 +77,9 @@ type UpdateNewsRequest struct {
     
      
     Content *string `json:"content"` 
+    
+     
+    Creator *string `json:"creator"` 
     
      
 }
