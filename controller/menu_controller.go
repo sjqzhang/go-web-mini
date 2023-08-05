@@ -58,7 +58,7 @@ func (mc MenuController) GetMenuTree(c *gin.Context) {
 }
 
 // 创建菜单
-//@router /menu [post]
+//@router /menu/create [post]
 func (mc MenuController) CreateMenu(c *gin.Context) {
 	var req vo.CreateMenuRequest
 	// 参数绑定

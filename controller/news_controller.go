@@ -14,7 +14,7 @@ type NewsController struct {
 
 // 查询接口
 //@middleware auth,transition
-// @router /list [get]
+// @router /list [post]
 func (c *NewsController) List(ctx *gin.Context, req *vo.ListNewsRequest) (interface{}, error) {
 	return c.newsService.List(ctx, req)
 }

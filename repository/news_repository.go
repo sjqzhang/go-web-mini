@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"fmt"
+	"github.com/jinzhu/copier"
 	"go-web-mini/common"
 	"go-web-mini/model"
 	"time"
@@ -14,11 +15,27 @@ import (
 type NewsRepository struct {
 }
 
-func (r *NewsRepository) List(ctx context.Context, query *model.NewsQuery) ([]*model.News, error) {
+func (r *NewsRepository) List(ctx context.Context, query *model.NewsQuery) (*model.PagerModel, error) {
 	db := common.GetDB(ctx)
 	var list []*model.News
-	err := db.Debug().Offset((query.PageNum-1) * query.PageSize).Limit(query.PageSize).Find(&list).Error
-	return list, err
+	var obj model.News
+	copier.CopyWithOption(&obj, &query, copier.Option{IgnoreEmpty: true, DeepCopy: true})
+	var total int64
+	where,values,_:=model.BuildWhere(obj)
+	err := db.Debug().Model(&obj).Where(where,values...).Count(&total).Error
+	if err != nil {
+		return nil, err
+	}
+	err = db.Model(&obj).Debug().Where(where,values...).Offset((query.PageNum-1) * query.PageSize).Limit(query.PageSize).Find(&list).Error
+	if err != nil {
+		return nil, err
+	}
+	var pagerModel model.PagerModel
+	pagerModel.List=list
+	pagerModel.Total=total
+	pagerModel.PageNum=query.PageNum
+	pagerModel.PageSize=query.PageSize
+	return &pagerModel, err
 }
 
 func (r *NewsRepository) Create(ctx context.Context, obj *model.News) (*model.News, error) {

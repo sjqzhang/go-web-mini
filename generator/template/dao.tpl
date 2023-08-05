@@ -3,6 +3,7 @@
 import (
 	"context"
 	"fmt"
+	"github.com/jinzhu/copier"
 	"{{.ModuleName}}/common"
 	"{{.ModuleName}}/model"
 	"time"
@@ -14,11 +15,27 @@ import (
 type {{.Table.TableName}}Repository struct {
 }
 
-func (r *{{.Table.TableName}}Repository) List(ctx context.Context, query *model.{{.Table.TableName}}Query) ([]*model.{{.Table.TableName}}, error) {
+func (r *{{.Table.TableName}}Repository) List(ctx context.Context, query *model.{{.Table.TableName}}Query) (*model.PagerModel, error) {
 	db := common.GetDB(ctx)
 	var list []*model.{{.Table.TableName}}
-	err := db.Debug().Offset((query.PageNum-1) * query.PageSize).Limit(query.PageSize).Find(&list).Error
-	return list, err
+	var obj model.{{.Table.TableName}}
+	copier.CopyWithOption(&obj, &query, copier.Option{IgnoreEmpty: true, DeepCopy: true})
+	var total int64
+	where,values,_:=model.BuildWhere(obj)
+	err := db.Debug().Model(&obj).Where(where,values...).Count(&total).Error
+	if err != nil {
+		return nil, err
+	}
+	err = db.Model(&obj).Debug().Where(where,values...).Offset((query.PageNum-1) * query.PageSize).Limit(query.PageSize).Find(&list).Error
+	if err != nil {
+		return nil, err
+	}
+	var pagerModel model.PagerModel
+	pagerModel.List=list
+	pagerModel.Total=total
+	pagerModel.PageNum=query.PageNum
+	pagerModel.PageSize=query.PageSize
+	return &pagerModel, err
 }
 
 func (r *{{.Table.TableName}}Repository) Create(ctx context.Context, obj *model.{{.Table.TableName}}) (*model.{{.Table.TableName}}, error) {

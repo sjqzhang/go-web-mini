@@ -24,6 +24,16 @@ type News struct {
      
 }
 
+// 查询News 
+type PagerNews struct {
+	Total    int64                  `json:"total"`
+	List     []News          `json:"list"`
+	PageNum  int                    `json:"pageNum" form:"pageNum"`
+	PageSize int                    `json:"pageSize" form:"pageSize"`
+	Extra    map[string]interface{} `json:"extra"`
+}
+
+
 
 // 查询News 
 type ListNewsRequest struct {

@@ -34,7 +34,7 @@ type NewsQuery struct {
     Content *string `json:"content"` 
     Creator *string `json:"creator"` 
 
-          PageNum  int   `json:"pageNum" form:"pageNum"`
-          PageSize int   `json:"pageSize" form:"pageSize"`
+          PageNum  int   `json:"-" form:"pageNum"`
+          PageSize int   `json:"-" form:"pageSize"`
 }
 
