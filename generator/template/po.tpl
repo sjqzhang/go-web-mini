@@ -20,8 +20,8 @@ type {{.Table.TableName}}Query struct {
  {{range .Fields}}
     {{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }}` {{.ColumnComment}}{{end}}
 
-          PageNum  int   `json:"pageNum" form:"pageNum"`
-          PageSize int   `json:"pageSize" form:"pageSize"`
+          PageNum  int   `json:"-" form:"pageNum"`
+          PageSize int   `json:"-" form:"pageSize"`
 }
 
 {{end}}

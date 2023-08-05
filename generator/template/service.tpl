@@ -23,19 +23,19 @@ type {{.Table.TableName}}Service struct {
 	{{.Table.Uri}}Repository repository.{{.Table.TableName}}Repository
 }
 
-func (s *{{.Table.TableName}}Service) List(ctx context.Context, req *vo.List{{.Table.TableName}}Request) ([]*vo.{{.Table.TableName}}, error) {
+func (s *{{.Table.TableName}}Service) List(ctx context.Context, req *vo.List{{.Table.TableName}}Request) (*vo.Pager{{.Table.TableName}}, error) {
 	var query model.{{.Table.TableName}}Query
 	err := copier.Copy(&query, req)
 	if err != nil {
 		return nil, err
 	}
-    var resp []*vo.News
+    var resp vo.Pager{{.Table.TableName}}
     objs,err:= s.{{.Table.Uri}}Repository.List(ctx, &query)
     if err != nil {
         return nil, err
     }
     err = copier.Copy(&resp, objs)
-    return resp, err
+    return &resp, err
 }
 
 func (s *{{.Table.TableName}}Service) Create(ctx *gin.Context, req *vo.Create{{.Table.TableName}}Request) (*vo.{{.Table.TableName}}, error) {
@@ -44,13 +44,13 @@ func (s *{{.Table.TableName}}Service) Create(ctx *gin.Context, req *vo.Create{{.
 	if err != nil {
 		return nil, err
 	}
-	var resp *vo.{{.Table.TableName}}
+	var resp vo.{{.Table.TableName}}
 	_,err= s.{{.Table.Uri}}Repository.Create(ctx, &obj)
 	if err != nil {
         return nil, err
     }
     err = copier.Copy(&resp, &obj)
-    return resp, err
+    return &resp, err
 }
 
 
@@ -60,13 +60,13 @@ func (s *{{.Table.TableName}}Service) Update(ctx *gin.Context, req *vo.Update{{.
 	if err != nil {
 		return nil, err
 	}
-	var resp *vo.{{.Table.TableName}}
+	var resp vo.{{.Table.TableName}}
 	_,err= s.{{.Table.Uri}}Repository.Update(ctx, &obj)
 	if err != nil {
         return nil, err
     }
     err = copier.Copy(&resp, &obj)
-    return resp, err
+    return &resp, err
 }
 
 

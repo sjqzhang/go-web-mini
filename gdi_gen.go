@@ -13,7 +13,7 @@ import (
 	p13 "go-web-mini/vo"
 )
 
-//go:embed middleware response util vo config controller dto generator service common model repository routes
+//go:embed model repository routes service vo common config generator response util controller dto middleware
 var gdiEmbedFiles embed.FS
 
 func init() {
@@ -40,6 +40,7 @@ func init() {
 	gdi.PlaceHolder((*p7.Api)(nil))
 	gdi.PlaceHolder((*p7.RoleCasbin)(nil))
 	gdi.PlaceHolder((*p7.Model)(nil))
+	gdi.PlaceHolder((*p7.PagerModel)(nil))
 	gdi.PlaceHolder((*p7.Menu)(nil))
 	gdi.PlaceHolder((*p7.News)(nil))
 	gdi.PlaceHolder((*p7.NewsQuery)(nil))
@@ -64,6 +65,7 @@ func init() {
 	gdi.PlaceHolder((*p13.UpdateMenuRequest)(nil))
 	gdi.PlaceHolder((*p13.DeleteMenuRequest)(nil))
 	gdi.PlaceHolder((*p13.News)(nil))
+	gdi.PlaceHolder((*p13.PagerNews)(nil))
 	gdi.PlaceHolder((*p13.ListNewsRequest)(nil))
 	gdi.PlaceHolder((*p13.CreateNewsRequest)(nil))
 	gdi.PlaceHolder((*p13.UpdateNewsRequest)(nil))

@@ -23,19 +23,19 @@ type NewsService struct {
 	newsRepository repository.NewsRepository
 }
 
-func (s *NewsService) List(ctx context.Context, req *vo.ListNewsRequest) ([]*vo.News, error) {
+func (s *NewsService) List(ctx context.Context, req *vo.ListNewsRequest) (*vo.PagerNews, error) {
 	var query model.NewsQuery
 	err := copier.Copy(&query, req)
 	if err != nil {
 		return nil, err
 	}
-    var resp []*vo.News
+    var resp vo.PagerNews
     objs,err:= s.newsRepository.List(ctx, &query)
     if err != nil {
         return nil, err
     }
     err = copier.Copy(&resp, objs)
-    return resp, err
+    return &resp, err
 }
 
 func (s *NewsService) Create(ctx *gin.Context, req *vo.CreateNewsRequest) (*vo.News, error) {
@@ -44,13 +44,13 @@ func (s *NewsService) Create(ctx *gin.Context, req *vo.CreateNewsRequest) (*vo.N
 	if err != nil {
 		return nil, err
 	}
-	var resp *vo.News
+	var resp vo.News
 	_,err= s.newsRepository.Create(ctx, &obj)
 	if err != nil {
         return nil, err
     }
     err = copier.Copy(&resp, &obj)
-    return resp, err
+    return &resp, err
 }
 
 
@@ -60,13 +60,13 @@ func (s *NewsService) Update(ctx *gin.Context, req *vo.UpdateNewsRequest) (*vo.N
 	if err != nil {
 		return nil, err
 	}
-	var resp *vo.News
+	var resp vo.News
 	_,err= s.newsRepository.Update(ctx, &obj)
 	if err != nil {
         return nil, err
     }
     err = copier.Copy(&resp, &obj)
-    return resp, err
+    return &resp, err
 }
 
 

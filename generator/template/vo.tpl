@@ -12,6 +12,16 @@ type {{.Table.TableName}} struct {
      {{end}}
 }
 
+// 查询{{.Table.TableName}} {{.Table.TableComment}}
+type Pager{{.Table.TableName}} struct {
+	Total    int64                  `json:"total"`
+	List     []{{.Table.TableName}}          `json:"list"`
+	PageNum  int                    `json:"pageNum" form:"pageNum"`
+	PageSize int                    `json:"pageSize" form:"pageSize"`
+	Extra    map[string]interface{} `json:"extra"`
+}
+
+
 
 // 查询{{.Table.TableName}} {{.Table.TableComment}}
 type List{{.Table.TableName}}Request struct {
