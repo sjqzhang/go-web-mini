@@ -7,7 +7,7 @@ import (
 )
 
 
-// News 
+// News news
 type News struct {
     Model
     
@@ -15,24 +15,24 @@ type News struct {
      
      
      
-    Title string `json:"title"` 
+    Title string `json:"title"` // 新闻标题
      
-    Content string `json:"content"` 
+    Content string `json:"content"` // 新闻内容
      
-    Creator string `json:"creator"` 
+    Creator string `json:"creator"` // 新闻创建者
      
 }
 
-// News 
+// News news
 type NewsQuery struct {
  
-    ID *int64 `json:"id" gorm:"primary_key;AUTO_INCREMENT"` 
-    CreatedAt *time.Time `json:"created_at"` 
-    UpdatedAt *time.Time `json:"updated_at"` 
-    DeletedAt *time.Time `json:"deleted_at"` 
-    Title *string `json:"title"` 
-    Content *string `json:"content"` 
-    Creator *string `json:"creator"` 
+    ID *int64 `json:"id" gorm:"primary_key;AUTO_INCREMENT"` // id
+    CreatedAt *time.Time `json:"created_at"` // created_at
+    UpdatedAt *time.Time `json:"updated_at"` // updated_at
+    DeletedAt *time.Time `json:"deleted_at"` // deleted_at
+    Title *string `json:"title"` // 新闻标题
+    Content *string `json:"content"` // 新闻内容
+    Creator *string `json:"creator"` // 新闻创建者
 
           PageNum  int   `json:"-" form:"pageNum"`
           PageSize int   `json:"-" form:"pageSize"`

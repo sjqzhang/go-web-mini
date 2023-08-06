@@ -12,7 +12,7 @@ import (
 )
 
 /*
-// NewsQueryPage 分页查询
+// NewsQueryPage news分页查询
 func NewsQueryPage(param dto.NewsPageDTO) []vo.NewsVO{
 
 	return []vo.NewsVO{}

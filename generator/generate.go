@@ -6,20 +6,22 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"os"
+	"strings"
 	"sync"
 	"text/template"
 )
 
 type FieldResult struct {
-	ColumnName    string
-	CamelField    string
-	DataType      string
-	RealType      string
-	ColumnKey     string
-	KeyStr        string
-	Extra         string
-	ColumnDefault string
-	ColumnComment string
+	ColumnName           string
+	CamelField           string
+	DataType             string
+	RealType             string
+	ColumnKey            string
+	KeyStr               string
+	Extra                string
+	ColumnDefault        string
+	ColumnComment        string
+	ColumnCommentForView string
 }
 
 type TableResult struct {
@@ -129,16 +131,15 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 }
 
 // 检查指定的filed 是否在指定的fields中
-func checkField( field string) bool {
-	fields:=[]string{"id","created_at","updated_at","deleted_at"}
-	for _,v:=range fields{
-		if v==field{
+func checkField(field string) bool {
+	fields := []string{"id", "created_at", "updated_at", "deleted_at"}
+	for _, v := range fields {
+		if v == field {
 			return false
 		}
 	}
 	return true
 }
-
 
 // 创建文件
 func createFiles(obj CommonObject, tableName string) {
@@ -166,6 +167,9 @@ func createFiles(obj CommonObject, tableName string) {
 
 	// 创建service
 	createGoFile(obj, tableName, "index.vue", "/Users/junqiang.zhang/repo/js/go-web-mini-ui/src/views/business/news/", "./template/index.vue", "index.vue")
+
+	createGoFile(obj, tableName, ".js", "/Users/junqiang.zhang/repo/js/go-web-mini-ui/src/api/business/", "./template/api.js", "api")
+
 }
 
 // 创建所需的文件夹
@@ -221,15 +225,12 @@ func createGoFile(obj CommonObject, tableName string, filename string, path stri
 		return
 	}
 
-	t:=template.New("template")
+	t := template.New("template")
 
-	t=t.Funcs(template.FuncMap{"checkField":checkField})
+	t = t.Funcs(template.FuncMap{"checkField": checkField})
 
 	// 校验是否存在po模板
 	t = template.Must(t.ParseGlob(templatePath))
-
-
-
 
 	// 根据模板生成文件
 	createPOError := t.ExecuteTemplate(file, templateName, obj)
@@ -251,10 +252,9 @@ func createFile(fileName string, path string) *os.File {
 
 	_, exist := os.Stat(path + "/" + fileName)
 
-
 	// 文件存在直接跳过
 	if exist == nil {
-		fi,err:= os.OpenFile(path + "/" + fileName,os.O_WRONLY|os.O_TRUNC|os.O_CREATE,0666)
+		fi, err := os.OpenFile(path+"/"+fileName, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0666)
 		if err != nil {
 			return nil
 		}
@@ -305,6 +305,10 @@ func convertField(con *gorm.DB, query *sql.Rows) []FieldResult {
 			fmt.Println(err)
 			panic("failed to scan rows")
 		}
+		if strings.TrimSpace(str.ColumnComment) == "" {
+			str.ColumnComment = str.ColumnName
+		}
+		str.ColumnCommentForView=str.ColumnComment
 		fields = append(fields, str)
 	}
 	return fields
@@ -321,6 +325,9 @@ func convertTable(con *gorm.DB, query *sql.Rows) []TableResult {
 		if err != nil {
 			fmt.Println(err)
 			panic("failed to scan rows")
+		}
+		if strings.TrimSpace(str.TableComment) == "" {
+			str.TableComment = str.TableName
 		}
 		tables = append(tables, str)
 	}
