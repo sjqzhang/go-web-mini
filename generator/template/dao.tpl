@@ -22,11 +22,11 @@ func (r *{{.Table.TableName}}Repository) List(ctx context.Context, query *model.
 	copier.CopyWithOption(&obj, &query, copier.Option{IgnoreEmpty: true, DeepCopy: true})
 	var total int64
 	where,values,_:=model.BuildWhere(obj)
-	err := db.Debug().Model(&obj).Where(where,values...).Count(&total).Error
+	err := db.Debug().Model(&obj).Where(where,values...).Where("deleted_at is null").Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
-	err = db.Model(&obj).Debug().Where(where,values...).Offset((query.PageNum-1) * query.PageSize).Limit(query.PageSize).Find(&list).Error
+	err = db.Model(&obj).Debug().Where(where,values...).Where("deleted_at is null").Offset((query.PageNum-1) * query.PageSize).Limit(query.PageSize).Find(&list).Error
 	if err != nil {
 		return nil, err
 	}
@@ -41,6 +41,17 @@ func (r *{{.Table.TableName}}Repository) List(ctx context.Context, query *model.
 func (r *{{.Table.TableName}}Repository) Create(ctx context.Context, obj *model.{{.Table.TableName}}) (*model.{{.Table.TableName}}, error) {
 	db := common.GetDB(ctx)
 	return obj, db.Create(obj).Error
+}
+
+
+func (r *{{.Table.TableName}}Repository) GetById(ctx context.Context,  id int64) (*model.{{.Table.TableName}}, error) {
+	db := common.GetDB(ctx)
+	var obj model.{{.Table.TableName}}
+    err:=db.Model(obj).Where("id=?",id).First(&obj).Error
+	if err != nil {
+	    return nil,err
+	}
+	return &obj,err
 }
 
 func (r *{{.Table.TableName}}Repository) Update(ctx context.Context, obj *model.{{.Table.TableName}}) (*model.{{.Table.TableName}}, error) {

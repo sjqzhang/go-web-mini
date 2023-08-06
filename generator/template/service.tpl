@@ -38,6 +38,16 @@ func (s *{{.Table.TableName}}Service) List(ctx context.Context, req *vo.List{{.T
     return &resp, err
 }
 
+func (s *{{.Table.TableName}}Service) GetById(ctx context.Context, req *vo.Get{{.Table.TableName}}Request) (*vo.{{.Table.TableName}}, error) {
+    obj,err:= s.{{.Table.Uri}}Repository.GetById(ctx, req.ID)
+    if err != nil {
+        return nil, err
+    }
+    var resp vo.{{.Table.TableName}}
+    err = copier.Copy(&resp, obj)
+    return &resp, err
+}
+
 func (s *{{.Table.TableName}}Service) Create(ctx *gin.Context, req *vo.Create{{.Table.TableName}}Request) (*vo.{{.Table.TableName}}, error) {
 	var obj model.{{.Table.TableName}}
 	err := copier.Copy(&obj, req)
