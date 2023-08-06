@@ -72,7 +72,7 @@ func (ac ApiController) GetApiTree(c *gin.Context) {
 }
 
 // 创建接口
-// @router /create [post]
+// @router /api/create [post]
 func (ac ApiController) CreateApi(c *gin.Context) {
 	var req vo.CreateApiRequest
 	// 参数绑定

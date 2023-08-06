@@ -65,7 +65,7 @@ func (s *{{.Table.TableName}}Service) Create(ctx *gin.Context, req *vo.Create{{.
 
 
 func (s *{{.Table.TableName}}Service) Update(ctx *gin.Context, req *vo.Update{{.Table.TableName}}Request) (*vo.{{.Table.TableName}}, error) {
-	var obj model.News
+	var obj model.{{.Table.TableName}}
 	err := copier.Copy(&obj, req)
 	if err != nil {
 		return nil, err
@@ -81,12 +81,7 @@ func (s *{{.Table.TableName}}Service) Update(ctx *gin.Context, req *vo.Update{{.
 
 
 func (s *{{.Table.TableName}}Service) Delete(ctx *gin.Context, req *vo.Delete{{.Table.TableName}}Request) (int64, error) {
-	var obj model.{{.Table.TableName}}
-	err := copier.Copy(&obj, req)
-	if err != nil {
-		return 0, err
-	}
-	return s.{{.Table.Uri}}Repository.Delete(ctx, &obj)
+	return s.{{.Table.Uri}}Repository.Delete(ctx, req.Ids)
 }
 
 

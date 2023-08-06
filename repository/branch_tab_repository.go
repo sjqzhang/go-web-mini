@@ -12,13 +12,13 @@ import (
 
 
 
-type NewsRepository struct {
+type BranchTabRepository struct {
 }
 
-func (r *NewsRepository) List(ctx context.Context, query *model.NewsQuery) (*model.PagerModel, error) {
+func (r *BranchTabRepository) List(ctx context.Context, query *model.BranchTabQuery) (*model.PagerModel, error) {
 	db := common.GetDB(ctx)
-	var list []*model.News
-	var obj model.News
+	var list []*model.BranchTab
+	var obj model.BranchTab
 	copier.CopyWithOption(&obj, &query, copier.Option{IgnoreEmpty: true, DeepCopy: true})
 	var total int64
 	where,values,_:=model.BuildWhere(obj)
@@ -38,15 +38,15 @@ func (r *NewsRepository) List(ctx context.Context, query *model.NewsQuery) (*mod
 	return &pagerModel, err
 }
 
-func (r *NewsRepository) Create(ctx context.Context, obj *model.News) (*model.News, error) {
+func (r *BranchTabRepository) Create(ctx context.Context, obj *model.BranchTab) (*model.BranchTab, error) {
 	db := common.GetDB(ctx)
 	return obj, db.Create(obj).Error
 }
 
 
-func (r *NewsRepository) GetById(ctx context.Context,  id int64) (*model.News, error) {
+func (r *BranchTabRepository) GetById(ctx context.Context,  id int64) (*model.BranchTab, error) {
 	db := common.GetDB(ctx)
-	var obj model.News
+	var obj model.BranchTab
     err:=db.Model(obj).Where("id=?",id).First(&obj).Error
 	if err != nil {
 	    return nil,err
@@ -54,7 +54,7 @@ func (r *NewsRepository) GetById(ctx context.Context,  id int64) (*model.News, e
 	return &obj,err
 }
 
-func (r *NewsRepository) Update(ctx context.Context, obj *model.News) (*model.News, error) {
+func (r *BranchTabRepository) Update(ctx context.Context, obj *model.BranchTab) (*model.BranchTab, error) {
 	db := common.GetDB(ctx)
 	if obj.ID==0  {
 		return nil, fmt.Errorf("id is empty")
@@ -66,10 +66,10 @@ func (r *NewsRepository) Update(ctx context.Context, obj *model.News) (*model.Ne
 	return nil, fmt.Errorf("not found")
 }
 
-func (r *NewsRepository) Delete(ctx context.Context, ids []int64) (int64, error) {
+func (r *BranchTabRepository) Delete(ctx context.Context, ids []int64) (int64, error) {
 	db := common.GetDB(ctx)
 	//软删除
-	return db.Model(model.News{}).UpdateColumn("deleted_at", time.Now()).Where("id in (?)", ids).RowsAffected, nil
+	return db.Model(model.BranchTab{}).Where("id in (?)", ids).UpdateColumn("deleted_at", time.Now()).RowsAffected, nil
 }
 
 

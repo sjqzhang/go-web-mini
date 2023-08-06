@@ -394,7 +394,7 @@ func (rc RoleController) GetRoleApisById(c *gin.Context) {
 }
 
 // 更新角色的权限接口
-//@router /role/apis/update/:roleId/ [patch]
+//@router /role/apis/update/:roleId [patch]
 func (rc RoleController) UpdateRoleApisById(c *gin.Context) {
 	var req vo.UpdateRoleApisRequest
 	// 参数绑定
@@ -493,7 +493,7 @@ func (rc RoleController) UpdateRoleApisById(c *gin.Context) {
 }
 
 // 批量删除角色
-//@router /role/delete/batch/ [delete]
+//@router /role/delete/batch [delete]
 func (rc RoleController) BatchDeleteRoleByIds(c *gin.Context) {
 	var req vo.DeleteRoleRequest
 	// 参数绑定

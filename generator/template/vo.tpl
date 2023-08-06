@@ -54,7 +54,7 @@ type Update{{.Table.TableName}}Request struct {
 
 // 删除{{.Table.TableName}} {{.Table.TableComment}}
 type Delete{{.Table.TableName}}Request struct {
-    ID      int64 `json:"id" uri:"id" form:"id"`
+    Ids      []int64 `json:"ids" uri:"ids" form:"ids"`
 }
 
 // 删除{{.Table.TableName}} {{.Table.TableComment}}

@@ -96,7 +96,7 @@ type UpdateNewsRequest struct {
 
 // 删除News news
 type DeleteNewsRequest struct {
-    ID      int64 `json:"id" uri:"id" form:"id"`
+    Ids      []int64 `json:"ids" uri:"ids" form:"ids"`
 }
 
 // 删除News news
