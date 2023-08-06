@@ -66,10 +66,10 @@ func (r *{{.Table.TableName}}Repository) Update(ctx context.Context, obj *model.
 	return nil, fmt.Errorf("not found")
 }
 
-func (r *{{.Table.TableName}}Repository) Delete(ctx context.Context, obj *model.{{.Table.TableName}}) (int64, error) {
+func (r *{{.Table.TableName}}Repository) Delete(ctx context.Context, ids []int64) (int64, error) {
 	db := common.GetDB(ctx)
 	//软删除
-	return db.Model(obj).UpdateColumn("deleted_at", time.Now()).Where("id = ?", obj.ID).RowsAffected, nil
+	return db.Model(model.{{.Table.TableName}}{}).Where("id in (?)", ids).UpdateColumn("deleted_at", time.Now()).RowsAffected, nil
 }
 
 

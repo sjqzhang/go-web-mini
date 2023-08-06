@@ -67,7 +67,7 @@ func BinderMiddleware(method reflect.Value) gin.HandlerFunc {
 				}
 			}
 			if results[0].Interface() != nil {
-				response.Response(c, 200, 0, results[0].Interface(), "ok")
+				response.Response(c, 200, 0, results[0].Interface(), "Success")
 				return
 			}
 		}

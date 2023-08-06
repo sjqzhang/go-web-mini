@@ -25,9 +25,10 @@ type FieldResult struct {
 }
 
 type TableResult struct {
-	TableName    string
-	Uri          string
-	TableComment string
+	TableName       string
+	Uri             string
+	TableComment    string
+	TableNameOrigin string
 }
 
 type CommonObject struct {
@@ -117,6 +118,7 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 
 	// 设置表信息
 	tableInfo := tables[0]
+	tableInfo.TableNameOrigin=tableName
 	tableInfo.TableName = TransToCamel(tableName, false)
 	tableInfo.Uri = TransToCamel(tableName, true)
 
@@ -308,7 +310,7 @@ func convertField(con *gorm.DB, query *sql.Rows) []FieldResult {
 		if strings.TrimSpace(str.ColumnComment) == "" {
 			str.ColumnComment = str.ColumnName
 		}
-		str.ColumnCommentForView=str.ColumnComment
+		str.ColumnCommentForView = str.ColumnComment
 		fields = append(fields, str)
 	}
 	return fields

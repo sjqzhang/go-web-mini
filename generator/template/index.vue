@@ -46,13 +46,11 @@
         background
         style="margin-top: 10px;float:right;margin-bottom: 10px;"
         @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
+        @current-change="handleCurrentChange"/>
 
       <el-dialog :title="dialogFormTitle" :visible.sync="dialogFormVisible">
         <el-form ref="dialogForm" size="small" :model="dialogFormData" :rules="dialogFormRules" label-width="120px">
-          {{range .Fields}}{{if  checkField .ColumnName}}
-          <el-form-item label="{{.ColumnCommentForView}}" prop="{{.ColumnName}}">
+          {{range .Fields}}{{if  checkField .ColumnName}}<el-form-item label="{{.ColumnCommentForView}}" prop="{{.ColumnName}}">
             <el-input v-model.trim="dialogFormData.{{.ColumnName}}" placeholder="{{.ColumnCommentForView}}" />
           </el-form-item>{{end}}{{end}}
         </el-form>
@@ -70,7 +68,7 @@
 import { get{{.Table.TableName}}, create{{.Table.TableName}}, update{{.Table.TableName}}, delete{{.Table.TableName}} } from '@/api/business/{{.Table.Uri}}'
 
 export default {
-  name: 'Api',
+  name: '{{.Table.TableName}}',
   filters: {
     methodTagFilter(val) {
       if (val === 'GET') {
@@ -92,11 +90,9 @@ export default {
     return {
       // 查询参数
       params: {
-      {{range .Fields}}{{if  checkField .ColumnName}}
-        // content: '',
-            {{.ColumnName}}:'',
-            {{end}}{{end}}
-
+      {{range .Fields}}{{if  checkField .ColumnName}}{{.ColumnName}}: '',
+        {{end}}{{end}}
+    // content: '',
         pageNum: 1,
         pageSize: 10
       },
@@ -112,9 +108,7 @@ export default {
       dialogFormVisible: false,
       dialogFormData: {
         id:'',
-            {{range .Fields}}{{if  checkField .ColumnName}}
-      // content: '',
-      {{.ColumnName}}:'',
+            {{range .Fields}}{{if  checkField .ColumnName}}{{.ColumnName}}: '',
           {{end}}{{end}}
       },
       // dialogFormRules: {
@@ -173,16 +167,8 @@ export default {
     // 修改
     update(row) {
       this.dialogFormData.id = row.id
-
-      {{range .Fields}}{{if  checkField .ColumnName}}
-      // content: '',
-      this.dialogFormData.{{.ColumnName}}=row.{{.ColumnName}}
-          {{end}}{{end}}
-      // this.dialogFormData.title = row.title
-      // this.dialogFormData.content = row.content
-      // this.dialogFormData.method = row.method
-      // this.dialogFormData.desc = row.desc
-
+      {{range .Fields}}{{if  checkField .ColumnName}}this.dialogFormData.{{.ColumnName}} = row.{{.ColumnName}}
+      {{end}}{{end}}
       this.dialogFormTitle = '修改接口'
       this.dialogType = 'update'
       this.dialogFormVisible = true
@@ -234,9 +220,8 @@ export default {
       this.dialogFormVisible = false
       this.$refs['dialogForm'].resetFields()
       this.dialogFormData = {
-      {{range .Fields}}{{if  checkField .ColumnName}}
       // content: '',
-          {{.ColumnName}}:'',
+      {{range .Fields}}{{if  checkField .ColumnName}}{{.ColumnName}}: '',
       {{end}}{{end}}
 
       }
@@ -252,11 +237,11 @@ export default {
         this.loading = true
         const apiIds = []
         this.multipleSelection.forEach(x => {
-          apiIds.push(x.ID)
+          apiIds.push(x.id)
         })
         let msg = ''
         try {
-          const { message } = await delete{{.Table.TableName}}({ apiIds: apiIds })
+          const { message } = await delete{{.Table.TableName}}({ ids: apiIds })
           msg = message
         } finally {
           this.loading = false
@@ -287,7 +272,7 @@ export default {
       this.loading = true
       let msg = ''
       try {
-        const { message } = await delete{{.Table.TableName}}({ id: Id })
+        const { message } = await delete{{.Table.TableName}}({ ids: [Id] })
         msg = message
       } finally {
         this.loading = false

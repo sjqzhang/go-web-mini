@@ -89,5 +89,6 @@ func dbAutoMigrate() {
 		&model.Api{},
 		&model.OperationLog{},
 		&model.News{},
+		&model.BranchTab{},
 	)
 }

@@ -24,4 +24,9 @@ type {{.Table.TableName}}Query struct {
           PageSize int   `json:"-" form:"pageSize"`
 }
 
+
+func (t {{.Table.TableName}})TableName() string {
+    return "{{.Table.TableNameOrigin}}"
+}
+
 {{end}}

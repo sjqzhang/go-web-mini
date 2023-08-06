@@ -81,12 +81,7 @@ func (s *NewsService) Update(ctx *gin.Context, req *vo.UpdateNewsRequest) (*vo.N
 
 
 func (s *NewsService) Delete(ctx *gin.Context, req *vo.DeleteNewsRequest) (int64, error) {
-	var obj model.News
-	err := copier.Copy(&obj, req)
-	if err != nil {
-		return 0, err
-	}
-	return s.newsRepository.Delete(ctx, &obj)
+	return s.newsRepository.Delete(ctx, req.Ids)
 }
 
 

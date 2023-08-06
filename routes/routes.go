@@ -3,6 +3,9 @@ package routes
 import (
 	"fmt"
 	"github.com/sjqzhang/gdi"
+	"go-web-mini/model"
+	"strings"
+
 	//"fmt"
 	"github.com/gin-gonic/gin"
 	"go-web-mini/common"
@@ -15,6 +18,13 @@ import (
 func InitRoutes() *gin.Engine {
 
 	routerMap, _ := gdi.GetRouterInfo("controller")
+
+	restInfo, _ := gdi.GetRestInfo("controller")
+
+	for _, info := range restInfo {
+
+		fmt.Println(info)
+	}
 
 	ctrls, err := gdi.AutoRegisterByPackagePatten(`controller*`)
 
@@ -122,7 +132,15 @@ func InitRoutes() *gin.Engine {
 					mds = append(mds, f)
 				}
 			}
+			api := model.Api{
+				Method:   v.Method,
+				Path:     strings.TrimPrefix(v.Uri, "/"+config.Conf.System.UrlPathPrefix),
+				Category: strings.ToLower(strings.TrimSuffix(v.Controller, "Controller")),
+				Desc:     v.Description,
+				Creator:  "系统",
+			}
 
+			common.DB.Model(model.Api{}).Create(&api)
 
 			switch x.(type) {
 			case func(*gin.Context):
