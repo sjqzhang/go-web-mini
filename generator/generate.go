@@ -12,6 +12,7 @@ import (
 )
 
 type FieldResult struct {
+	Value                interface{}
 	ColumnName           string
 	CamelField           string
 	DataType             string
@@ -37,13 +38,37 @@ type CommonObject struct {
 	ModuleName string
 }
 
-func Generate(url string, database string, tableNames []string, moduleName string) {
-
-	// 获取数据库连接，生成
-	generateCode(connect(url), database, tableNames, moduleName)
+type Config struct {
+	Tables     []string
+	WebRoot    string
+	DSN        string
+	ModuleName string
 }
 
-// Generate 生成代码
+var cfg Config
+
+func InitConfig(conf Config) {
+	cfg = conf
+}
+
+func generate(url string, tableNames []string, moduleName string) {
+
+	db, database := connect(url)
+
+	// 获取数据库连接，生成
+	generateCode(db, database, tableNames, moduleName)
+}
+
+func DoGenerate() {
+
+	if cfg.DSN == "" {
+		panic(fmt.Sprintf("please InitConfig First!"))
+	}
+
+	generate(cfg.DSN, cfg.Tables, cfg.ModuleName)
+}
+
+// generate 生成代码
 func generateCode(con *gorm.DB, database string, tableNames []string, moduleName string) {
 
 	// 创建所需的文件夹
@@ -118,7 +143,7 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 
 	// 设置表信息
 	tableInfo := tables[0]
-	tableInfo.TableNameOrigin=tableName
+	tableInfo.TableNameOrigin = tableName
 	tableInfo.TableName = TransToCamel(tableName, false)
 	tableInfo.Uri = TransToCamel(tableName, true)
 
@@ -150,27 +175,27 @@ func createFiles(obj CommonObject, tableName string) {
 	createGoFile(obj, tableName, ".go", "../model", "./template/po.tpl", "po")
 
 	// 创建vo
-	createGoFile(obj, tableName, "_request.go", "../vo", "./template/vo.tpl", "vo")
+	createGoFile(obj, tableName, fmt.Sprintf("%v_request.go",tableName), "../vo", "./template/vo.tpl", "vo")
 
 	// 创建add dto
 	//createGoFile(obj, tableName, "AddDTO.go", "./dto", "./template/addDto.tpl", "addDto")
 
 	// 创建page dto
-	createGoFile(obj, tableName, "_repository.go", "../repository", "./template/dao.tpl", "repository")
+	createGoFile(obj, tableName, fmt.Sprintf("%v_repository.go",tableName), "../repository", "./template/dao.tpl", "repository")
 
 	// 创建controller
-	createGoFile(obj, tableName, "_controller.go", "../controller", "./template/controller.tpl", "controller")
+	createGoFile(obj, tableName, fmt.Sprintf("%v_controller.go",tableName), "../controller", "./template/controller.tpl", "controller")
 
 	// 创建router
 	//createGoFile(obj, tableName, "Router.go", "./router", "./template/router.tpl", "router")
 
 	// 创建service
-	createGoFile(obj, tableName, "_service.go", "../service", "./template/service.tpl", "service")
+	createGoFile(obj, tableName, fmt.Sprintf("%v_service.go",tableName), "../service", "./template/service.tpl", "service")
 
 	// 创建service
-	createGoFile(obj, tableName, "index.vue", "/Users/junqiang.zhang/repo/js/go-web-mini-ui/src/views/business/news/", "./template/index.vue", "index.vue")
+	createGoFile(obj, tableName, "index.vue", fmt.Sprintf("%v/src/views/business/%v", cfg.WebRoot, tableName), "./template/index.vue", "index.vue")
 
-	createGoFile(obj, tableName, ".js", "/Users/junqiang.zhang/repo/js/go-web-mini-ui/src/api/business/", "./template/api.js", "api")
+	createGoFile(obj, tableName, fmt.Sprintf("%v.js", tableName), fmt.Sprintf("%v/src/api/business", cfg.WebRoot), "./template/api.js", "api")
 
 }
 
@@ -219,8 +244,9 @@ func createDir(modulePath string, dirName string) {
 // 创建go文件
 func createGoFile(obj CommonObject, tableName string, filename string, path string, templatePath string, templateName string) {
 
+	os.MkdirAll(path, 07777)
 	// 创建文件
-	file := createFile(TransToUnderline(tableName)+filename, path)
+	file := createFile(filename, path)
 
 	// 如果为空，直接返回，无需创建
 	if file == nil {
@@ -252,15 +278,18 @@ func createGoFile(obj CommonObject, tableName string, filename string, path stri
 // 创建文件，如果存在不创建
 func createFile(fileName string, path string) *os.File {
 
-	_, exist := os.Stat(path + "/" + fileName)
+	_, err := os.Stat(path + "/" + fileName)
 
 	// 文件存在直接跳过
-	if exist == nil {
+	if err == nil {
 		fi, err := os.OpenFile(path+"/"+fileName, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0666)
 		if err != nil {
+			fmt.Println(err)
 			return nil
 		}
 		return fi
+	} else {
+		fmt.Println(err)
 	}
 
 	// 创建文件
@@ -337,7 +366,7 @@ func convertTable(con *gorm.DB, query *sql.Rows) []TableResult {
 }
 
 // 获取连接
-func connect(url string) *gorm.DB {
+func connect(url string) (*gorm.DB, string) {
 
 	if len(url) == 0 {
 		panic("connection strings cannot be empty")
@@ -351,5 +380,7 @@ func connect(url string) *gorm.DB {
 		panic("failed to connect to database,check your connection strings")
 	}
 
-	return con
+	var dbName string
+	con.Raw(" SELECT DATABASE()").First(&dbName)
+	return con, dbName
 }

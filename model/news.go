@@ -38,3 +38,8 @@ type NewsQuery struct {
           PageSize int   `json:"-" form:"pageSize"`
 }
 
+
+func (t News)TableName() string {
+    return "news"
+}
+
