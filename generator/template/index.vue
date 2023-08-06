@@ -5,9 +5,7 @@
     <el-card class="container-card" shadow="always">
       <el-form size="mini" :inline="true" :model="params" class="demo-form-inline">
         {{range .Fields}}{{if  checkField .ColumnName}}
-
-        <el-form-item label="{{.ColumnName}}">
-          <el-input v-model.trim="params.{{.ColumnName}}" clearable placeholder="{{.ColumnComment}}" @clear="search" />
+        <el-form-item label="{{.ColumnCommentForView}}"><el-input v-model.trim="params.{{.ColumnName}}" clearable placeholder="{{.ColumnCommentForView}}" @clear="search" />
         </el-form-item>{{end}}{{end}}
 
         <el-form-item>
@@ -24,7 +22,7 @@
       <el-table v-loading="loading" :data="tableData" border stripe style="width: 100%" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
         {{range .Fields}}{{if  checkField .ColumnName}}
-        <el-table-column show-overflow-tooltip sortable prop="{{.ColumnName}}" label="{{.ColumnName}}" />{{end}} {{end}}
+        <el-table-column show-overflow-tooltip sortable prop="{{.ColumnName}}" label="{{.ColumnCommentForView}}" />{{end}}{{end}}
         <el-table-column fixed="right" label="操作" align="center" width="120">
           <template slot-scope="scope">
             <el-tooltip content="编辑" effect="dark" placement="top">
@@ -54,13 +52,9 @@
       <el-dialog :title="dialogFormTitle" :visible.sync="dialogFormVisible">
         <el-form ref="dialogForm" size="small" :model="dialogFormData" :rules="dialogFormRules" label-width="120px">
           {{range .Fields}}{{if  checkField .ColumnName}}
-          <el-form-item label="标题" prop="path">
-            <el-input v-model.trim="dialogFormData.{{.ColumnName}}" placeholder="{{.ColumnComment}}" />
-          </el-form-item>
-
-
-          {{end}}
-          {{end}}
+          <el-form-item label="{{.ColumnCommentForView}}" prop="{{.ColumnName}}">
+            <el-input v-model.trim="dialogFormData.{{.ColumnName}}" placeholder="{{.ColumnCommentForView}}" />
+          </el-form-item>{{end}}{{end}}
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button size="mini" @click="cancelForm()">取 消</el-button>
