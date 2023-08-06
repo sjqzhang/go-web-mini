@@ -69,7 +69,7 @@ func (r *NewsRepository) Update(ctx context.Context, obj *model.News) (*model.Ne
 func (r *NewsRepository) Delete(ctx context.Context, ids []int64) (int64, error) {
 	db := common.GetDB(ctx)
 	//软删除
-	return db.Model(model.News{}).UpdateColumn("deleted_at", time.Now()).Where("id in (?)", ids).RowsAffected, nil
+	return db.Model(model.News{}).Where("id in (?)", ids).UpdateColumn("deleted_at", time.Now()).RowsAffected, nil
 }
 
 
