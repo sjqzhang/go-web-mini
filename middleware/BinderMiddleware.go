@@ -7,7 +7,6 @@ import (
 	"go-web-mini/common"
 	"go-web-mini/response"
 	"reflect"
-	"strings"
 )
 
 // CORS跨域中间件
@@ -21,25 +20,37 @@ func BinderMiddleware(method reflect.Value) gin.HandlerFunc {
 			return
 		}
 		reqType := method.Type().In(1)
+		var err error
 
 		req := reflect.New(reqType.Elem()).Interface()
-		// 绑定参数
-
-
-		err := c.ShouldBindJSON(req)
-		if err != nil {
-			fmt.Println(req)
-			c.JSON(400, gin.H{"message": "请求参数错误"})
-			return
-		}
-		if strings.Index(c.FullPath(),":")>0 {
-			err = c.ShouldBindUri(req)
+		// 获取请求参数 Get
+		if c.Request.Method == "GET" {
+			err := c.ShouldBindQuery(req)
 			if err != nil {
 				fmt.Println(req)
 				c.JSON(400, gin.H{"message": "请求参数错误"})
 				return
 			}
 		}
+		// 绑定参数
+
+		if (c.Request.Method == "POST" || c.Request.Method == "PUT" || c.Request.Method == "DELETE" ||
+			c.Request.Method == "PATCH") && c.Request.ContentLength > 0 {
+			err := c.ShouldBindJSON(req)
+			if err != nil {
+				fmt.Println(req)
+				c.JSON(400, gin.H{"message": "请求参数错误"})
+				return
+			}
+		}
+		//if strings.Index(c.FullPath(), ":") > 0 {
+		//	err = c.ShouldBindUri(req)
+		//	if err != nil {
+		//		fmt.Println(req)
+		//		c.JSON(400, gin.H{"message": "请求参数错误"})
+		//		return
+		//	}
+		//}
 		err = common.Validate.Struct(req)
 		if err != nil {
 			errStr := err.(validator.ValidationErrors)[0].Translate(common.Trans)
@@ -56,7 +67,7 @@ func BinderMiddleware(method reflect.Value) gin.HandlerFunc {
 				}
 			}
 			if results[0].Interface() != nil {
-				response.Response(c, 200, 0, gin.H{"data":  results[0].Interface()}, "ok")
+				response.Response(c, 200, 0, results[0].Interface(), "ok")
 				return
 			}
 		}

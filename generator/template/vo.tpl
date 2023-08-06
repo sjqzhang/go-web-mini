@@ -8,7 +8,7 @@ import (
 // 查询{{.Table.TableName}} {{.Table.TableComment}}
 type {{.Table.TableName}} struct {
  {{range .Fields}}
-    {{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }}` {{.ColumnComment}}
+    {{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }} form:"{{.ColumnName}}"` {{.ColumnComment}}
      {{end}}
 }
 
@@ -26,7 +26,7 @@ type Pager{{.Table.TableName}} struct {
 // 查询{{.Table.TableName}} {{.Table.TableComment}}
 type List{{.Table.TableName}}Request struct {
     {{range .Fields}}{{if  checkField .ColumnName}}
-    {{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }}` {{.ColumnComment}}
+    {{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }}  form:"{{.ColumnName}}"` {{.ColumnComment}}
     {{end}}
      {{end}}
      PageNum  *uint   `json:"pageNum" form:"pageNum"`
@@ -37,7 +37,7 @@ type List{{.Table.TableName}}Request struct {
 // 创建{{.Table.TableName}} {{.Table.TableComment}}
 type Create{{.Table.TableName}}Request struct {
     {{range .Fields}}{{if  checkField .ColumnName}}
-    {{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }}` {{.ColumnComment}}
+    {{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }} form:"{{.ColumnName}}"` {{.ColumnComment}}
     {{end}}
      {{end}}
 }
@@ -47,14 +47,19 @@ type Create{{.Table.TableName}}Request struct {
 type Update{{.Table.TableName}}Request struct {
     ID      *int `json:""`
     {{range .Fields}}{{if  checkField .ColumnName}}
-    {{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }}` {{.ColumnComment}}
+    {{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }} form:"{{.ColumnName}}"` {{.ColumnComment}}
     {{end}}
      {{end}}
 }
 
 // 删除{{.Table.TableName}} {{.Table.TableComment}}
 type Delete{{.Table.TableName}}Request struct {
-    ID      int `json:"id" uri:"id" form:"id"`
+    ID      int64 `json:"id" uri:"id" form:"id"`
+}
+
+// 删除{{.Table.TableName}} {{.Table.TableComment}}
+type Get{{.Table.TableName}}Request struct {
+    ID      int64 `json:"id" uri:"id" form:"id"`
 }
 
 {{end}}

@@ -8,19 +8,19 @@ import (
 // 查询News 
 type News struct {
  
-    ID *int64 `json:"id" gorm:"primary_key;AUTO_INCREMENT"` 
+    ID *int64 `json:"id" gorm:"primary_key;AUTO_INCREMENT" form:"id"` 
      
-    CreatedAt *time.Time `json:"created_at"` 
+    CreatedAt *time.Time `json:"created_at" form:"created_at"` 
      
-    UpdatedAt *time.Time `json:"updated_at"` 
+    UpdatedAt *time.Time `json:"updated_at" form:"updated_at"` 
      
-    DeletedAt *time.Time `json:"deleted_at"` 
+    DeletedAt *time.Time `json:"deleted_at" form:"deleted_at"` 
      
-    Title *string `json:"title"` 
+    Title *string `json:"title" form:"title"` 
      
-    Content *string `json:"content"` 
+    Content *string `json:"content" form:"content"` 
      
-    Creator *string `json:"creator"` 
+    Creator *string `json:"creator" form:"creator"` 
      
 }
 
@@ -42,13 +42,13 @@ type ListNewsRequest struct {
      
      
      
-    Title *string `json:"title"` 
+    Title *string `json:"title"  form:"title"` 
     
      
-    Content *string `json:"content"` 
+    Content *string `json:"content"  form:"content"` 
     
      
-    Creator *string `json:"creator"` 
+    Creator *string `json:"creator"  form:"creator"` 
     
      
      PageNum  *uint   `json:"pageNum" form:"pageNum"`
@@ -63,13 +63,13 @@ type CreateNewsRequest struct {
      
      
      
-    Title *string `json:"title"` 
+    Title *string `json:"title" form:"title"` 
     
      
-    Content *string `json:"content"` 
+    Content *string `json:"content" form:"content"` 
     
      
-    Creator *string `json:"creator"` 
+    Creator *string `json:"creator" form:"creator"` 
     
      
 }
@@ -83,19 +83,24 @@ type UpdateNewsRequest struct {
      
      
      
-    Title *string `json:"title"` 
+    Title *string `json:"title" form:"title"` 
     
      
-    Content *string `json:"content"` 
+    Content *string `json:"content" form:"content"` 
     
      
-    Creator *string `json:"creator"` 
+    Creator *string `json:"creator" form:"creator"` 
     
      
 }
 
 // 删除News 
 type DeleteNewsRequest struct {
-    ID      int `json:"id" uri:"id" form:"id"`
+    ID      int64 `json:"id" uri:"id" form:"id"`
+}
+
+// 删除News 
+type GetNewsRequest struct {
+    ID      int64 `json:"id" uri:"id" form:"id"`
 }
 

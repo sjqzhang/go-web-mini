@@ -163,6 +163,9 @@ func createFiles(obj CommonObject, tableName string) {
 
 	// 创建service
 	createGoFile(obj, tableName, "_service.go", "../service", "./template/service.tpl", "service")
+
+	// 创建service
+	createGoFile(obj, tableName, "index.vue", "/Users/junqiang.zhang/repo/js/go-web-mini-ui/src/views/business/news/", "./template/index.vue", "index.vue")
 }
 
 // 创建所需的文件夹

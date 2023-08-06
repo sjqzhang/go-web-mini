@@ -38,6 +38,16 @@ func (s *NewsService) List(ctx context.Context, req *vo.ListNewsRequest) (*vo.Pa
     return &resp, err
 }
 
+func (s *NewsService) GetById(ctx context.Context, req *vo.GetNewsRequest) (*vo.News, error) {
+    obj,err:= s.newsRepository.GetById(ctx, req.ID)
+    if err != nil {
+        return nil, err
+    }
+    var resp vo.News
+    err = copier.Copy(&resp, obj)
+    return &resp, err
+}
+
 func (s *NewsService) Create(ctx *gin.Context, req *vo.CreateNewsRequest) (*vo.News, error) {
 	var obj model.News
 	err := copier.Copy(&obj, req)

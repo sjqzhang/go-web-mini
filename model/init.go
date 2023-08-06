@@ -5,13 +5,14 @@ import (
 	"fmt"
 	"strings"
 	"time"
+
 )
 
 type Model struct {
 	ID        int64      `gorm:"primarykey" json:"id"`
 	CreatedAt *time.Time `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt *time.Time `json:"updated_at" gorm:"autoUpdateTime"`
-	DeletedAt *time.Time `gorm:"index" json:"deleted_at"`
+	DeletedAt *time.Time `gorm:"index;softDelete:flag" json:"deleted_at" `
 }
 
 type PagerModel struct {
