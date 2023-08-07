@@ -12,7 +12,7 @@ import (
 )
 
 /*
-// BranchTabQueryPage branch_tab分页查询
+// BranchTabQueryPage branch分页查询
 func BranchTabQueryPage(param dto.BranchTabPageDTO) []vo.BranchTabVO{
 
 	return []vo.BranchTabVO{}

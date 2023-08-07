@@ -13,7 +13,7 @@ import (
 	p13 "go-web-mini/vo"
 )
 
-//go:embed routes util vo common controller dto repository response service config generator middleware model
+//go:embed common config middleware response util vo service controller dto generator model repository routes
 var gdiEmbedFiles embed.FS
 
 func init() {
@@ -26,6 +26,7 @@ func init() {
 	gdi.PlaceHolder((*p2.JwtConfig)(nil))
 	gdi.PlaceHolder((*p2.RateLimitConfig)(nil))
 	gdi.PlaceHolder((*p3.ApiController)(nil))
+	gdi.PlaceHolder((*p3.BranchController)(nil))
 	gdi.PlaceHolder((*p3.BranchTabController)(nil))
 	gdi.PlaceHolder((*p3.MenuController)(nil))
 	gdi.PlaceHolder((*p3.NewsController)(nil))
@@ -39,9 +40,9 @@ func init() {
 	gdi.PlaceHolder((*p5.TableResult)(nil))
 	gdi.PlaceHolder((*p5.CommonObject)(nil))
 	gdi.PlaceHolder((*p5.Config)(nil))
-	gdi.PlaceHolder((*p7.BranchTab)(nil))
-	gdi.PlaceHolder((*p7.BranchTabQuery)(nil))
 	gdi.PlaceHolder((*p7.Api)(nil))
+	gdi.PlaceHolder((*p7.Branch)(nil))
+	gdi.PlaceHolder((*p7.BranchQuery)(nil))
 	gdi.PlaceHolder((*p7.BranchTab)(nil))
 	gdi.PlaceHolder((*p7.BranchTabQuery)(nil))
 	gdi.PlaceHolder((*p7.RoleCasbin)(nil))
@@ -55,6 +56,7 @@ func init() {
 	gdi.PlaceHolder((*p7.Role)(nil))
 	gdi.PlaceHolder((*p7.User)(nil))
 	gdi.PlaceHolder((*p8.ApiRepository)(nil))
+	gdi.PlaceHolder((*p8.BranchRepository)(nil))
 	gdi.PlaceHolder((*p8.BranchTabRepository)(nil))
 	gdi.PlaceHolder((*p8.MenuRepository)(nil))
 	gdi.PlaceHolder((*p8.News2Repository)(nil))
@@ -62,6 +64,7 @@ func init() {
 	gdi.PlaceHolder((*p8.OperationLogRepository)(nil))
 	gdi.PlaceHolder((*p8.RoleRepository)(nil))
 	gdi.PlaceHolder((*p8.UserRepository)(nil))
+	gdi.PlaceHolder((*p11.BranchService)(nil))
 	gdi.PlaceHolder((*p11.BranchTabService)(nil))
 	gdi.PlaceHolder((*p11.News2Service)(nil))
 	gdi.PlaceHolder((*p11.NewsService)(nil))
@@ -69,6 +72,13 @@ func init() {
 	gdi.PlaceHolder((*p13.CreateApiRequest)(nil))
 	gdi.PlaceHolder((*p13.UpdateApiRequest)(nil))
 	gdi.PlaceHolder((*p13.DeleteApiRequest)(nil))
+	gdi.PlaceHolder((*p13.Branch)(nil))
+	gdi.PlaceHolder((*p13.PagerBranch)(nil))
+	gdi.PlaceHolder((*p13.ListBranchRequest)(nil))
+	gdi.PlaceHolder((*p13.CreateBranchRequest)(nil))
+	gdi.PlaceHolder((*p13.UpdateBranchRequest)(nil))
+	gdi.PlaceHolder((*p13.DeleteBranchRequest)(nil))
+	gdi.PlaceHolder((*p13.GetBranchRequest)(nil))
 	gdi.PlaceHolder((*p13.BranchTab)(nil))
 	gdi.PlaceHolder((*p13.PagerBranchTab)(nil))
 	gdi.PlaceHolder((*p13.ListBranchTabRequest)(nil))

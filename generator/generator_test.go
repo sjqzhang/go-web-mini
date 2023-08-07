@@ -9,7 +9,8 @@ func TestGenerate(t *testing.T) {
 		ModuleName: "go-web-mini",
 		Tables:     []string{"branch_tab"},
 		WebRoot:    "/Users/junqiang.zhang/repo/js/go-web-mini-ui",
-
+		TablePrefix: "",
+		TableSuffix: "_tab",
 
 	}
 	InitConfig(conf)

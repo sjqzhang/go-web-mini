@@ -5,7 +5,7 @@
     <el-card class="container-card" shadow="always">
       <el-form size="mini" :inline="true" :model="params" class="demo-form-inline">
         {{range .Fields}}{{if  checkField .ColumnName}}
-        <el-form-item label="{{.ColumnCommentForView}}"><el-input v-model.trim="params.{{.ColumnName}}" clearable placeholder="{{.ColumnCommentForView}}" @clear="search" />
+        <el-form-item label="{{.ColumnCommentForView}}"><el-input v-model.trim="params.{{.ColumnName}}" type="input" clearable placeholder="{{.ColumnCommentForView}}" @keyup.enter.native="search" @clear="search" />
         </el-form-item>{{end}}{{end}}
 
         <el-form-item>
@@ -51,7 +51,7 @@
       <el-dialog :title="dialogFormTitle" :visible.sync="dialogFormVisible">
         <el-form ref="dialogForm" size="small" :model="dialogFormData" :rules="dialogFormRules" label-width="120px">
           {{range .Fields}}{{if  checkField .ColumnName}}<el-form-item label="{{.ColumnCommentForView}}" prop="{{.ColumnName}}">
-            <el-input v-model.trim="dialogFormData.{{.ColumnName}}" placeholder="{{.ColumnCommentForView}}" />
+            <{{.VueTag}} type="{{.VueType}}" v-model.trim="dialogFormData.{{.ColumnName}}" placeholder="{{.ColumnCommentForView}}" />
           </el-form-item>{{end}}{{end}}
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -90,7 +90,7 @@ export default {
     return {
       // 查询参数
       params: {
-      {{range .Fields}}{{if  checkField .ColumnName}}{{.ColumnName}}: '',
+      {{range .Fields}}{{if  checkField .ColumnName}}{{.ColumnName}}: {{.Value}},
         {{end}}{{end}}
     // content: '',
         pageNum: 1,
@@ -108,7 +108,7 @@ export default {
       dialogFormVisible: false,
       dialogFormData: {
         id:'',
-            {{range .Fields}}{{if  checkField .ColumnName}}{{.ColumnName}}: '',
+            {{range .Fields}}{{if  checkField .ColumnName}}{{.ColumnName}}: {{.Value}},
           {{end}}{{end}}
       },
       // dialogFormRules: {
@@ -149,7 +149,12 @@ export default {
     async getTableData() {
       this.loading = true
       try {
-        const { data } = await get{{.Table.TableName}}(this.params)
+        var searchParams = {
+          ...this.params,
+        {{range .Fields}}{{if  checkField .ColumnName}}{{if isString .DataType}}{{.ColumnName}} : 'like %'+ this.params.{{.ColumnName}}+'%',
+          {{end}}{{end}}{{end}}
+        }
+        const { data } = await get{{.Table.TableName}}(searchParams)
         this.tableData = data.list
         this.total = data.total
       } finally {
@@ -181,6 +186,10 @@ export default {
           let msg = ''
           this.submitLoading = true
           try {
+
+            {{range .Fields}}{{if  checkField .ColumnName}}this.dialogFormData.{{.ColumnName}} =  {{.VueFunction}}(this.dialogFormData.{{.ColumnName}})
+            {{end}}{{end}}
+
             if (this.dialogType === 'create') {
               const { message } = await create{{.Table.TableName}}(this.dialogFormData)
               msg = message
@@ -221,7 +230,7 @@ export default {
       this.$refs['dialogForm'].resetFields()
       this.dialogFormData = {
       // content: '',
-      {{range .Fields}}{{if  checkField .ColumnName}}{{.ColumnName}}: '',
+      {{range .Fields}}{{if  checkField .ColumnName}}{{.ColumnName}}:{{.Value}},
       {{end}}{{end}}
 
       }
