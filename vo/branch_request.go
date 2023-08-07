@@ -5,8 +5,8 @@ import (
 )
 
 
-// 查询BranchTab branch
-type BranchTab struct {
+// 查询Branch branch
+type Branch struct {
  
     ID *int64 `json:"id" gorm:"primary_key;AUTO_INCREMENT" form:"id"` // id
      
@@ -40,10 +40,10 @@ type BranchTab struct {
      
 }
 
-// 查询BranchTab branch
-type PagerBranchTab struct {
+// 查询Branch branch
+type PagerBranch struct {
 	Total    int64                  `json:"total"`
-	List     []BranchTab          `json:"list"`
+	List     []Branch          `json:"list"`
 	PageNum  int                    `json:"pageNum" form:"pageNum"`
 	PageSize int                    `json:"pageSize" form:"pageSize"`
 	Extra    map[string]interface{} `json:"extra"`
@@ -51,8 +51,8 @@ type PagerBranchTab struct {
 
 
 
-// 查询BranchTab branch
-type ListBranchTabRequest struct {
+// 查询Branch branch
+type ListBranchRequest struct {
     
      
     Repo *string `json:"repo"  form:"repo"` // repo
@@ -96,8 +96,8 @@ type ListBranchTabRequest struct {
 }
 
 
-// 创建BranchTab branch
-type CreateBranchTabRequest struct {
+// 创建Branch branch
+type CreateBranchRequest struct {
     
      
     Repo *string `json:"repo" form:"repo"` // repo
@@ -139,8 +139,8 @@ type CreateBranchTabRequest struct {
 }
 
 
-// 更新BranchTab branch
-type UpdateBranchTabRequest struct {
+// 更新Branch branch
+type UpdateBranchRequest struct {
     ID      *int `json:""`
     
      
@@ -182,13 +182,13 @@ type UpdateBranchTabRequest struct {
      
 }
 
-// 删除BranchTab branch
-type DeleteBranchTabRequest struct {
+// 删除Branch branch
+type DeleteBranchRequest struct {
     Ids      []int64 `json:"ids" uri:"ids" form:"ids"`
 }
 
-// 删除BranchTab branch
-type GetBranchTabRequest struct {
+// 删除Branch branch
+type GetBranchRequest struct {
     ID      int64 `json:"id" uri:"id" form:"id"`
 }
 

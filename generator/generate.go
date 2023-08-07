@@ -12,7 +12,6 @@ import (
 )
 
 type FieldResult struct {
-	Value                interface{}
 	ColumnName           string
 	CamelField           string
 	DataType             string
@@ -23,6 +22,10 @@ type FieldResult struct {
 	ColumnDefault        string
 	ColumnComment        string
 	ColumnCommentForView string
+	Value                string
+	VueTag               string
+	VueType              string
+	VueFunction          string
 }
 
 type TableResult struct {
@@ -39,10 +42,12 @@ type CommonObject struct {
 }
 
 type Config struct {
-	Tables     []string
-	WebRoot    string
-	DSN        string
-	ModuleName string
+	Tables      []string
+	WebRoot     string
+	DSN         string
+	ModuleName  string
+	TablePrefix string
+	TableSuffix string
 }
 
 var cfg Config
@@ -93,7 +98,8 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 	// 查询表信息
 	tableQuery, _ := con.Raw("select "+
 		"TABLE_NAME as TableName,"+
-		"TABLE_COMMENT as TableComment "+
+		"TABLE_COMMENT as TableComment ,"+
+		"'' as TableNameOrigin "+
 		"from "+
 		"information_schema.TABLES "+
 		"where "+
@@ -114,7 +120,8 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 		"DATA_TYPE as DataType,"+
 		"COLUMN_KEY as ColumnKey,"+
 		"EXTRA as Extra,"+
-		"COLUMN_COMMENT as ColumnComment "+
+		"COLUMN_COMMENT as ColumnComment ,"+
+		"'' as ColumnCommentForView "+
 		"from "+
 		"information_schema.columns "+
 		"where "+
@@ -141,9 +148,13 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 	// 处理属性
 	handleFields(fields)
 
+
+
 	// 设置表信息
 	tableInfo := tables[0]
-	tableInfo.TableNameOrigin = tableName
+	tableInfo.TableNameOrigin= tableName // 原始表名，带前缀和后缀
+	tableName = strings.Replace(tableName, cfg.TablePrefix, "", 1)
+	tableName = strings.Replace(tableName, cfg.TableSuffix, "", 1)
 	tableInfo.TableName = TransToCamel(tableName, false)
 	tableInfo.Uri = TransToCamel(tableName, true)
 
@@ -172,25 +183,25 @@ func checkField(field string) bool {
 func createFiles(obj CommonObject, tableName string) {
 
 	// 创建po
-	createGoFile(obj, tableName, ".go", "../model", "./template/po.tpl", "po")
+	createGoFile(obj, tableName, fmt.Sprintf("%v.go",tableName), "../model", "./template/po.tpl", "po")
 
 	// 创建vo
-	createGoFile(obj, tableName, fmt.Sprintf("%v_request.go",tableName), "../vo", "./template/vo.tpl", "vo")
+	createGoFile(obj, tableName, fmt.Sprintf("%v_request.go", tableName), "../vo", "./template/vo.tpl", "vo")
 
 	// 创建add dto
 	//createGoFile(obj, tableName, "AddDTO.go", "./dto", "./template/addDto.tpl", "addDto")
 
 	// 创建page dto
-	createGoFile(obj, tableName, fmt.Sprintf("%v_repository.go",tableName), "../repository", "./template/dao.tpl", "repository")
+	createGoFile(obj, tableName, fmt.Sprintf("%v_repository.go", tableName), "../repository", "./template/dao.tpl", "repository")
 
 	// 创建controller
-	createGoFile(obj, tableName, fmt.Sprintf("%v_controller.go",tableName), "../controller", "./template/controller.tpl", "controller")
+	createGoFile(obj, tableName, fmt.Sprintf("%v_controller.go", tableName), "../controller", "./template/controller.tpl", "controller")
 
 	// 创建router
 	//createGoFile(obj, tableName, "Router.go", "./router", "./template/router.tpl", "router")
 
 	// 创建service
-	createGoFile(obj, tableName, fmt.Sprintf("%v_service.go",tableName), "../service", "./template/service.tpl", "service")
+	createGoFile(obj, tableName, fmt.Sprintf("%v_service.go", tableName), "../service", "./template/service.tpl", "service")
 
 	// 创建service
 	createGoFile(obj, tableName, "index.vue", fmt.Sprintf("%v/src/views/business/%v", cfg.WebRoot, tableName), "./template/index.vue", "index.vue")
@@ -241,6 +252,26 @@ func createDir(modulePath string, dirName string) {
 	}
 }
 
+func isNumber(fieldType string) bool {
+	return fieldType == "int" || fieldType == "tinyint" || fieldType == "bigint" || fieldType == "decimal" || fieldType == "float" || fieldType == "double"
+}
+
+func isString(fieldType string) bool {
+	return fieldType == "varchar" || fieldType == "char" || fieldType == "text" || fieldType == "longtext" || fieldType == "mediumtext"
+}
+
+func isInteger(fieldType string) bool {
+	return fieldType == "int" || fieldType == "tinyint" || fieldType == "bigint"
+}
+
+func isDate(fieldType string) bool {
+	return fieldType == "datetime" || fieldType == "date" || fieldType == "timestamp"
+}
+
+func isTime(fieldType string) bool {
+	return fieldType == "datetime" || fieldType == "timestamp"
+}
+
 // 创建go文件
 func createGoFile(obj CommonObject, tableName string, filename string, path string, templatePath string, templateName string) {
 
@@ -255,7 +286,8 @@ func createGoFile(obj CommonObject, tableName string, filename string, path stri
 
 	t := template.New("template")
 
-	t = t.Funcs(template.FuncMap{"checkField": checkField})
+	t = t.Funcs(template.FuncMap{"checkField": checkField, "isNumber": isNumber,
+		"isString": isString, "isInteger": isInteger, "isDate": isDate, "isTime": isTime})
 
 	// 校验是否存在po模板
 	t = template.Must(t.ParseGlob(templatePath))
@@ -340,7 +372,34 @@ func convertField(con *gorm.DB, query *sql.Rows) []FieldResult {
 			str.ColumnComment = str.ColumnName
 		}
 		str.ColumnCommentForView = str.ColumnComment
+		if strings.Index(strings.ToLower(str.DataType), "int") != -1 {
+			str.Value = "0"
+			str.VueType = "number"
+			str.VueTag = "el-input"
+			str.VueFunction = "Number"
+		} else if strings.Index(strings.ToLower(str.DataType), "text") != -1 {
+			str.Value = "''"
+			str.VueType = "textarea"
+			str.VueTag = "el-input"
+			str.VueFunction = "String"
+		} else if isDate(strings.ToLower(str.DataType)) {
+			str.Value = "''"
+			str.VueType = "date"
+			str.VueTag = "el-date-picker"
+			str.VueFunction = "String"
+		} else if isTime(strings.ToLower(str.DataType)) {
+			str.Value = "''"
+			str.VueType = "datetime"
+			str.VueTag = "el-date-picker"
+			str.VueFunction = "String"
+		} else {
+			str.Value = "''"
+			str.VueType = "text"
+			str.VueTag = "el-input"
+			str.VueFunction = "String"
+		}
 		fields = append(fields, str)
+		fmt.Println(fmt.Sprintf("%v", str))
 	}
 	return fields
 }
@@ -353,6 +412,8 @@ func convertTable(con *gorm.DB, query *sql.Rows) []TableResult {
 	for query.Next() {
 		var str TableResult
 		err := con.ScanRows(query, &str)
+		str.TableName =strings.TrimPrefix(str.TableName,cfg.TablePrefix)
+		str.TableName=strings.TrimSuffix(str.TableName,cfg.TableSuffix)
 		if err != nil {
 			fmt.Println(err)
 			panic("failed to scan rows")
@@ -379,7 +440,7 @@ func connect(url string) (*gorm.DB, string) {
 		fmt.Println(err)
 		panic("failed to connect to database,check your connection strings")
 	}
-
+	con.Debug()
 	var dbName string
 	con.Raw(" SELECT DATABASE()").First(&dbName)
 	return con, dbName
