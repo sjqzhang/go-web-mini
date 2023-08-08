@@ -34,7 +34,7 @@ type MenuController struct {
 //	menuController := MenuController{MenuRepository: menuRepository}
 //	return menuController
 //}
-
+//@tags 菜单管理
 // 获取菜单列表
 //@router /menu/list [get]
 func (mc MenuController) GetMenus(c *gin.Context) {
@@ -45,7 +45,7 @@ func (mc MenuController) GetMenus(c *gin.Context) {
 	}
 	response.Success(c, gin.H{"menus": menus}, "获取菜单列表成功")
 }
-
+//@tags 菜单管理
 // 获取菜单树
 //@router /menu/tree [get]
 func (mc MenuController) GetMenuTree(c *gin.Context) {
@@ -56,7 +56,7 @@ func (mc MenuController) GetMenuTree(c *gin.Context) {
 	}
 	response.Success(c, gin.H{"menuTree": menuTree}, "获取菜单树成功")
 }
-
+//@tags 菜单管理
 // 创建菜单
 //@router /menu/create [post]
 func (mc MenuController) CreateMenu(c *gin.Context) {
@@ -106,7 +106,7 @@ func (mc MenuController) CreateMenu(c *gin.Context) {
 	}
 	response.Success(c, nil, "创建菜单成功")
 }
-
+//@tags 菜单管理
 // 更新菜单
 //@router /menu/update/:menuId [patch]
 func (mc MenuController) UpdateMenuById(c *gin.Context) {
@@ -167,7 +167,7 @@ func (mc MenuController) UpdateMenuById(c *gin.Context) {
 	response.Success(c, nil, "更新菜单成功")
 
 }
-
+//@tags 菜单管理
 // 批量删除菜单
 //@router /menu/delete/batch [delete]
 func (mc MenuController) BatchDeleteMenuByIds(c *gin.Context) {
@@ -191,7 +191,7 @@ func (mc MenuController) BatchDeleteMenuByIds(c *gin.Context) {
 
 	response.Success(c, nil, "删除菜单成功")
 }
-
+//@tags 菜单管理
 // 根据用户ID获取用户的可访问菜单列表
 //@router /access/list/user/:userId [get]
 func (mc MenuController) GetUserMenusByUserId(c *gin.Context) {
@@ -209,7 +209,7 @@ func (mc MenuController) GetUserMenusByUserId(c *gin.Context) {
 	}
 	response.Success(c, gin.H{"menus": menus}, "获取用户的可访问菜单列表成功")
 }
-
+//@tags 菜单管理
 // 根据用户ID获取用户的可访问菜单树
 //@router /menu/access/tree/:userId [get]
 func (mc MenuController) GetUserMenuTreeByUserId(c *gin.Context) {

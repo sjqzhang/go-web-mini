@@ -19,6 +19,9 @@ const docTemplate = `{
     "paths": {
         "/access/list/user/:userId": {
             "get": {
+                "tags": [
+                    "菜单管理"
+                ],
                 "responses": {}
             }
         },
@@ -62,7 +65,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "branch管理"
+                    "branch"
                 ],
                 "parameters": [
                     {
@@ -146,7 +149,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/vo.PagerBranch"
+                            "$ref": "#/definitions/vo.ListBranchResponse"
                         }
                     }
                 }
@@ -165,7 +168,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "branch管理"
+                    "branch"
                 ],
                 "parameters": [
                     {
@@ -239,7 +242,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/vo.Branch"
+                            "$ref": "#/definitions/vo.CreateBranchResponse"
                         }
                     }
                 }
@@ -258,7 +261,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "branch管理"
+                    "branch"
                 ],
                 "parameters": [
                     {
@@ -275,7 +278,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "int"
+                            "$ref": "#/definitions/vo.DeleteBranchResponse"
                         }
                     }
                 }
@@ -296,7 +299,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "branch管理"
+                    "branch"
                 ],
                 "parameters": [
                     {
@@ -309,7 +312,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/vo.Branch"
+                            "$ref": "#/definitions/vo.GetBranchResponse"
                         }
                     }
                 }
@@ -328,7 +331,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "branch管理"
+                    "branch"
                 ],
                 "parameters": [
                     {
@@ -407,43 +410,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/vo.Branch"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "security": [
-                    {
-                        "JWT": []
-                    }
-                ],
-                "description": "删除单个branch",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "branch管理"
-                ],
-                "parameters": [
-                    {
-                        "type": "array",
-                        "items": {
-                            "type": "integer"
-                        },
-                        "collectionFormat": "csv",
-                        "name": "ids",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "int"
+                            "$ref": "#/definitions/vo.UpdateBranchResponse"
                         }
                     }
                 }
@@ -489,31 +456,49 @@ const docTemplate = `{
         },
         "/menu/access/tree/:userId": {
             "get": {
+                "tags": [
+                    "菜单管理"
+                ],
                 "responses": {}
             }
         },
         "/menu/create": {
             "post": {
+                "tags": [
+                    "菜单管理"
+                ],
                 "responses": {}
             }
         },
         "/menu/delete/batch": {
             "delete": {
+                "tags": [
+                    "菜单管理"
+                ],
                 "responses": {}
             }
         },
         "/menu/list": {
             "get": {
+                "tags": [
+                    "菜单管理"
+                ],
                 "responses": {}
             }
         },
         "/menu/tree": {
             "get": {
+                "tags": [
+                    "菜单管理"
+                ],
                 "responses": {}
             }
         },
         "/menu/update/:menuId": {
             "patch": {
+                "tags": [
+                    "菜单管理"
+                ],
                 "responses": {}
             }
         },
@@ -547,71 +532,113 @@ const docTemplate = `{
         },
         "/role/apis/get/:roleId": {
             "get": {
+                "tags": [
+                    "角色管理"
+                ],
                 "responses": {}
             }
         },
         "/role/apis/update/:roleId": {
             "patch": {
+                "tags": [
+                    "角色管理"
+                ],
                 "responses": {}
             }
         },
         "/role/create": {
             "post": {
+                "tags": [
+                    "角色管理"
+                ],
                 "responses": {}
             }
         },
         "/role/delete/batch": {
             "delete": {
+                "tags": [
+                    "角色管理"
+                ],
                 "responses": {}
             }
         },
         "/role/list": {
             "get": {
+                "tags": [
+                    "角色管理"
+                ],
                 "responses": {}
             }
         },
         "/role/menus/get/:roleId": {
             "get": {
+                "tags": [
+                    "角色管理"
+                ],
                 "responses": {}
             }
         },
         "/role/menus/update/:roleId": {
             "patch": {
+                "tags": [
+                    "角色管理"
+                ],
                 "responses": {}
             }
         },
         "/role/update/:roleId": {
             "patch": {
+                "tags": [
+                    "角色管理"
+                ],
                 "responses": {}
             }
         },
         "/user": {
             "post": {
+                "tags": [
+                    "用户管理"
+                ],
                 "responses": {}
             }
         },
         "/user/changePwd": {
             "put": {
+                "tags": [
+                    "用户管理"
+                ],
                 "responses": {}
             }
         },
         "/user/delete/batch": {
             "delete": {
+                "tags": [
+                    "用户管理"
+                ],
                 "responses": {}
             }
         },
         "/user/info": {
             "post": {
+                "tags": [
+                    "用户管理"
+                ],
                 "responses": {}
             }
         },
         "/user/list": {
             "get": {
+                "tags": [
+                    "用户管理"
+                ],
                 "responses": {}
             }
         },
         "/user/update/:userId": {
             "patch": {
+                "tags": [
+                    "用户管理"
+                ],
                 "responses": {}
             }
         }
@@ -682,6 +709,62 @@ const docTemplate = `{
                 }
             }
         },
+        "vo.CreateBranchResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/vo.Branch"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "vo.DeleteBranchResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "vo.GetBranchResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/vo.Branch"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "vo.ListBranchResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/vo.PagerBranch"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
         "vo.PagerBranch": {
             "type": "object",
             "properties": {
@@ -703,6 +786,20 @@ const docTemplate = `{
                 },
                 "total": {
                     "type": "integer"
+                }
+            }
+        },
+        "vo.UpdateBranchResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/vo.Branch"
+                },
+                "message": {
+                    "type": "string"
                 }
             }
         }

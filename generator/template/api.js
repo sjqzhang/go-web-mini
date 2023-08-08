@@ -31,7 +31,7 @@ export function update{{.Table.TableName}}(Id, data) {
 // 删除{{.Table.TableComment}}
 export function delete{{.Table.TableName}}(data) {
   return request({
-    url: '/api/{{.Table.Uri}}/:id',
+    url: '/api/{{.Table.Uri}}',
     method: 'delete',
     data
   })

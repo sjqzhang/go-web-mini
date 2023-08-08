@@ -5,6 +5,9 @@ import (
 )
 
 
+
+
+
 // 查询{{.Table.TableName}} {{.Table.TableComment}}
 type {{.Table.TableName}} struct {
  {{range .Fields}}
@@ -60,6 +63,34 @@ type Delete{{.Table.TableName}}Request struct {
 // 删除{{.Table.TableName}} {{.Table.TableComment}}
 type Get{{.Table.TableName}}Request struct {
     ID      int64 `json:"id" uri:"id" form:"id"`
+}
+
+
+
+//以下结构体只用于生成文档
+type List{{.Table.TableName}}Response  struct {
+    Response
+    Data Pager{{.Table.TableName}}  `json:"data"`
+}
+
+type Get{{.Table.TableName}}Response  struct {
+    Response
+    Data {{.Table.TableName}}  `json:"data"`
+}
+
+type Create{{.Table.TableName}}Response  struct {
+    Response
+    Data {{.Table.TableName}}  `json:"data"`
+}
+
+type Update{{.Table.TableName}}Response  struct {
+    Response
+    Data {{.Table.TableName}}  `json:"data"`
+}
+
+type Delete{{.Table.TableName}}Response  struct {
+    Response
+    Data int `json:"data"`
 }
 
 {{end}}

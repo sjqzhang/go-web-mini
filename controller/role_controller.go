@@ -38,7 +38,7 @@ type RoleController struct {
 //	roleController := RoleController{RoleRepository: roleRepository}
 //	return roleController
 //}
-
+//@tags 角色管理
 // 获取角色列表
 //@router /role/list [get]
 func (rc RoleController) GetRoles(c *gin.Context) {
@@ -63,7 +63,7 @@ func (rc RoleController) GetRoles(c *gin.Context) {
 	}
 	response.Success(c, gin.H{"roles": roles, "total": total}, "获取角色列表成功")
 }
-
+//@tags 角色管理
 // 创建角色
 // @router /role/create [post]
 func (rc RoleController) CreateRole(c *gin.Context) {
@@ -112,7 +112,7 @@ func (rc RoleController) CreateRole(c *gin.Context) {
 	response.Success(c, nil, "创建角色成功")
 
 }
-
+//@tags 角色管理
 // 更新角色
 // @router /role/update/:roleId [patch]
 func (rc RoleController) UpdateRoleById(c *gin.Context) {
@@ -232,7 +232,7 @@ func (rc RoleController) UpdateRoleById(c *gin.Context) {
 
 	response.Success(c, nil, "更新角色成功")
 }
-
+//@tags 角色管理
 // 获取角色的权限菜单
 //@router /role/menus/get/:roleId [get]
 func (rc RoleController) GetRoleMenusById(c *gin.Context) {
@@ -249,7 +249,7 @@ func (rc RoleController) GetRoleMenusById(c *gin.Context) {
 	}
 	response.Success(c, gin.H{"menus": menus}, "获取角色的权限菜单成功")
 }
-
+//@tags 角色管理
 // 更新角色的权限菜单
 //@router /role/menus/update/:roleId [patch]
 func (rc RoleController) UpdateRoleMenusById(c *gin.Context) {
@@ -363,7 +363,7 @@ func (rc RoleController) UpdateRoleMenusById(c *gin.Context) {
 	response.Success(c, nil, "更新角色的权限菜单成功")
 
 }
-
+//@tags 角色管理
 // 获取角色的权限接口
 //@router /role/apis/get/:roleId [get]
 func (rc RoleController) GetRoleApisById(c *gin.Context) {
@@ -392,7 +392,7 @@ func (rc RoleController) GetRoleApisById(c *gin.Context) {
 	}
 	response.Success(c, gin.H{"apis": apis}, "获取角色的权限接口成功")
 }
-
+//@tags 角色管理
 // 更新角色的权限接口
 //@router /role/apis/update/:roleId [patch]
 func (rc RoleController) UpdateRoleApisById(c *gin.Context) {
@@ -491,7 +491,7 @@ func (rc RoleController) UpdateRoleApisById(c *gin.Context) {
 	response.Success(c, nil, "更新角色的权限接口成功")
 
 }
-
+//@tags 角色管理
 // 批量删除角色
 //@router /role/delete/batch [delete]
 func (rc RoleController) BatchDeleteRoleByIds(c *gin.Context) {
