@@ -20,33 +20,48 @@ const docTemplate = `{
         "/access/list/user/:userId": {
             "get": {
                 "tags": [
-                    "菜单管理"
+                    "menu"
                 ],
                 "responses": {}
             }
         },
         "/api/create": {
             "post": {
+                "tags": [
+                    "api"
+                ],
                 "responses": {}
             }
         },
         "/api/delete/batch": {
             "delete": {
+                "tags": [
+                    "api"
+                ],
                 "responses": {}
             }
         },
         "/api/list": {
             "get": {
+                "tags": [
+                    "api"
+                ],
                 "responses": {}
             }
         },
         "/api/tree": {
             "get": {
+                "tags": [
+                    "api"
+                ],
                 "responses": {}
             }
         },
         "/api/update/:apiId": {
             "patch": {
+                "tags": [
+                    "api"
+                ],
                 "responses": {}
             }
         },
@@ -446,18 +461,24 @@ const docTemplate = `{
         },
         "/log/operation/delete/batch": {
             "delete": {
+                "tags": [
+                    "log"
+                ],
                 "responses": {}
             }
         },
         "/log/operation/list": {
             "get": {
+                "tags": [
+                    "log"
+                ],
                 "responses": {}
             }
         },
         "/menu/access/tree/:userId": {
             "get": {
                 "tags": [
-                    "菜单管理"
+                    "menu"
                 ],
                 "responses": {}
             }
@@ -465,7 +486,7 @@ const docTemplate = `{
         "/menu/create": {
             "post": {
                 "tags": [
-                    "菜单管理"
+                    "menu"
                 ],
                 "responses": {}
             }
@@ -473,7 +494,7 @@ const docTemplate = `{
         "/menu/delete/batch": {
             "delete": {
                 "tags": [
-                    "菜单管理"
+                    "menu"
                 ],
                 "responses": {}
             }
@@ -481,7 +502,7 @@ const docTemplate = `{
         "/menu/list": {
             "get": {
                 "tags": [
-                    "菜单管理"
+                    "menu"
                 ],
                 "responses": {}
             }
@@ -489,7 +510,7 @@ const docTemplate = `{
         "/menu/tree": {
             "get": {
                 "tags": [
-                    "菜单管理"
+                    "menu"
                 ],
                 "responses": {}
             }
@@ -497,7 +518,7 @@ const docTemplate = `{
         "/menu/update/:menuId": {
             "patch": {
                 "tags": [
-                    "菜单管理"
+                    "menu"
                 ],
                 "responses": {}
             }
@@ -533,7 +554,7 @@ const docTemplate = `{
         "/role/apis/get/:roleId": {
             "get": {
                 "tags": [
-                    "角色管理"
+                    "role"
                 ],
                 "responses": {}
             }
@@ -541,7 +562,7 @@ const docTemplate = `{
         "/role/apis/update/:roleId": {
             "patch": {
                 "tags": [
-                    "角色管理"
+                    "role"
                 ],
                 "responses": {}
             }
@@ -549,7 +570,7 @@ const docTemplate = `{
         "/role/create": {
             "post": {
                 "tags": [
-                    "角色管理"
+                    "role"
                 ],
                 "responses": {}
             }
@@ -557,7 +578,7 @@ const docTemplate = `{
         "/role/delete/batch": {
             "delete": {
                 "tags": [
-                    "角色管理"
+                    "role"
                 ],
                 "responses": {}
             }
@@ -565,7 +586,7 @@ const docTemplate = `{
         "/role/list": {
             "get": {
                 "tags": [
-                    "角色管理"
+                    "role"
                 ],
                 "responses": {}
             }
@@ -573,7 +594,7 @@ const docTemplate = `{
         "/role/menus/get/:roleId": {
             "get": {
                 "tags": [
-                    "角色管理"
+                    "role"
                 ],
                 "responses": {}
             }
@@ -581,7 +602,7 @@ const docTemplate = `{
         "/role/menus/update/:roleId": {
             "patch": {
                 "tags": [
-                    "角色管理"
+                    "role"
                 ],
                 "responses": {}
             }
@@ -589,7 +610,7 @@ const docTemplate = `{
         "/role/update/:roleId": {
             "patch": {
                 "tags": [
-                    "角色管理"
+                    "role"
                 ],
                 "responses": {}
             }
@@ -597,7 +618,7 @@ const docTemplate = `{
         "/user": {
             "post": {
                 "tags": [
-                    "用户管理"
+                    "user"
                 ],
                 "responses": {}
             }
@@ -605,7 +626,7 @@ const docTemplate = `{
         "/user/changePwd": {
             "put": {
                 "tags": [
-                    "用户管理"
+                    "user"
                 ],
                 "responses": {}
             }
@@ -613,7 +634,7 @@ const docTemplate = `{
         "/user/delete/batch": {
             "delete": {
                 "tags": [
-                    "用户管理"
+                    "user"
                 ],
                 "responses": {}
             }
@@ -621,7 +642,7 @@ const docTemplate = `{
         "/user/info": {
             "post": {
                 "tags": [
-                    "用户管理"
+                    "user"
                 ],
                 "responses": {}
             }
@@ -629,7 +650,7 @@ const docTemplate = `{
         "/user/list": {
             "get": {
                 "tags": [
-                    "用户管理"
+                    "user"
                 ],
                 "responses": {}
             }
@@ -637,7 +658,7 @@ const docTemplate = `{
         "/user/update/:userId": {
             "patch": {
                 "tags": [
-                    "用户管理"
+                    "user"
                 ],
                 "responses": {}
             }

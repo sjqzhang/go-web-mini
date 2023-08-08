@@ -31,7 +31,7 @@ type ApiController struct {
 //	apiController := ApiController{ApiRepository: apiRepository}
 //	return apiController
 //}
-
+//@tags api
 // 获取接口列表
 // @router /api/list [get]
 func (ac ApiController) GetApis(c *gin.Context) {
@@ -57,7 +57,7 @@ func (ac ApiController) GetApis(c *gin.Context) {
 		"apis": apis, "total": total,
 	}, "获取接口列表成功")
 }
-
+//@tags api
 // 获取接口树(按接口Category字段分类)
 // @router /api/tree [get]
 func (ac ApiController) GetApiTree(c *gin.Context) {
@@ -70,7 +70,7 @@ func (ac ApiController) GetApiTree(c *gin.Context) {
 		"apiTree": tree,
 	}, "获取接口树成功")
 }
-
+//@tags api
 // 创建接口
 // @router /api/create [post]
 func (ac ApiController) CreateApi(c *gin.Context) {
@@ -113,7 +113,7 @@ func (ac ApiController) CreateApi(c *gin.Context) {
 	response.Success(c, nil, "创建接口成功")
 	return
 }
-
+//@tags api
 // 更新接口
 // @router /api/update/:apiId [patch]
 func (ac ApiController) UpdateApiById(c *gin.Context) {
@@ -161,7 +161,7 @@ func (ac ApiController) UpdateApiById(c *gin.Context) {
 
 	response.Success(c, nil, "更新接口成功")
 }
-
+//@tags api
 // 批量删除接口
 // @router /api/delete/batch [delete]
 func (ac ApiController) BatchDeleteApiByIds(c *gin.Context) {

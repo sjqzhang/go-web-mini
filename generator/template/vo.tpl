@@ -67,7 +67,7 @@ type Get{{.Table.TableName}}Request struct {
 
 
 
-//以下结构体只用于生成文档
+//以下结构体只用于生成swagger文档
 type List{{.Table.TableName}}Response  struct {
     Response
     Data Pager{{.Table.TableName}}  `json:"data"`
