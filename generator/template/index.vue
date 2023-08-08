@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { get{{.Table.TableName}}, create{{.Table.TableName}}, update{{.Table.TableName}}, delete{{.Table.TableName}} } from '@/api/business/{{.Table.TableNameOrigin}}'
+import { get{{.Table.TableName}}, create{{.Table.TableName}}, update{{.Table.TableName}}, delete{{.Table.TableName}} } from '@/api/business/{{.Table.TableNameTrim}}'
 
 export default {
   name: '{{.Table.TableName}}',
