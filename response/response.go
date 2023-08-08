@@ -5,8 +5,6 @@ import (
 	"net/http"
 )
 
-
-
 // 返回前端
 func Response(c *gin.Context, httpStatus int, code int, data interface{}, message string) {
 

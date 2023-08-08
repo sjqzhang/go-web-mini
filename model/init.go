@@ -5,22 +5,21 @@ import (
 	"fmt"
 	"strings"
 	"time"
-
 )
 
 type Model struct {
-	ID        int64      `gorm:"primarykey" json:"id"`
-	CreatedAt *time.Time `json:"created_at" gorm:"autoCreateTime"`
-	UpdatedAt *time.Time `json:"updated_at" gorm:"autoUpdateTime"`
-	DeletedAt *time.Time `gorm:"index;softDelete:flag" json:"deleted_at" `
+	ID        int64      `gorm:"primarykey" json:"id"`                     // 主键ID
+	CreatedAt *time.Time `json:"created_at" gorm:"autoCreateTime"`         // 创建时间
+	UpdatedAt *time.Time `json:"updated_at" gorm:"autoUpdateTime"`         // 更新时间
+	DeletedAt *time.Time `gorm:"index;softDelete:flag" json:"deleted_at" ` // 删除时间
 }
 
 type PagerModel struct {
-	Total    int64                  `json:"total"`
-	List     interface{}            `json:"list"`
-	PageNum  int                    `json:"pageNum" form:"pageNum"`
-	PageSize int                    `json:"pageSize" form:"pageSize"`
-	Extra    map[string]interface{} `json:"extra"`
+	Total    int64                  `json:"total"`                    // 总数
+	List     interface{}            `json:"list"`                     // 列表
+	PageNum  int                    `json:"pageNum" form:"pageNum"`   // 当前页码
+	PageSize int                    `json:"pageSize" form:"pageSize"` // 一页数据量
+	Extra    map[string]interface{} `json:"extra"`                    // 额外数据
 }
 
 type NullType byte
@@ -134,7 +133,7 @@ func BuildWhereSelectFromValue(where map[string]interface{}, or bool) (whereSQL 
 
 		// 获取字段名和操作符
 		v, operator, err := parseKey(fmt.Sprintf("%v", v))
-		field:=k
+		field := k
 		if err != nil {
 			return "", nil, fmt.Errorf("Error in query condition: %s. ", k)
 		}
@@ -193,7 +192,7 @@ func parseKey(val string) (value interface{}, operator string, err error) {
 	} else if len(parts) == 2 {
 		return parts[1], parts[0], nil
 	} else if len(parts) > 2 {
-		return strings.Join(parts[1:]," "), parts[0], nil
+		return strings.Join(parts[1:], " "), parts[0], nil
 	}
 	return parts[0], parts[1], nil
 }

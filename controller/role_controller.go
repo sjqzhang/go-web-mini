@@ -23,14 +23,15 @@ type IRoleController interface {
 	UpdateRoleApisById(c *gin.Context)   // 更新角色的权限接口
 	BatchDeleteRoleByIds(c *gin.Context) // 批量删除角色
 }
+
 //@middleware auth
 //@router /api
 type RoleController struct {
 	RoleRepository repository.IRoleRepository
-	mr repository.IMenuRepository
-	uc repository.IUserRepository
-	ur repository.IUserRepository
-	ar repository.IApiRepository
+	mr             repository.IMenuRepository
+	uc             repository.IUserRepository
+	ur             repository.IUserRepository
+	ar             repository.IApiRepository
 }
 
 //func NewRoleController() IRoleController {
@@ -56,13 +57,14 @@ func (rc RoleController) GetRoles(c *gin.Context) {
 	}
 
 	// 获取角色列表
-	roles, total, err := rc.RoleRepository.GetRoles(c,&req)
+	roles, total, err := rc.RoleRepository.GetRoles(c, &req)
 	if err != nil {
 		response.Fail(c, nil, "获取角色列表失败: "+err.Error())
 		return
 	}
 	response.Success(c, gin.H{"roles": roles, "total": total}, "获取角色列表成功")
 }
+
 //@tags role
 // 创建角色
 // @router /role/create [post]
@@ -104,7 +106,7 @@ func (rc RoleController) CreateRole(c *gin.Context) {
 	}
 
 	// 创建角色
-	err = rc.RoleRepository.CreateRole(c,&role)
+	err = rc.RoleRepository.CreateRole(c, &role)
 	if err != nil {
 		response.Fail(c, nil, "创建角色失败: "+err.Error())
 		return
@@ -112,6 +114,7 @@ func (rc RoleController) CreateRole(c *gin.Context) {
 	response.Success(c, nil, "创建角色成功")
 
 }
+
 //@tags role
 // 更新角色
 // @router /role/update/:roleId [patch]
@@ -145,7 +148,7 @@ func (rc RoleController) UpdateRoleById(c *gin.Context) {
 
 	// 不能更新比自己角色等级高或相等的角色
 	// 根据path中的角色ID获取该角色信息
-	roles, err := rc.RoleRepository.GetRolesByIds(c,[]uint{uint(roleId)})
+	roles, err := rc.RoleRepository.GetRolesByIds(c, []uint{uint(roleId)})
 	if err != nil {
 		response.Fail(c, nil, err.Error())
 		return
@@ -175,7 +178,7 @@ func (rc RoleController) UpdateRoleById(c *gin.Context) {
 	}
 
 	// 更新角色
-	err = rc.RoleRepository.UpdateRoleById(c,uint(roleId), &role)
+	err = rc.RoleRepository.UpdateRoleById(c, uint(roleId), &role)
 	if err != nil {
 		response.Fail(c, nil, "更新角色失败: "+err.Error())
 		return
@@ -232,6 +235,7 @@ func (rc RoleController) UpdateRoleById(c *gin.Context) {
 
 	response.Success(c, nil, "更新角色成功")
 }
+
 //@tags role
 // 获取角色的权限菜单
 //@router /role/menus/get/:roleId [get]
@@ -242,13 +246,14 @@ func (rc RoleController) GetRoleMenusById(c *gin.Context) {
 		response.Fail(c, nil, "角色ID不正确")
 		return
 	}
-	menus, err := rc.RoleRepository.GetRoleMenusById(c,uint(roleId))
+	menus, err := rc.RoleRepository.GetRoleMenusById(c, uint(roleId))
 	if err != nil {
 		response.Fail(c, nil, "获取角色的权限菜单失败: "+err.Error())
 		return
 	}
 	response.Success(c, gin.H{"menus": menus}, "获取角色的权限菜单成功")
 }
+
 //@tags role
 // 更新角色的权限菜单
 //@router /role/menus/update/:roleId [patch]
@@ -272,7 +277,7 @@ func (rc RoleController) UpdateRoleMenusById(c *gin.Context) {
 		return
 	}
 	// 根据path中的角色ID获取该角色信息
-	roles, err := rc.RoleRepository.GetRolesByIds(c,[]uint{uint(roleId)})
+	roles, err := rc.RoleRepository.GetRolesByIds(c, []uint{uint(roleId)})
 	if err != nil {
 		response.Fail(c, nil, err.Error())
 		return
@@ -354,7 +359,7 @@ func (rc RoleController) UpdateRoleMenusById(c *gin.Context) {
 
 	roles[0].Menus = reqMenus
 
-	err = rc.RoleRepository.UpdateRoleMenus(c,roles[0])
+	err = rc.RoleRepository.UpdateRoleMenus(c, roles[0])
 	if err != nil {
 		response.Fail(c, nil, "更新角色的权限菜单失败: "+err.Error())
 		return
@@ -363,6 +368,7 @@ func (rc RoleController) UpdateRoleMenusById(c *gin.Context) {
 	response.Success(c, nil, "更新角色的权限菜单成功")
 
 }
+
 //@tags role
 // 获取角色的权限接口
 //@router /role/apis/get/:roleId [get]
@@ -374,7 +380,7 @@ func (rc RoleController) GetRoleApisById(c *gin.Context) {
 		return
 	}
 	// 根据path中的角色ID获取该角色信息
-	roles, err := rc.RoleRepository.GetRolesByIds(c,[]uint{uint(roleId)})
+	roles, err := rc.RoleRepository.GetRolesByIds(c, []uint{uint(roleId)})
 	if err != nil {
 		response.Fail(c, nil, err.Error())
 		return
@@ -385,13 +391,14 @@ func (rc RoleController) GetRoleApisById(c *gin.Context) {
 	}
 	// 根据角色keyword获取casbin中policy
 	keyword := roles[0].Keyword
-	apis, err := rc.RoleRepository.GetRoleApisByRoleKeyword(c,keyword)
+	apis, err := rc.RoleRepository.GetRoleApisByRoleKeyword(c, keyword)
 	if err != nil {
 		response.Fail(c, nil, err.Error())
 		return
 	}
 	response.Success(c, gin.H{"apis": apis}, "获取角色的权限接口成功")
 }
+
 //@tags role
 // 更新角色的权限接口
 //@router /role/apis/update/:roleId [patch]
@@ -416,7 +423,7 @@ func (rc RoleController) UpdateRoleApisById(c *gin.Context) {
 		return
 	}
 	// 根据path中的角色ID获取该角色信息
-	roles, err := rc.RoleRepository.GetRolesByIds(c,[]uint{uint(roleId)})
+	roles, err := rc.RoleRepository.GetRolesByIds(c, []uint{uint(roleId)})
 	if err != nil {
 		response.Fail(c, nil, err.Error())
 		return
@@ -482,7 +489,7 @@ func (rc RoleController) UpdateRoleApisById(c *gin.Context) {
 	}
 
 	// 更新角色的权限接口
-	err = rc.RoleRepository.UpdateRoleApis(c,roles[0].Keyword, reqRolePolicies)
+	err = rc.RoleRepository.UpdateRoleApis(c, roles[0].Keyword, reqRolePolicies)
 	if err != nil {
 		response.Fail(c, nil, err.Error())
 		return
@@ -491,6 +498,7 @@ func (rc RoleController) UpdateRoleApisById(c *gin.Context) {
 	response.Success(c, nil, "更新角色的权限接口成功")
 
 }
+
 //@tags role
 // 批量删除角色
 //@router /role/delete/batch [delete]
@@ -519,7 +527,7 @@ func (rc RoleController) BatchDeleteRoleByIds(c *gin.Context) {
 	// 前端传来需要删除的角色ID
 	roleIds := req.RoleIds
 	// 获取角色信息
-	roles, err := rc.RoleRepository.GetRolesByIds(c,roleIds)
+	roles, err := rc.RoleRepository.GetRolesByIds(c, roleIds)
 	if err != nil {
 		response.Fail(c, nil, "获取角色信息失败: "+err.Error())
 		return
@@ -538,7 +546,7 @@ func (rc RoleController) BatchDeleteRoleByIds(c *gin.Context) {
 	}
 
 	// 删除角色
-	err = rc.RoleRepository.BatchDeleteRoleByIds(c,roleIds)
+	err = rc.RoleRepository.BatchDeleteRoleByIds(c, roleIds)
 	if err != nil {
 		response.Fail(c, nil, "删除角色失败")
 		return

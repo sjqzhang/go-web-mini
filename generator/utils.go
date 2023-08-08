@@ -1,7 +1,5 @@
 package generator
 
-
-
 // TransToCamel 字符串：下划线转驼峰
 func TransToCamel(s string, firstLowerCase bool) string {
 	data := make([]byte, 0, len(s))
@@ -44,7 +42,6 @@ func TransToUnderline(s string) string {
 	}
 	return string(data[:])
 }
-
 
 // GetTypeMap 获取类型转换map
 func GetTypeMap() map[string]string {

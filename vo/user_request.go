@@ -18,7 +18,6 @@ type CreateUserRequest struct {
 	RoleIds      []uint `form:"roleIds" json:"roleIds" validate:"required"`
 }
 
-
 // 获取用户列表结构体
 type UserListRequest struct {
 	Username string `json:"username" form:"username" `

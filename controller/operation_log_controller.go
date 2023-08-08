@@ -13,6 +13,7 @@ type IOperationLogController interface {
 	GetOperationLogs(c *gin.Context)             // 获取操作日志列表
 	BatchDeleteOperationLogByIds(c *gin.Context) //批量删除操作日志
 }
+
 //@middleware auth
 // @router /api
 type OperationLogController struct {
@@ -48,6 +49,7 @@ func (oc OperationLogController) GetOperationLogs(c *gin.Context) {
 	}
 	response.Success(c, gin.H{"logs": logs, "total": total}, "获取操作日志列表成功")
 }
+
 //@tags log
 // 批量删除操作日志
 // @router /log/operation/delete/batch [delete]

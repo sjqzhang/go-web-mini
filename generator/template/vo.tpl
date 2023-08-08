@@ -32,8 +32,8 @@ type List{{.Table.TableName}}Request struct {
     {{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }}  form:"{{.ColumnName}}"` {{.ColumnComment}}
     {{end}}
      {{end}}
-     PageNum  *uint   `json:"pageNum" form:"pageNum"`
-     PageSize *uint   `json:"pageSize" form:"pageSize"`
+     PageNum  *uint   `json:"pageNum" form:"pageNum"` //第几页
+     PageSize *uint   `json:"pageSize" form:"pageSize"` //每页多少条
 }
 
 
@@ -57,12 +57,12 @@ type Update{{.Table.TableName}}Request struct {
 
 // 删除{{.Table.TableName}} {{.Table.TableComment}}
 type Delete{{.Table.TableName}}Request struct {
-    Ids      []int64 `json:"ids" uri:"ids" form:"ids"`
+    Ids      []int64 `json:"ids" uri:"ids" form:"ids"` //待编号
 }
 
 // 删除{{.Table.TableName}} {{.Table.TableComment}}
 type Get{{.Table.TableName}}Request struct {
-    ID      int64 `json:"id" uri:"id" form:"id"`
+    ID      int64 `json:"id" uri:"id" form:"id"` //待编号
 }
 
 

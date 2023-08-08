@@ -51,37 +51,113 @@ definitions:
   vo.CreateBranchResponse:
     properties:
       code:
+        description: 0:成功，非0:失败
         type: integer
       data:
         $ref: '#/definitions/vo.Branch'
       message:
+        description: 提示信息
+        type: string
+    type: object
+  vo.CreateNewsResponse:
+    properties:
+      code:
+        description: 0:成功，非0:失败
+        type: integer
+      data:
+        $ref: '#/definitions/vo.News'
+      message:
+        description: 提示信息
         type: string
     type: object
   vo.DeleteBranchResponse:
     properties:
       code:
+        description: 0:成功，非0:失败
         type: integer
       data:
         type: integer
       message:
+        description: 提示信息
+        type: string
+    type: object
+  vo.DeleteNewsResponse:
+    properties:
+      code:
+        description: 0:成功，非0:失败
+        type: integer
+      data:
+        type: integer
+      message:
+        description: 提示信息
         type: string
     type: object
   vo.GetBranchResponse:
     properties:
       code:
+        description: 0:成功，非0:失败
         type: integer
       data:
         $ref: '#/definitions/vo.Branch'
       message:
+        description: 提示信息
+        type: string
+    type: object
+  vo.GetNewsResponse:
+    properties:
+      code:
+        description: 0:成功，非0:失败
+        type: integer
+      data:
+        $ref: '#/definitions/vo.News'
+      message:
+        description: 提示信息
         type: string
     type: object
   vo.ListBranchResponse:
     properties:
       code:
+        description: 0:成功，非0:失败
         type: integer
       data:
         $ref: '#/definitions/vo.PagerBranch'
       message:
+        description: 提示信息
+        type: string
+    type: object
+  vo.ListNewsResponse:
+    properties:
+      code:
+        description: 0:成功，非0:失败
+        type: integer
+      data:
+        $ref: '#/definitions/vo.PagerNews'
+      message:
+        description: 提示信息
+        type: string
+    type: object
+  vo.News:
+    properties:
+      content:
+        description: 新闻内容
+        type: string
+      created_at:
+        description: created_at
+        type: string
+      creator:
+        description: 新闻创建者
+        type: string
+      deleted_at:
+        description: deleted_at
+        type: string
+      id:
+        description: id
+        type: integer
+      title:
+        description: 新闻标题
+        type: string
+      updated_at:
+        description: updated_at
         type: string
     type: object
   vo.PagerBranch:
@@ -100,13 +176,42 @@ definitions:
       total:
         type: integer
     type: object
+  vo.PagerNews:
+    properties:
+      extra:
+        additionalProperties: true
+        type: object
+      list:
+        items:
+          $ref: '#/definitions/vo.News'
+        type: array
+      pageNum:
+        type: integer
+      pageSize:
+        type: integer
+      total:
+        type: integer
+    type: object
   vo.UpdateBranchResponse:
     properties:
       code:
+        description: 0:成功，非0:失败
         type: integer
       data:
         $ref: '#/definitions/vo.Branch'
       message:
+        description: 提示信息
+        type: string
+    type: object
+  vo.UpdateNewsResponse:
+    properties:
+      code:
+        description: 0:成功，非0:失败
+        type: integer
+      data:
+        $ref: '#/definitions/vo.News'
+      message:
+        description: 提示信息
         type: string
     type: object
 info:
@@ -153,6 +258,7 @@ paths:
       description: 批量删除branch
       parameters:
       - collectionFormat: csv
+        description: 待编号
         in: query
         items:
           type: integer
@@ -168,7 +274,7 @@ paths:
       security:
       - JWT: []
       tags:
-      - branch
+      - Branch
     get:
       consumes:
       - application/json
@@ -210,10 +316,12 @@ paths:
         in: query
         name: jira_key
         type: string
-      - in: query
+      - description: 第几页
+        in: query
         name: pageNum
         type: integer
-      - in: query
+      - description: 每页多少条
+        in: query
         name: pageSize
         type: integer
       - description: repo
@@ -234,7 +342,7 @@ paths:
       security:
       - JWT: []
       tags:
-      - branch
+      - Branch
     post:
       consumes:
       - application/json
@@ -294,14 +402,15 @@ paths:
       security:
       - JWT: []
       tags:
-      - branch
+      - Branch
   /branch/:id:
     get:
       consumes:
       - application/json
       description: 查询branch列表
       parameters:
-      - in: query
+      - description: 待编号
+        in: query
         name: id
         type: integer
       produces:
@@ -314,7 +423,7 @@ paths:
       security:
       - JWT: []
       tags:
-      - branch
+      - Branch
     put:
       consumes:
       - application/json
@@ -377,27 +486,7 @@ paths:
       security:
       - JWT: []
       tags:
-      - branch
-  /branchTab:
-    delete:
-      description: 批量删除branch
-      responses: {}
-    get:
-      description: 查询单个branch
-      responses: {}
-    post:
-      description: 创建branch
-      responses: {}
-  /branchTab/:id:
-    delete:
-      description: 删除单个branch
-      responses: {}
-    get:
-      description: 查询branch列表
-      responses: {}
-    put:
-      description: 更新branch
-      responses: {}
+      - Branch
   /log/operation/delete/batch:
     delete:
       responses: {}
@@ -440,24 +529,144 @@ paths:
       - menu
   /news:
     delete:
-      description: 批量删除news
-      responses: {}
+      consumes:
+      - application/json
+      description: 批量删除新闻
+      parameters:
+      - collectionFormat: csv
+        description: 待编号
+        in: query
+        items:
+          type: integer
+        name: ids
+        type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.DeleteNewsResponse'
+      security:
+      - JWT: []
+      tags:
+      - News
     get:
-      description: 查询单个news
-      responses: {}
+      consumes:
+      - application/json
+      description: 查询单个新闻
+      parameters:
+      - description: 新闻内容
+        in: query
+        name: content
+        type: string
+      - description: 新闻创建者
+        in: query
+        name: creator
+        type: string
+      - description: 第几页
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页多少条
+        in: query
+        name: pageSize
+        type: integer
+      - description: 新闻标题
+        in: query
+        name: title
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.ListNewsResponse'
+      security:
+      - JWT: []
+      tags:
+      - News
     post:
-      description: 创建news
-      responses: {}
+      consumes:
+      - application/json
+      description: 创建新闻
+      parameters:
+      - description: 新闻内容
+        in: query
+        name: content
+        type: string
+      - description: 新闻创建者
+        in: query
+        name: creator
+        type: string
+      - description: 新闻标题
+        in: query
+        name: title
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.CreateNewsResponse'
+      security:
+      - JWT: []
+      tags:
+      - News
   /news/:id:
-    delete:
-      description: 删除单个news
-      responses: {}
     get:
-      description: 查询news列表
-      responses: {}
+      consumes:
+      - application/json
+      description: 查询新闻列表
+      parameters:
+      - description: 待编号
+        in: query
+        name: id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.GetNewsResponse'
+      security:
+      - JWT: []
+      tags:
+      - News
     put:
-      description: 更新news
-      responses: {}
+      consumes:
+      - application/json
+      description: 更新新闻
+      parameters:
+      - description: 新闻内容
+        in: query
+        name: content
+        type: string
+      - description: 新闻创建者
+        in: query
+        name: creator
+        type: string
+      - in: query
+        name: id
+        type: integer
+      - description: 新闻标题
+        in: query
+        name: title
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.UpdateNewsResponse'
+      security:
+      - JWT: []
+      tags:
+      - News
   /role/apis/get/:roleId:
     get:
       responses: {}

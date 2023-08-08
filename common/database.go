@@ -63,7 +63,7 @@ func InitMysql() {
 		//	TablePrefix: config.Conf.Mysql.TablePrefix + "_",
 		//},
 	})
-	db=db.Debug()
+	db = db.Debug()
 	if err != nil {
 		Log.Panicf("初始化mysql数据库异常: %v", err)
 		panic(fmt.Errorf("初始化mysql数据库异常: %v", err))
@@ -89,6 +89,6 @@ func dbAutoMigrate() {
 		&model.Api{},
 		&model.OperationLog{},
 		&model.News{},
-		&model.BranchTab{},
+		&model.Branch{},
 	)
 }

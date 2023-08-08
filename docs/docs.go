@@ -80,7 +80,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "branch"
+                    "Branch"
                 ],
                 "parameters": [
                     {
@@ -139,11 +139,13 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
+                        "description": "第几页",
                         "name": "pageNum",
                         "in": "query"
                     },
                     {
                         "type": "integer",
+                        "description": "每页多少条",
                         "name": "pageSize",
                         "in": "query"
                     },
@@ -183,7 +185,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "branch"
+                    "Branch"
                 ],
                 "parameters": [
                     {
@@ -276,7 +278,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "branch"
+                    "Branch"
                 ],
                 "parameters": [
                     {
@@ -285,6 +287,7 @@ const docTemplate = `{
                             "type": "integer"
                         },
                         "collectionFormat": "csv",
+                        "description": "待编号",
                         "name": "ids",
                         "in": "query"
                     }
@@ -314,11 +317,12 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "branch"
+                    "Branch"
                 ],
                 "parameters": [
                     {
                         "type": "integer",
+                        "description": "待编号",
                         "name": "id",
                         "in": "query"
                     }
@@ -346,7 +350,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "branch"
+                    "Branch"
                 ],
                 "parameters": [
                     {
@@ -431,34 +435,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/branchTab": {
-            "get": {
-                "description": "查询单个branch",
-                "responses": {}
-            },
-            "post": {
-                "description": "创建branch",
-                "responses": {}
-            },
-            "delete": {
-                "description": "批量删除branch",
-                "responses": {}
-            }
-        },
-        "/branchTab/:id": {
-            "get": {
-                "description": "查询branch列表",
-                "responses": {}
-            },
-            "put": {
-                "description": "更新branch",
-                "responses": {}
-            },
-            "delete": {
-                "description": "删除单个branch",
-                "responses": {}
-            }
-        },
         "/log/operation/delete/batch": {
             "delete": {
                 "tags": [
@@ -525,30 +501,228 @@ const docTemplate = `{
         },
         "/news": {
             "get": {
-                "description": "查询单个news",
-                "responses": {}
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "description": "查询单个新闻",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "News"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "新闻内容",
+                        "name": "content",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "新闻创建者",
+                        "name": "creator",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "第几页",
+                        "name": "pageNum",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页多少条",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "新闻标题",
+                        "name": "title",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/vo.ListNewsResponse"
+                        }
+                    }
+                }
             },
             "post": {
-                "description": "创建news",
-                "responses": {}
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "description": "创建新闻",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "News"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "新闻内容",
+                        "name": "content",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "新闻创建者",
+                        "name": "creator",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "新闻标题",
+                        "name": "title",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/vo.CreateNewsResponse"
+                        }
+                    }
+                }
             },
             "delete": {
-                "description": "批量删除news",
-                "responses": {}
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "description": "批量删除新闻",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "News"
+                ],
+                "parameters": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "待编号",
+                        "name": "ids",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/vo.DeleteNewsResponse"
+                        }
+                    }
+                }
             }
         },
         "/news/:id": {
             "get": {
-                "description": "查询news列表",
-                "responses": {}
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "description": "查询新闻列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "News"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "待编号",
+                        "name": "id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/vo.GetNewsResponse"
+                        }
+                    }
+                }
             },
             "put": {
-                "description": "更新news",
-                "responses": {}
-            },
-            "delete": {
-                "description": "删除单个news",
-                "responses": {}
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "description": "更新新闻",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "News"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "新闻内容",
+                        "name": "content",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "新闻创建者",
+                        "name": "creator",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "新闻标题",
+                        "name": "title",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/vo.UpdateNewsResponse"
+                        }
+                    }
+                }
             }
         },
         "/role/apis/get/:roleId": {
@@ -734,12 +908,30 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "code": {
+                    "description": "0:成功，非0:失败",
                     "type": "integer"
                 },
                 "data": {
                     "$ref": "#/definitions/vo.Branch"
                 },
                 "message": {
+                    "description": "提示信息",
+                    "type": "string"
+                }
+            }
+        },
+        "vo.CreateNewsResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "0:成功，非0:失败",
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/vo.News"
+                },
+                "message": {
+                    "description": "提示信息",
                     "type": "string"
                 }
             }
@@ -748,12 +940,30 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "code": {
+                    "description": "0:成功，非0:失败",
                     "type": "integer"
                 },
                 "data": {
                     "type": "integer"
                 },
                 "message": {
+                    "description": "提示信息",
+                    "type": "string"
+                }
+            }
+        },
+        "vo.DeleteNewsResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "0:成功，非0:失败",
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "integer"
+                },
+                "message": {
+                    "description": "提示信息",
                     "type": "string"
                 }
             }
@@ -762,12 +972,30 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "code": {
+                    "description": "0:成功，非0:失败",
                     "type": "integer"
                 },
                 "data": {
                     "$ref": "#/definitions/vo.Branch"
                 },
                 "message": {
+                    "description": "提示信息",
+                    "type": "string"
+                }
+            }
+        },
+        "vo.GetNewsResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "0:成功，非0:失败",
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/vo.News"
+                },
+                "message": {
+                    "description": "提示信息",
                     "type": "string"
                 }
             }
@@ -776,12 +1004,63 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "code": {
+                    "description": "0:成功，非0:失败",
                     "type": "integer"
                 },
                 "data": {
                     "$ref": "#/definitions/vo.PagerBranch"
                 },
                 "message": {
+                    "description": "提示信息",
+                    "type": "string"
+                }
+            }
+        },
+        "vo.ListNewsResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "0:成功，非0:失败",
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/vo.PagerNews"
+                },
+                "message": {
+                    "description": "提示信息",
+                    "type": "string"
+                }
+            }
+        },
+        "vo.News": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "description": "新闻内容",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "created_at",
+                    "type": "string"
+                },
+                "creator": {
+                    "description": "新闻创建者",
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "description": "deleted_at",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "id",
+                    "type": "integer"
+                },
+                "title": {
+                    "description": "新闻标题",
+                    "type": "string"
+                },
+                "updated_at": {
+                    "description": "updated_at",
                     "type": "string"
                 }
             }
@@ -810,16 +1089,58 @@ const docTemplate = `{
                 }
             }
         },
+        "vo.PagerNews": {
+            "type": "object",
+            "properties": {
+                "extra": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/vo.News"
+                    }
+                },
+                "pageNum": {
+                    "type": "integer"
+                },
+                "pageSize": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
         "vo.UpdateBranchResponse": {
             "type": "object",
             "properties": {
                 "code": {
+                    "description": "0:成功，非0:失败",
                     "type": "integer"
                 },
                 "data": {
                     "$ref": "#/definitions/vo.Branch"
                 },
                 "message": {
+                    "description": "提示信息",
+                    "type": "string"
+                }
+            }
+        },
+        "vo.UpdateNewsResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "0:成功，非0:失败",
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/vo.News"
+                },
+                "message": {
+                    "description": "提示信息",
                     "type": "string"
                 }
             }

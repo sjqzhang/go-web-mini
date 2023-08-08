@@ -50,10 +50,6 @@ func main() {
 
 	gdi.GenGDIRegisterFile(true)
 
-
-
-
-
 	// 注册所有路由
 	r := routes.InitRoutes()
 
@@ -63,7 +59,6 @@ func main() {
 	for i := 0; i < 3; i++ {
 		go logRepository.SaveOperationLogChannel(nil, middleware.OperationLogChan)
 	}
-
 
 	host := "localhost"
 	port := config.Conf.System.Port
