@@ -33,6 +33,7 @@ type TableResult struct {
 	Uri             string
 	TableComment    string
 	TableNameOrigin string
+	TableNameTrim   string
 }
 
 type CommonObject struct {
@@ -148,13 +149,12 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 	// 处理属性
 	handleFields(fields)
 
-
-
 	// 设置表信息
 	tableInfo := tables[0]
-	tableInfo.TableNameOrigin= tableName // 原始表名，带前缀和后缀
+	tableInfo.TableNameOrigin = tableName // 原始表名，带前缀和后缀
 	tableName = strings.Replace(tableName, cfg.TablePrefix, "", 1)
 	tableName = strings.Replace(tableName, cfg.TableSuffix, "", 1)
+	tableInfo.TableNameTrim = tableName // 去掉前缀和后缀的表名
 	tableInfo.TableName = TransToCamel(tableName, false)
 	tableInfo.Uri = TransToCamel(tableName, true)
 
@@ -183,7 +183,7 @@ func checkField(field string) bool {
 func createFiles(obj CommonObject, tableName string) {
 
 	// 创建po
-	createGoFile(obj, tableName, fmt.Sprintf("%v.go",tableName), "../model", "./template/po.tpl", "po")
+	createGoFile(obj, tableName, fmt.Sprintf("%v.go", tableName), "../model", "./template/po.tpl", "po")
 
 	// 创建vo
 	createGoFile(obj, tableName, fmt.Sprintf("%v_request.go", tableName), "../vo", "./template/vo.tpl", "vo")
@@ -412,8 +412,8 @@ func convertTable(con *gorm.DB, query *sql.Rows) []TableResult {
 	for query.Next() {
 		var str TableResult
 		err := con.ScanRows(query, &str)
-		str.TableName =strings.TrimPrefix(str.TableName,cfg.TablePrefix)
-		str.TableName=strings.TrimSuffix(str.TableName,cfg.TableSuffix)
+		str.TableName = strings.TrimPrefix(str.TableName, cfg.TablePrefix)
+		str.TableName = strings.TrimSuffix(str.TableName, cfg.TableSuffix)
 		if err != nil {
 			fmt.Println(err)
 			panic("failed to scan rows")

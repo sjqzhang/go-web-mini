@@ -16,6 +16,15 @@ import (
 	"time"
 )
 
+// @title Swagger Example API
+// @version v1
+// @description This is a sample server Petstore server.
+// @termsOfService http://localhost
+// @BasePath /api
+// @schemes http https
+//@securityDefinitions.apikey JWT
+//@in header
+//@name Authorization
 func main() {
 
 	// 加载配置文件到全局配置结构体

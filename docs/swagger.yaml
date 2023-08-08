@@ -1,0 +1,460 @@
+basePath: /api
+definitions:
+  vo.Branch:
+    properties:
+      branch_name:
+        description: branch_name
+        type: string
+      branch_type:
+        description: branch_type
+        type: integer
+      commit_id:
+        description: commit_id
+        type: string
+      commit_time:
+        description: commit_time
+        type: integer
+      commit_title:
+        description: commit_title
+        type: string
+      committer:
+        description: committer
+        type: string
+      created_at:
+        description: created_at
+        type: string
+      creator:
+        description: creator
+        type: string
+      deleted_at:
+        description: deleted_at
+        type: string
+      id:
+        description: id
+        type: integer
+      is_dev:
+        description: is_dev
+        type: integer
+      jira_key:
+        description: jira_key
+        type: string
+      repo:
+        description: repo
+        type: string
+      sync_time:
+        description: sync_time
+        type: integer
+      updated_at:
+        description: updated_at
+        type: string
+    type: object
+  vo.PagerBranch:
+    properties:
+      extra:
+        additionalProperties: true
+        type: object
+      list:
+        items:
+          $ref: '#/definitions/vo.Branch'
+        type: array
+      pageNum:
+        type: integer
+      pageSize:
+        type: integer
+      total:
+        type: integer
+    type: object
+info:
+  contact: {}
+  description: This is a sample server Petstore server.
+  termsOfService: http://localhost
+  title: Swagger Example API
+  version: v1
+paths:
+  /access/list/user/:userId:
+    get:
+      responses: {}
+  /api/create:
+    post:
+      responses: {}
+  /api/delete/batch:
+    delete:
+      responses: {}
+  /api/list:
+    get:
+      responses: {}
+  /api/tree:
+    get:
+      responses: {}
+  /api/update/:apiId:
+    patch:
+      responses: {}
+  /branch:
+    delete:
+      consumes:
+      - application/json
+      description: 批量删除branch
+      parameters:
+      - collectionFormat: csv
+        in: query
+        items:
+          type: integer
+        name: ids
+        type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: int
+      security:
+      - JWT: []
+      tags:
+      - branch管理
+    get:
+      consumes:
+      - application/json
+      description: 查询单个branch
+      parameters:
+      - description: branch_name
+        in: query
+        name: branch_name
+        type: string
+      - description: branch_type
+        in: query
+        name: branch_type
+        type: integer
+      - description: commit_id
+        in: query
+        name: commit_id
+        type: string
+      - description: commit_time
+        in: query
+        name: commit_time
+        type: integer
+      - description: commit_title
+        in: query
+        name: commit_title
+        type: string
+      - description: committer
+        in: query
+        name: committer
+        type: string
+      - description: creator
+        in: query
+        name: creator
+        type: string
+      - description: is_dev
+        in: query
+        name: is_dev
+        type: integer
+      - description: jira_key
+        in: query
+        name: jira_key
+        type: string
+      - in: query
+        name: pageNum
+        type: integer
+      - in: query
+        name: pageSize
+        type: integer
+      - description: repo
+        in: query
+        name: repo
+        type: string
+      - description: sync_time
+        in: query
+        name: sync_time
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.PagerBranch'
+      security:
+      - JWT: []
+      tags:
+      - branch管理
+    post:
+      consumes:
+      - application/json
+      description: 创建branch
+      parameters:
+      - description: branch_name
+        in: query
+        name: branch_name
+        type: string
+      - description: branch_type
+        in: query
+        name: branch_type
+        type: integer
+      - description: commit_id
+        in: query
+        name: commit_id
+        type: string
+      - description: commit_time
+        in: query
+        name: commit_time
+        type: integer
+      - description: commit_title
+        in: query
+        name: commit_title
+        type: string
+      - description: committer
+        in: query
+        name: committer
+        type: string
+      - description: creator
+        in: query
+        name: creator
+        type: string
+      - description: is_dev
+        in: query
+        name: is_dev
+        type: integer
+      - description: jira_key
+        in: query
+        name: jira_key
+        type: string
+      - description: repo
+        in: query
+        name: repo
+        type: string
+      - description: sync_time
+        in: query
+        name: sync_time
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.Branch'
+      security:
+      - JWT: []
+      tags:
+      - branch管理
+  /branch/:id:
+    delete:
+      consumes:
+      - application/json
+      description: 删除单个branch
+      parameters:
+      - collectionFormat: csv
+        in: query
+        items:
+          type: integer
+        name: ids
+        type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: int
+      security:
+      - JWT: []
+      tags:
+      - branch管理
+    get:
+      consumes:
+      - application/json
+      description: 查询branch列表
+      parameters:
+      - in: query
+        name: id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.Branch'
+      security:
+      - JWT: []
+      tags:
+      - branch管理
+    put:
+      consumes:
+      - application/json
+      description: 更新branch
+      parameters:
+      - description: branch_name
+        in: query
+        name: branch_name
+        type: string
+      - description: branch_type
+        in: query
+        name: branch_type
+        type: integer
+      - description: commit_id
+        in: query
+        name: commit_id
+        type: string
+      - description: commit_time
+        in: query
+        name: commit_time
+        type: integer
+      - description: commit_title
+        in: query
+        name: commit_title
+        type: string
+      - description: committer
+        in: query
+        name: committer
+        type: string
+      - description: creator
+        in: query
+        name: creator
+        type: string
+      - in: query
+        name: id
+        type: integer
+      - description: is_dev
+        in: query
+        name: is_dev
+        type: integer
+      - description: jira_key
+        in: query
+        name: jira_key
+        type: string
+      - description: repo
+        in: query
+        name: repo
+        type: string
+      - description: sync_time
+        in: query
+        name: sync_time
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.Branch'
+      security:
+      - JWT: []
+      tags:
+      - branch管理
+  /branchTab:
+    delete:
+      description: 批量删除branch
+      responses: {}
+    get:
+      description: 查询单个branch
+      responses: {}
+    post:
+      description: 创建branch
+      responses: {}
+  /branchTab/:id:
+    delete:
+      description: 删除单个branch
+      responses: {}
+    get:
+      description: 查询branch列表
+      responses: {}
+    put:
+      description: 更新branch
+      responses: {}
+  /log/operation/delete/batch:
+    delete:
+      responses: {}
+  /log/operation/list:
+    get:
+      responses: {}
+  /menu/access/tree/:userId:
+    get:
+      responses: {}
+  /menu/create:
+    post:
+      responses: {}
+  /menu/delete/batch:
+    delete:
+      responses: {}
+  /menu/list:
+    get:
+      responses: {}
+  /menu/tree:
+    get:
+      responses: {}
+  /menu/update/:menuId:
+    patch:
+      responses: {}
+  /news:
+    delete:
+      description: 批量删除news
+      responses: {}
+    get:
+      description: 查询单个news
+      responses: {}
+    post:
+      description: 创建news
+      responses: {}
+  /news/:id:
+    delete:
+      description: 删除单个news
+      responses: {}
+    get:
+      description: 查询news列表
+      responses: {}
+    put:
+      description: 更新news
+      responses: {}
+  /role/apis/get/:roleId:
+    get:
+      responses: {}
+  /role/apis/update/:roleId:
+    patch:
+      responses: {}
+  /role/create:
+    post:
+      responses: {}
+  /role/delete/batch:
+    delete:
+      responses: {}
+  /role/list:
+    get:
+      responses: {}
+  /role/menus/get/:roleId:
+    get:
+      responses: {}
+  /role/menus/update/:roleId:
+    patch:
+      responses: {}
+  /role/update/:roleId:
+    patch:
+      responses: {}
+  /user:
+    post:
+      responses: {}
+  /user/changePwd:
+    put:
+      responses: {}
+  /user/delete/batch:
+    delete:
+      responses: {}
+  /user/info:
+    post:
+      responses: {}
+  /user/list:
+    get:
+      responses: {}
+  /user/update/:userId:
+    patch:
+      responses: {}
+schemes:
+- http
+- https
+securityDefinitions:
+  JWT:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

@@ -8,8 +8,11 @@ import (
 
 	//"fmt"
 	"github.com/gin-gonic/gin"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"go-web-mini/common"
 	"go-web-mini/config"
+	_ "go-web-mini/docs"
 	"go-web-mini/middleware"
 	"time"
 )
@@ -39,6 +42,7 @@ func InitRoutes() *gin.Engine {
 	// 创建不带中间件的路由:
 	r := gin.New()
 	r.Use(gin.Recovery())
+	r.GET("/swagger/*any",  ginSwagger.WrapHandler(swaggerfiles.Handler, ginSwagger.URL("/swagger/doc.json")))
 
 	// 启用限流中间件
 	// 默认每50毫秒填充一个令牌，最多填充200个

@@ -1,0 +1,713 @@
+{
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample server Petstore server.",
+        "title": "Swagger Example API",
+        "termsOfService": "http://localhost",
+        "contact": {},
+        "version": "v1"
+    },
+    "basePath": "/api",
+    "paths": {
+        "/access/list/user/:userId": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/api/create": {
+            "post": {
+                "responses": {}
+            }
+        },
+        "/api/delete/batch": {
+            "delete": {
+                "responses": {}
+            }
+        },
+        "/api/list": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/api/tree": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/api/update/:apiId": {
+            "patch": {
+                "responses": {}
+            }
+        },
+        "/branch": {
+            "get": {
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "description": "查询单个branch",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "branch管理"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "branch_name",
+                        "name": "branch_name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "branch_type",
+                        "name": "branch_type",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "commit_id",
+                        "name": "commit_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "commit_time",
+                        "name": "commit_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "commit_title",
+                        "name": "commit_title",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "committer",
+                        "name": "committer",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "creator",
+                        "name": "creator",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "is_dev",
+                        "name": "is_dev",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "jira_key",
+                        "name": "jira_key",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "pageNum",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "repo",
+                        "name": "repo",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "sync_time",
+                        "name": "sync_time",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/vo.PagerBranch"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "description": "创建branch",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "branch管理"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "branch_name",
+                        "name": "branch_name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "branch_type",
+                        "name": "branch_type",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "commit_id",
+                        "name": "commit_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "commit_time",
+                        "name": "commit_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "commit_title",
+                        "name": "commit_title",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "committer",
+                        "name": "committer",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "creator",
+                        "name": "creator",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "is_dev",
+                        "name": "is_dev",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "jira_key",
+                        "name": "jira_key",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "repo",
+                        "name": "repo",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "sync_time",
+                        "name": "sync_time",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/vo.Branch"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "description": "批量删除branch",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "branch管理"
+                ],
+                "parameters": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "name": "ids",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                }
+            }
+        },
+        "/branch/:id": {
+            "get": {
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "description": "查询branch列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "branch管理"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "name": "id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/vo.Branch"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "description": "更新branch",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "branch管理"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "branch_name",
+                        "name": "branch_name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "branch_type",
+                        "name": "branch_type",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "commit_id",
+                        "name": "commit_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "commit_time",
+                        "name": "commit_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "commit_title",
+                        "name": "commit_title",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "committer",
+                        "name": "committer",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "creator",
+                        "name": "creator",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "is_dev",
+                        "name": "is_dev",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "jira_key",
+                        "name": "jira_key",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "repo",
+                        "name": "repo",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "sync_time",
+                        "name": "sync_time",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/vo.Branch"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "description": "删除单个branch",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "branch管理"
+                ],
+                "parameters": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "name": "ids",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                }
+            }
+        },
+        "/branchTab": {
+            "get": {
+                "description": "查询单个branch",
+                "responses": {}
+            },
+            "post": {
+                "description": "创建branch",
+                "responses": {}
+            },
+            "delete": {
+                "description": "批量删除branch",
+                "responses": {}
+            }
+        },
+        "/branchTab/:id": {
+            "get": {
+                "description": "查询branch列表",
+                "responses": {}
+            },
+            "put": {
+                "description": "更新branch",
+                "responses": {}
+            },
+            "delete": {
+                "description": "删除单个branch",
+                "responses": {}
+            }
+        },
+        "/log/operation/delete/batch": {
+            "delete": {
+                "responses": {}
+            }
+        },
+        "/log/operation/list": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/menu/access/tree/:userId": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/menu/create": {
+            "post": {
+                "responses": {}
+            }
+        },
+        "/menu/delete/batch": {
+            "delete": {
+                "responses": {}
+            }
+        },
+        "/menu/list": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/menu/tree": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/menu/update/:menuId": {
+            "patch": {
+                "responses": {}
+            }
+        },
+        "/news": {
+            "get": {
+                "description": "查询单个news",
+                "responses": {}
+            },
+            "post": {
+                "description": "创建news",
+                "responses": {}
+            },
+            "delete": {
+                "description": "批量删除news",
+                "responses": {}
+            }
+        },
+        "/news/:id": {
+            "get": {
+                "description": "查询news列表",
+                "responses": {}
+            },
+            "put": {
+                "description": "更新news",
+                "responses": {}
+            },
+            "delete": {
+                "description": "删除单个news",
+                "responses": {}
+            }
+        },
+        "/role/apis/get/:roleId": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/role/apis/update/:roleId": {
+            "patch": {
+                "responses": {}
+            }
+        },
+        "/role/create": {
+            "post": {
+                "responses": {}
+            }
+        },
+        "/role/delete/batch": {
+            "delete": {
+                "responses": {}
+            }
+        },
+        "/role/list": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/role/menus/get/:roleId": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/role/menus/update/:roleId": {
+            "patch": {
+                "responses": {}
+            }
+        },
+        "/role/update/:roleId": {
+            "patch": {
+                "responses": {}
+            }
+        },
+        "/user": {
+            "post": {
+                "responses": {}
+            }
+        },
+        "/user/changePwd": {
+            "put": {
+                "responses": {}
+            }
+        },
+        "/user/delete/batch": {
+            "delete": {
+                "responses": {}
+            }
+        },
+        "/user/info": {
+            "post": {
+                "responses": {}
+            }
+        },
+        "/user/list": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/user/update/:userId": {
+            "patch": {
+                "responses": {}
+            }
+        }
+    },
+    "definitions": {
+        "vo.Branch": {
+            "type": "object",
+            "properties": {
+                "branch_name": {
+                    "description": "branch_name",
+                    "type": "string"
+                },
+                "branch_type": {
+                    "description": "branch_type",
+                    "type": "integer"
+                },
+                "commit_id": {
+                    "description": "commit_id",
+                    "type": "string"
+                },
+                "commit_time": {
+                    "description": "commit_time",
+                    "type": "integer"
+                },
+                "commit_title": {
+                    "description": "commit_title",
+                    "type": "string"
+                },
+                "committer": {
+                    "description": "committer",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "created_at",
+                    "type": "string"
+                },
+                "creator": {
+                    "description": "creator",
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "description": "deleted_at",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "id",
+                    "type": "integer"
+                },
+                "is_dev": {
+                    "description": "is_dev",
+                    "type": "integer"
+                },
+                "jira_key": {
+                    "description": "jira_key",
+                    "type": "string"
+                },
+                "repo": {
+                    "description": "repo",
+                    "type": "string"
+                },
+                "sync_time": {
+                    "description": "sync_time",
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "description": "updated_at",
+                    "type": "string"
+                }
+            }
+        },
+        "vo.PagerBranch": {
+            "type": "object",
+            "properties": {
+                "extra": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/vo.Branch"
+                    }
+                },
+                "pageNum": {
+                    "type": "integer"
+                },
+                "pageSize": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "JWT": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}
