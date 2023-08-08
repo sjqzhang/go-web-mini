@@ -22,11 +22,12 @@ type IMenuController interface {
 	GetUserMenusByUserId(c *gin.Context)    // 获取用户的可访问菜单列表
 	GetUserMenuTreeByUserId(c *gin.Context) // 获取用户的可访问菜单树
 }
+
 //@middleware auth
 //@router /api
 type MenuController struct {
 	MenuRepository repository.IMenuRepository
-	UserRepository  repository.IUserRepository
+	UserRepository repository.IUserRepository
 }
 
 //func NewMenuController() IMenuController {
@@ -45,6 +46,7 @@ func (mc MenuController) GetMenus(c *gin.Context) {
 	}
 	response.Success(c, gin.H{"menus": menus}, "获取菜单列表成功")
 }
+
 //@tags menu
 // 获取菜单树
 //@router /menu/tree [get]
@@ -56,6 +58,7 @@ func (mc MenuController) GetMenuTree(c *gin.Context) {
 	}
 	response.Success(c, gin.H{"menuTree": menuTree}, "获取菜单树成功")
 }
+
 //@tags menu
 // 创建菜单
 //@router /menu/create [post]
@@ -106,6 +109,7 @@ func (mc MenuController) CreateMenu(c *gin.Context) {
 	}
 	response.Success(c, nil, "创建菜单成功")
 }
+
 //@tags menu
 // 更新菜单
 //@router /menu/update/:menuId [patch]
@@ -131,9 +135,9 @@ func (mc MenuController) UpdateMenuById(c *gin.Context) {
 	}
 
 	// 获取当前用户
-	ur :=mc.UserRepository //repository.NewUserRepository()
+	ur := mc.UserRepository //repository.NewUserRepository()
 
-	fmt.Println(ur==nil)
+	fmt.Println(ur == nil)
 	ctxUser, err := ur.GetCurrentUser(nil, c)
 	if err != nil {
 		response.Fail(c, nil, "获取当前用户信息失败")
@@ -167,6 +171,7 @@ func (mc MenuController) UpdateMenuById(c *gin.Context) {
 	response.Success(c, nil, "更新菜单成功")
 
 }
+
 //@tags menu
 // 批量删除菜单
 //@router /menu/delete/batch [delete]
@@ -191,6 +196,7 @@ func (mc MenuController) BatchDeleteMenuByIds(c *gin.Context) {
 
 	response.Success(c, nil, "删除菜单成功")
 }
+
 //@tags menu
 // 根据用户ID获取用户的可访问菜单列表
 //@router /access/list/user/:userId [get]
@@ -209,6 +215,7 @@ func (mc MenuController) GetUserMenusByUserId(c *gin.Context) {
 	}
 	response.Success(c, gin.H{"menus": menus}, "获取用户的可访问菜单列表成功")
 }
+
 //@tags menu
 // 根据用户ID获取用户的可访问菜单树
 //@router /menu/access/tree/:userId [get]

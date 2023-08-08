@@ -28,7 +28,7 @@ type IUserController interface {
 //@router /api
 type UserController struct {
 	UserRepository repository.IUserRepository
-	rr 		   repository.IRoleRepository
+	rr             repository.IRoleRepository
 }
 
 // 构造函数
@@ -52,6 +52,7 @@ func (uc UserController) GetUserInfo(c *gin.Context) {
 		"userInfo": userInfoDto,
 	}, "获取当前用户信息成功")
 }
+
 //@tags user
 // 获取用户列表
 //@router /user/list [get]
@@ -77,6 +78,7 @@ func (uc UserController) GetUsers(c *gin.Context) {
 	}
 	response.Success(c, gin.H{"users": dto.ToUsersDto(users), "total": total}, "获取用户列表成功")
 }
+
 //@tags user
 // 更新用户登录密码
 //@router /user/changePwd [put]
@@ -132,6 +134,7 @@ func (uc UserController) ChangePwd(c *gin.Context) {
 	}
 	response.Success(c, nil, "更新密码成功")
 }
+
 //@tags user
 // 创建用户
 //@router /user [post]
@@ -175,7 +178,7 @@ func (uc UserController) CreateUser(c *gin.Context) {
 	reqRoleIds := req.RoleIds
 	// 根据角色id获取角色
 	//rr := repository.NewRoleRepository()
-	roles, err := uc.rr.GetRolesByIds(c,reqRoleIds)
+	roles, err := uc.rr.GetRolesByIds(c, reqRoleIds)
 	if err != nil {
 		response.Fail(c, nil, "根据角色ID获取角色信息失败: "+err.Error())
 		return
@@ -221,6 +224,7 @@ func (uc UserController) CreateUser(c *gin.Context) {
 	response.Success(c, nil, "创建用户成功")
 
 }
+
 //@tags user
 // 更新用户
 //@router /user/update/:userId [patch]
@@ -275,7 +279,7 @@ func (uc UserController) UpdateUserById(c *gin.Context) {
 	reqRoleIds := req.RoleIds
 	// 根据角色id获取角色
 	//rr := repository.NewRoleRepository()
-	roles, err := uc.rr.GetRolesByIds(c,reqRoleIds)
+	roles, err := uc.rr.GetRolesByIds(c, reqRoleIds)
 	if err != nil {
 		response.Fail(c, nil, "根据角色ID获取角色信息失败: "+err.Error())
 		return
@@ -370,6 +374,7 @@ func (uc UserController) UpdateUserById(c *gin.Context) {
 	response.Success(c, nil, "更新用户成功")
 
 }
+
 //@tags user
 // 批量删除用户
 //@router /user/delete/batch [delete]

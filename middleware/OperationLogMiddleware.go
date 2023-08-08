@@ -14,7 +14,7 @@ import (
 var OperationLogChan = make(chan *model.OperationLog, 30)
 
 func OperationLogMiddleware() gin.HandlerFunc {
-	apiRepository :=gdi.Get(&repository.ApiRepository{}).(*repository.ApiRepository)
+	apiRepository := gdi.Get(&repository.ApiRepository{}).(*repository.ApiRepository)
 	return func(c *gin.Context) {
 		// 开始时间
 		startTime := time.Now()
