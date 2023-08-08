@@ -1,13 +1,14 @@
 package service
 
 import (
-	"context"
-	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/copier"
 
-	"go-web-mini/model"
-	"go-web-mini/repository"
-	"go-web-mini/vo"
+    "context"
+    "github.com/gin-gonic/gin"
+    "github.com/jinzhu/copier"
+
+    "go-web-mini/model"
+    "go-web-mini/repository"
+    "go-web-mini/vo"
 )
 
 /*
@@ -28,23 +29,23 @@ func (s *NewsService) List(ctx context.Context, req *vo.ListNewsRequest) (*vo.Pa
 	if err != nil {
 		return nil, err
 	}
-	var resp vo.PagerNews
-	objs, err := s.newsRepository.List(ctx, &query)
-	if err != nil {
-		return nil, err
-	}
-	err = copier.Copy(&resp, objs)
-	return &resp, err
+    var resp vo.PagerNews
+    objs,err:= s.newsRepository.List(ctx, &query)
+    if err != nil {
+        return nil, err
+    }
+    err = copier.Copy(&resp, objs)
+    return &resp, err
 }
 
 func (s *NewsService) GetById(ctx context.Context, req *vo.GetNewsRequest) (*vo.News, error) {
-	obj, err := s.newsRepository.GetById(ctx, req.ID)
-	if err != nil {
-		return nil, err
-	}
-	var resp vo.News
-	err = copier.Copy(&resp, obj)
-	return &resp, err
+    obj,err:= s.newsRepository.GetById(ctx, req.ID)
+    if err != nil {
+        return nil, err
+    }
+    var resp vo.News
+    err = copier.Copy(&resp, obj)
+    return &resp, err
 }
 
 func (s *NewsService) Create(ctx *gin.Context, req *vo.CreateNewsRequest) (*vo.News, error) {
@@ -54,13 +55,14 @@ func (s *NewsService) Create(ctx *gin.Context, req *vo.CreateNewsRequest) (*vo.N
 		return nil, err
 	}
 	var resp vo.News
-	_, err = s.newsRepository.Create(ctx, &obj)
+	_,err= s.newsRepository.Create(ctx, &obj)
 	if err != nil {
-		return nil, err
-	}
-	err = copier.Copy(&resp, &obj)
-	return &resp, err
+        return nil, err
+    }
+    err = copier.Copy(&resp, &obj)
+    return &resp, err
 }
+
 
 func (s *NewsService) Update(ctx *gin.Context, req *vo.UpdateNewsRequest) (*vo.News, error) {
 	var obj model.News
@@ -69,14 +71,17 @@ func (s *NewsService) Update(ctx *gin.Context, req *vo.UpdateNewsRequest) (*vo.N
 		return nil, err
 	}
 	var resp vo.News
-	_, err = s.newsRepository.Update(ctx, &obj)
+	_,err= s.newsRepository.Update(ctx, &obj)
 	if err != nil {
-		return nil, err
-	}
-	err = copier.Copy(&resp, &obj)
-	return &resp, err
+        return nil, err
+    }
+    err = copier.Copy(&resp, &obj)
+    return &resp, err
 }
+
 
 func (s *NewsService) Delete(ctx *gin.Context, req *vo.DeleteNewsRequest) (int64, error) {
 	return s.newsRepository.Delete(ctx, req.Ids)
 }
+
+
