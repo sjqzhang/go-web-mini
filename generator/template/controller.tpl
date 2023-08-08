@@ -47,7 +47,7 @@ func (c *{{.Table.TableName}}Controller) GetById(ctx *gin.Context, req *vo.Get{{
 // @Security JWT
 // @Accept       json
 // @Produce      json
-//@param req    query  vo.Create{{.Table.TableName}}Request  false "入参req"
+//@param req    body  vo.Create{{.Table.TableName}}Request  false "入参req"
 //@success 200 {object} vo.Create{{.Table.TableName}}Response
 //@middleware auth,transition
 // @router /{{.Table.Uri}} [post]
@@ -61,7 +61,7 @@ func (c *{{.Table.TableName}}Controller) Create(ctx *gin.Context, req *vo.Create
 // @Security JWT
 // @Accept       json
 // @Produce      json
-//@param req    query  vo.Delete{{.Table.TableName}}Request  false  "入参req"
+//@param req    body  vo.Delete{{.Table.TableName}}Request  false  "入参req"
 //@success 200  {object} vo.Delete{{.Table.TableName}}Response
 //@middleware auth,transition
 // @router /{{.Table.Uri}} [delete]
@@ -75,7 +75,7 @@ func (c *{{.Table.TableName}}Controller) DeleteBatch(ctx *gin.Context, req *vo.D
 // @Security JWT
 // @Accept       json
 // @Produce      json
-//@param req    query  vo.Update{{.Table.TableName}}Request  false  "入参req"
+//@param req    body  vo.Update{{.Table.TableName}}Request  false  "入参req"
 //@success 200 {object} vo.Update{{.Table.TableName}}Response
 //@middleware auth,transition
 // @router /{{.Table.Uri}}/:id [put]

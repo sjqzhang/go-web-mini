@@ -1,13 +1,14 @@
 package service
 
 import (
-	"context"
-	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/copier"
 
-	"go-web-mini/model"
-	"go-web-mini/repository"
-	"go-web-mini/vo"
+    "context"
+    "github.com/gin-gonic/gin"
+    "github.com/jinzhu/copier"
+
+    "go-web-mini/model"
+    "go-web-mini/repository"
+    "go-web-mini/vo"
 )
 
 /*
@@ -28,23 +29,23 @@ func (s *BranchService) List(ctx context.Context, req *vo.ListBranchRequest) (*v
 	if err != nil {
 		return nil, err
 	}
-	var resp vo.PagerBranch
-	objs, err := s.branchRepository.List(ctx, &query)
-	if err != nil {
-		return nil, err
-	}
-	err = copier.Copy(&resp, objs)
-	return &resp, err
+    var resp vo.PagerBranch
+    objs,err:= s.branchRepository.List(ctx, &query)
+    if err != nil {
+        return nil, err
+    }
+    err = copier.Copy(&resp, objs)
+    return &resp, err
 }
 
 func (s *BranchService) GetById(ctx context.Context, req *vo.GetBranchRequest) (*vo.Branch, error) {
-	obj, err := s.branchRepository.GetById(ctx, req.ID)
-	if err != nil {
-		return nil, err
-	}
-	var resp vo.Branch
-	err = copier.Copy(&resp, obj)
-	return &resp, err
+    obj,err:= s.branchRepository.GetById(ctx, req.ID)
+    if err != nil {
+        return nil, err
+    }
+    var resp vo.Branch
+    err = copier.Copy(&resp, obj)
+    return &resp, err
 }
 
 func (s *BranchService) Create(ctx *gin.Context, req *vo.CreateBranchRequest) (*vo.Branch, error) {
@@ -54,13 +55,14 @@ func (s *BranchService) Create(ctx *gin.Context, req *vo.CreateBranchRequest) (*
 		return nil, err
 	}
 	var resp vo.Branch
-	_, err = s.branchRepository.Create(ctx, &obj)
+	_,err= s.branchRepository.Create(ctx, &obj)
 	if err != nil {
-		return nil, err
-	}
-	err = copier.Copy(&resp, &obj)
-	return &resp, err
+        return nil, err
+    }
+    err = copier.Copy(&resp, &obj)
+    return &resp, err
 }
+
 
 func (s *BranchService) Update(ctx *gin.Context, req *vo.UpdateBranchRequest) (*vo.Branch, error) {
 	var obj model.Branch
@@ -69,14 +71,17 @@ func (s *BranchService) Update(ctx *gin.Context, req *vo.UpdateBranchRequest) (*
 		return nil, err
 	}
 	var resp vo.Branch
-	_, err = s.branchRepository.Update(ctx, &obj)
+	_,err= s.branchRepository.Update(ctx, &obj)
 	if err != nil {
-		return nil, err
-	}
-	err = copier.Copy(&resp, &obj)
-	return &resp, err
+        return nil, err
+    }
+    err = copier.Copy(&resp, &obj)
+    return &resp, err
 }
+
 
 func (s *BranchService) Delete(ctx *gin.Context, req *vo.DeleteBranchRequest) (int64, error) {
 	return s.branchRepository.Delete(ctx, req.Ids)
 }
+
+

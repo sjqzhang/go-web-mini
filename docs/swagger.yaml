@@ -48,6 +48,42 @@ definitions:
         description: updated_at
         type: string
     type: object
+  vo.CreateBranchRequest:
+    properties:
+      branch_name:
+        description: branch_name
+        type: string
+      branch_type:
+        description: branch_type
+        type: integer
+      commit_id:
+        description: commit_id
+        type: string
+      commit_time:
+        description: commit_time
+        type: integer
+      commit_title:
+        description: commit_title
+        type: string
+      committer:
+        description: committer
+        type: string
+      creator:
+        description: creator
+        type: string
+      is_dev:
+        description: is_dev
+        type: integer
+      jira_key:
+        description: jira_key
+        type: string
+      repo:
+        description: repo
+        type: string
+      sync_time:
+        description: sync_time
+        type: integer
+    type: object
   vo.CreateBranchResponse:
     properties:
       code:
@@ -57,6 +93,18 @@ definitions:
         $ref: '#/definitions/vo.Branch'
       message:
         description: 提示信息
+        type: string
+    type: object
+  vo.CreateNewsRequest:
+    properties:
+      content:
+        description: 新闻内容
+        type: string
+      creator:
+        description: 新闻创建者
+        type: string
+      title:
+        description: 新闻标题
         type: string
     type: object
   vo.CreateNewsResponse:
@@ -70,6 +118,14 @@ definitions:
         description: 提示信息
         type: string
     type: object
+  vo.DeleteBranchRequest:
+    properties:
+      ids:
+        description: 待编号
+        items:
+          type: integer
+        type: array
+    type: object
   vo.DeleteBranchResponse:
     properties:
       code:
@@ -80,6 +136,14 @@ definitions:
       message:
         description: 提示信息
         type: string
+    type: object
+  vo.DeleteNewsRequest:
+    properties:
+      ids:
+        description: 待编号
+        items:
+          type: integer
+        type: array
     type: object
   vo.DeleteNewsResponse:
     properties:
@@ -192,6 +256,44 @@ definitions:
       total:
         type: integer
     type: object
+  vo.UpdateBranchRequest:
+    properties:
+      branch_name:
+        description: branch_name
+        type: string
+      branch_type:
+        description: branch_type
+        type: integer
+      commit_id:
+        description: commit_id
+        type: string
+      commit_time:
+        description: commit_time
+        type: integer
+      commit_title:
+        description: commit_title
+        type: string
+      committer:
+        description: committer
+        type: string
+      creator:
+        description: creator
+        type: string
+      id:
+        type: integer
+      is_dev:
+        description: is_dev
+        type: integer
+      jira_key:
+        description: jira_key
+        type: string
+      repo:
+        description: repo
+        type: string
+      sync_time:
+        description: sync_time
+        type: integer
+    type: object
   vo.UpdateBranchResponse:
     properties:
       code:
@@ -201,6 +303,20 @@ definitions:
         $ref: '#/definitions/vo.Branch'
       message:
         description: 提示信息
+        type: string
+    type: object
+  vo.UpdateNewsRequest:
+    properties:
+      content:
+        description: 新闻内容
+        type: string
+      creator:
+        description: 新闻创建者
+        type: string
+      id:
+        type: integer
+      title:
+        description: 新闻标题
         type: string
     type: object
   vo.UpdateNewsResponse:
@@ -257,13 +373,11 @@ paths:
       - application/json
       description: 批量删除branch
       parameters:
-      - collectionFormat: csv
-        description: 待编号
-        in: query
-        items:
-          type: integer
-        name: ids
-        type: array
+      - description: 入参req
+        in: body
+        name: req
+        schema:
+          $ref: '#/definitions/vo.DeleteBranchRequest'
       produces:
       - application/json
       responses:
@@ -348,50 +462,11 @@ paths:
       - application/json
       description: 创建branch
       parameters:
-      - description: branch_name
-        in: query
-        name: branch_name
-        type: string
-      - description: branch_type
-        in: query
-        name: branch_type
-        type: integer
-      - description: commit_id
-        in: query
-        name: commit_id
-        type: string
-      - description: commit_time
-        in: query
-        name: commit_time
-        type: integer
-      - description: commit_title
-        in: query
-        name: commit_title
-        type: string
-      - description: committer
-        in: query
-        name: committer
-        type: string
-      - description: creator
-        in: query
-        name: creator
-        type: string
-      - description: is_dev
-        in: query
-        name: is_dev
-        type: integer
-      - description: jira_key
-        in: query
-        name: jira_key
-        type: string
-      - description: repo
-        in: query
-        name: repo
-        type: string
-      - description: sync_time
-        in: query
-        name: sync_time
-        type: integer
+      - description: 入参req
+        in: body
+        name: req
+        schema:
+          $ref: '#/definitions/vo.CreateBranchRequest'
       produces:
       - application/json
       responses:
@@ -429,53 +504,11 @@ paths:
       - application/json
       description: 更新branch
       parameters:
-      - description: branch_name
-        in: query
-        name: branch_name
-        type: string
-      - description: branch_type
-        in: query
-        name: branch_type
-        type: integer
-      - description: commit_id
-        in: query
-        name: commit_id
-        type: string
-      - description: commit_time
-        in: query
-        name: commit_time
-        type: integer
-      - description: commit_title
-        in: query
-        name: commit_title
-        type: string
-      - description: committer
-        in: query
-        name: committer
-        type: string
-      - description: creator
-        in: query
-        name: creator
-        type: string
-      - in: query
-        name: id
-        type: integer
-      - description: is_dev
-        in: query
-        name: is_dev
-        type: integer
-      - description: jira_key
-        in: query
-        name: jira_key
-        type: string
-      - description: repo
-        in: query
-        name: repo
-        type: string
-      - description: sync_time
-        in: query
-        name: sync_time
-        type: integer
+      - description: 入参req
+        in: body
+        name: req
+        schema:
+          $ref: '#/definitions/vo.UpdateBranchRequest'
       produces:
       - application/json
       responses:
@@ -533,13 +566,11 @@ paths:
       - application/json
       description: 批量删除新闻
       parameters:
-      - collectionFormat: csv
-        description: 待编号
-        in: query
-        items:
-          type: integer
-        name: ids
-        type: array
+      - description: 入参req
+        in: body
+        name: req
+        schema:
+          $ref: '#/definitions/vo.DeleteNewsRequest'
       produces:
       - application/json
       responses:
@@ -592,18 +623,11 @@ paths:
       - application/json
       description: 创建新闻
       parameters:
-      - description: 新闻内容
-        in: query
-        name: content
-        type: string
-      - description: 新闻创建者
-        in: query
-        name: creator
-        type: string
-      - description: 新闻标题
-        in: query
-        name: title
-        type: string
+      - description: 入参req
+        in: body
+        name: req
+        schema:
+          $ref: '#/definitions/vo.CreateNewsRequest'
       produces:
       - application/json
       responses:
@@ -641,21 +665,11 @@ paths:
       - application/json
       description: 更新新闻
       parameters:
-      - description: 新闻内容
-        in: query
-        name: content
-        type: string
-      - description: 新闻创建者
-        in: query
-        name: creator
-        type: string
-      - in: query
-        name: id
-        type: integer
-      - description: 新闻标题
-        in: query
-        name: title
-        type: string
+      - description: 入参req
+        in: body
+        name: req
+        schema:
+          $ref: '#/definitions/vo.UpdateNewsRequest'
       produces:
       - application/json
       responses:

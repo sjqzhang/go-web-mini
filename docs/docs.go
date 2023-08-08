@@ -189,70 +189,12 @@ const docTemplate = `{
                 ],
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "branch_name",
-                        "name": "branch_name",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "branch_type",
-                        "name": "branch_type",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "commit_id",
-                        "name": "commit_id",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "commit_time",
-                        "name": "commit_time",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "commit_title",
-                        "name": "commit_title",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "committer",
-                        "name": "committer",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "creator",
-                        "name": "creator",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "is_dev",
-                        "name": "is_dev",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "jira_key",
-                        "name": "jira_key",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "repo",
-                        "name": "repo",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "sync_time",
-                        "name": "sync_time",
-                        "in": "query"
+                        "description": "入参req",
+                        "name": "req",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/vo.CreateBranchRequest"
+                        }
                     }
                 ],
                 "responses": {
@@ -282,14 +224,12 @@ const docTemplate = `{
                 ],
                 "parameters": [
                     {
-                        "type": "array",
-                        "items": {
-                            "type": "integer"
-                        },
-                        "collectionFormat": "csv",
-                        "description": "待编号",
-                        "name": "ids",
-                        "in": "query"
+                        "description": "入参req",
+                        "name": "req",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/vo.DeleteBranchRequest"
+                        }
                     }
                 ],
                 "responses": {
@@ -354,75 +294,12 @@ const docTemplate = `{
                 ],
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "branch_name",
-                        "name": "branch_name",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "branch_type",
-                        "name": "branch_type",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "commit_id",
-                        "name": "commit_id",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "commit_time",
-                        "name": "commit_time",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "commit_title",
-                        "name": "commit_title",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "committer",
-                        "name": "committer",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "creator",
-                        "name": "creator",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "name": "id",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "is_dev",
-                        "name": "is_dev",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "jira_key",
-                        "name": "jira_key",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "repo",
-                        "name": "repo",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "sync_time",
-                        "name": "sync_time",
-                        "in": "query"
+                        "description": "入参req",
+                        "name": "req",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/vo.UpdateBranchRequest"
+                        }
                     }
                 ],
                 "responses": {
@@ -575,22 +452,12 @@ const docTemplate = `{
                 ],
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "新闻内容",
-                        "name": "content",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "新闻创建者",
-                        "name": "creator",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "新闻标题",
-                        "name": "title",
-                        "in": "query"
+                        "description": "入参req",
+                        "name": "req",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/vo.CreateNewsRequest"
+                        }
                     }
                 ],
                 "responses": {
@@ -620,14 +487,12 @@ const docTemplate = `{
                 ],
                 "parameters": [
                     {
-                        "type": "array",
-                        "items": {
-                            "type": "integer"
-                        },
-                        "collectionFormat": "csv",
-                        "description": "待编号",
-                        "name": "ids",
-                        "in": "query"
+                        "description": "入参req",
+                        "name": "req",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/vo.DeleteNewsRequest"
+                        }
                     }
                 ],
                 "responses": {
@@ -692,27 +557,12 @@ const docTemplate = `{
                 ],
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "新闻内容",
-                        "name": "content",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "新闻创建者",
-                        "name": "creator",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "name": "id",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "新闻标题",
-                        "name": "title",
-                        "in": "query"
+                        "description": "入参req",
+                        "name": "req",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/vo.UpdateNewsRequest"
+                        }
                     }
                 ],
                 "responses": {
@@ -904,6 +754,55 @@ const docTemplate = `{
                 }
             }
         },
+        "vo.CreateBranchRequest": {
+            "type": "object",
+            "properties": {
+                "branch_name": {
+                    "description": "branch_name",
+                    "type": "string"
+                },
+                "branch_type": {
+                    "description": "branch_type",
+                    "type": "integer"
+                },
+                "commit_id": {
+                    "description": "commit_id",
+                    "type": "string"
+                },
+                "commit_time": {
+                    "description": "commit_time",
+                    "type": "integer"
+                },
+                "commit_title": {
+                    "description": "commit_title",
+                    "type": "string"
+                },
+                "committer": {
+                    "description": "committer",
+                    "type": "string"
+                },
+                "creator": {
+                    "description": "creator",
+                    "type": "string"
+                },
+                "is_dev": {
+                    "description": "is_dev",
+                    "type": "integer"
+                },
+                "jira_key": {
+                    "description": "jira_key",
+                    "type": "string"
+                },
+                "repo": {
+                    "description": "repo",
+                    "type": "string"
+                },
+                "sync_time": {
+                    "description": "sync_time",
+                    "type": "integer"
+                }
+            }
+        },
         "vo.CreateBranchResponse": {
             "type": "object",
             "properties": {
@@ -916,6 +815,23 @@ const docTemplate = `{
                 },
                 "message": {
                     "description": "提示信息",
+                    "type": "string"
+                }
+            }
+        },
+        "vo.CreateNewsRequest": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "description": "新闻内容",
+                    "type": "string"
+                },
+                "creator": {
+                    "description": "新闻创建者",
+                    "type": "string"
+                },
+                "title": {
+                    "description": "新闻标题",
                     "type": "string"
                 }
             }
@@ -936,6 +852,18 @@ const docTemplate = `{
                 }
             }
         },
+        "vo.DeleteBranchRequest": {
+            "type": "object",
+            "properties": {
+                "ids": {
+                    "description": "待编号",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            }
+        },
         "vo.DeleteBranchResponse": {
             "type": "object",
             "properties": {
@@ -949,6 +877,18 @@ const docTemplate = `{
                 "message": {
                     "description": "提示信息",
                     "type": "string"
+                }
+            }
+        },
+        "vo.DeleteNewsRequest": {
+            "type": "object",
+            "properties": {
+                "ids": {
+                    "description": "待编号",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
                 }
             }
         },
@@ -1113,6 +1053,58 @@ const docTemplate = `{
                 }
             }
         },
+        "vo.UpdateBranchRequest": {
+            "type": "object",
+            "properties": {
+                "branch_name": {
+                    "description": "branch_name",
+                    "type": "string"
+                },
+                "branch_type": {
+                    "description": "branch_type",
+                    "type": "integer"
+                },
+                "commit_id": {
+                    "description": "commit_id",
+                    "type": "string"
+                },
+                "commit_time": {
+                    "description": "commit_time",
+                    "type": "integer"
+                },
+                "commit_title": {
+                    "description": "commit_title",
+                    "type": "string"
+                },
+                "committer": {
+                    "description": "committer",
+                    "type": "string"
+                },
+                "creator": {
+                    "description": "creator",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "is_dev": {
+                    "description": "is_dev",
+                    "type": "integer"
+                },
+                "jira_key": {
+                    "description": "jira_key",
+                    "type": "string"
+                },
+                "repo": {
+                    "description": "repo",
+                    "type": "string"
+                },
+                "sync_time": {
+                    "description": "sync_time",
+                    "type": "integer"
+                }
+            }
+        },
         "vo.UpdateBranchResponse": {
             "type": "object",
             "properties": {
@@ -1125,6 +1117,26 @@ const docTemplate = `{
                 },
                 "message": {
                     "description": "提示信息",
+                    "type": "string"
+                }
+            }
+        },
+        "vo.UpdateNewsRequest": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "description": "新闻内容",
+                    "type": "string"
+                },
+                "creator": {
+                    "description": "新闻创建者",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "title": {
+                    "description": "新闻标题",
                     "type": "string"
                 }
             }
