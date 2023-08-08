@@ -120,22 +120,32 @@ paths:
     get:
       responses: {}
       tags:
-      - 菜单管理
+      - menu
   /api/create:
     post:
       responses: {}
+      tags:
+      - api
   /api/delete/batch:
     delete:
       responses: {}
+      tags:
+      - api
   /api/list:
     get:
       responses: {}
+      tags:
+      - api
   /api/tree:
     get:
       responses: {}
+      tags:
+      - api
   /api/update/:apiId:
     patch:
       responses: {}
+      tags:
+      - api
   /branch:
     delete:
       consumes:
@@ -391,39 +401,43 @@ paths:
   /log/operation/delete/batch:
     delete:
       responses: {}
+      tags:
+      - log
   /log/operation/list:
     get:
       responses: {}
+      tags:
+      - log
   /menu/access/tree/:userId:
     get:
       responses: {}
       tags:
-      - 菜单管理
+      - menu
   /menu/create:
     post:
       responses: {}
       tags:
-      - 菜单管理
+      - menu
   /menu/delete/batch:
     delete:
       responses: {}
       tags:
-      - 菜单管理
+      - menu
   /menu/list:
     get:
       responses: {}
       tags:
-      - 菜单管理
+      - menu
   /menu/tree:
     get:
       responses: {}
       tags:
-      - 菜单管理
+      - menu
   /menu/update/:menuId:
     patch:
       responses: {}
       tags:
-      - 菜单管理
+      - menu
   /news:
     delete:
       description: 批量删除news
@@ -448,72 +462,72 @@ paths:
     get:
       responses: {}
       tags:
-      - 角色管理
+      - role
   /role/apis/update/:roleId:
     patch:
       responses: {}
       tags:
-      - 角色管理
+      - role
   /role/create:
     post:
       responses: {}
       tags:
-      - 角色管理
+      - role
   /role/delete/batch:
     delete:
       responses: {}
       tags:
-      - 角色管理
+      - role
   /role/list:
     get:
       responses: {}
       tags:
-      - 角色管理
+      - role
   /role/menus/get/:roleId:
     get:
       responses: {}
       tags:
-      - 角色管理
+      - role
   /role/menus/update/:roleId:
     patch:
       responses: {}
       tags:
-      - 角色管理
+      - role
   /role/update/:roleId:
     patch:
       responses: {}
       tags:
-      - 角色管理
+      - role
   /user:
     post:
       responses: {}
       tags:
-      - 用户管理
+      - user
   /user/changePwd:
     put:
       responses: {}
       tags:
-      - 用户管理
+      - user
   /user/delete/batch:
     delete:
       responses: {}
       tags:
-      - 用户管理
+      - user
   /user/info:
     post:
       responses: {}
       tags:
-      - 用户管理
+      - user
   /user/list:
     get:
       responses: {}
       tags:
-      - 用户管理
+      - user
   /user/update/:userId:
     patch:
       responses: {}
       tags:
-      - 用户管理
+      - user
 schemes:
 - http
 - https

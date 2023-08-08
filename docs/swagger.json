@@ -16,33 +16,48 @@
         "/access/list/user/:userId": {
             "get": {
                 "tags": [
-                    "菜单管理"
+                    "menu"
                 ],
                 "responses": {}
             }
         },
         "/api/create": {
             "post": {
+                "tags": [
+                    "api"
+                ],
                 "responses": {}
             }
         },
         "/api/delete/batch": {
             "delete": {
+                "tags": [
+                    "api"
+                ],
                 "responses": {}
             }
         },
         "/api/list": {
             "get": {
+                "tags": [
+                    "api"
+                ],
                 "responses": {}
             }
         },
         "/api/tree": {
             "get": {
+                "tags": [
+                    "api"
+                ],
                 "responses": {}
             }
         },
         "/api/update/:apiId": {
             "patch": {
+                "tags": [
+                    "api"
+                ],
                 "responses": {}
             }
         },
@@ -442,18 +457,24 @@
         },
         "/log/operation/delete/batch": {
             "delete": {
+                "tags": [
+                    "log"
+                ],
                 "responses": {}
             }
         },
         "/log/operation/list": {
             "get": {
+                "tags": [
+                    "log"
+                ],
                 "responses": {}
             }
         },
         "/menu/access/tree/:userId": {
             "get": {
                 "tags": [
-                    "菜单管理"
+                    "menu"
                 ],
                 "responses": {}
             }
@@ -461,7 +482,7 @@
         "/menu/create": {
             "post": {
                 "tags": [
-                    "菜单管理"
+                    "menu"
                 ],
                 "responses": {}
             }
@@ -469,7 +490,7 @@
         "/menu/delete/batch": {
             "delete": {
                 "tags": [
-                    "菜单管理"
+                    "menu"
                 ],
                 "responses": {}
             }
@@ -477,7 +498,7 @@
         "/menu/list": {
             "get": {
                 "tags": [
-                    "菜单管理"
+                    "menu"
                 ],
                 "responses": {}
             }
@@ -485,7 +506,7 @@
         "/menu/tree": {
             "get": {
                 "tags": [
-                    "菜单管理"
+                    "menu"
                 ],
                 "responses": {}
             }
@@ -493,7 +514,7 @@
         "/menu/update/:menuId": {
             "patch": {
                 "tags": [
-                    "菜单管理"
+                    "menu"
                 ],
                 "responses": {}
             }
@@ -529,7 +550,7 @@
         "/role/apis/get/:roleId": {
             "get": {
                 "tags": [
-                    "角色管理"
+                    "role"
                 ],
                 "responses": {}
             }
@@ -537,7 +558,7 @@
         "/role/apis/update/:roleId": {
             "patch": {
                 "tags": [
-                    "角色管理"
+                    "role"
                 ],
                 "responses": {}
             }
@@ -545,7 +566,7 @@
         "/role/create": {
             "post": {
                 "tags": [
-                    "角色管理"
+                    "role"
                 ],
                 "responses": {}
             }
@@ -553,7 +574,7 @@
         "/role/delete/batch": {
             "delete": {
                 "tags": [
-                    "角色管理"
+                    "role"
                 ],
                 "responses": {}
             }
@@ -561,7 +582,7 @@
         "/role/list": {
             "get": {
                 "tags": [
-                    "角色管理"
+                    "role"
                 ],
                 "responses": {}
             }
@@ -569,7 +590,7 @@
         "/role/menus/get/:roleId": {
             "get": {
                 "tags": [
-                    "角色管理"
+                    "role"
                 ],
                 "responses": {}
             }
@@ -577,7 +598,7 @@
         "/role/menus/update/:roleId": {
             "patch": {
                 "tags": [
-                    "角色管理"
+                    "role"
                 ],
                 "responses": {}
             }
@@ -585,7 +606,7 @@
         "/role/update/:roleId": {
             "patch": {
                 "tags": [
-                    "角色管理"
+                    "role"
                 ],
                 "responses": {}
             }
@@ -593,7 +614,7 @@
         "/user": {
             "post": {
                 "tags": [
-                    "用户管理"
+                    "user"
                 ],
                 "responses": {}
             }
@@ -601,7 +622,7 @@
         "/user/changePwd": {
             "put": {
                 "tags": [
-                    "用户管理"
+                    "user"
                 ],
                 "responses": {}
             }
@@ -609,7 +630,7 @@
         "/user/delete/batch": {
             "delete": {
                 "tags": [
-                    "用户管理"
+                    "user"
                 ],
                 "responses": {}
             }
@@ -617,7 +638,7 @@
         "/user/info": {
             "post": {
                 "tags": [
-                    "用户管理"
+                    "user"
                 ],
                 "responses": {}
             }
@@ -625,7 +646,7 @@
         "/user/list": {
             "get": {
                 "tags": [
-                    "用户管理"
+                    "user"
                 ],
                 "responses": {}
             }
@@ -633,7 +654,7 @@
         "/user/update/:userId": {
             "patch": {
                 "tags": [
-                    "用户管理"
+                    "user"
                 ],
                 "responses": {}
             }

@@ -24,7 +24,7 @@ type OperationLogController struct {
 //	operationLogController := OperationLogController{operationLogRepository: operationLogRepository}
 //	return operationLogController
 //}
-
+//@tags log
 // 获取操作日志列表
 // @router /log/operation/list [get]
 func (oc OperationLogController) GetOperationLogs(c *gin.Context) {
@@ -48,7 +48,7 @@ func (oc OperationLogController) GetOperationLogs(c *gin.Context) {
 	}
 	response.Success(c, gin.H{"logs": logs, "total": total}, "获取操作日志列表成功")
 }
-
+//@tags log
 // 批量删除操作日志
 // @router /log/operation/delete/batch [delete]
 func (oc OperationLogController) BatchDeleteOperationLogByIds(c *gin.Context) {
