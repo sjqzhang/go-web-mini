@@ -15,12 +15,12 @@ type {{.Table.TableName}}Controller struct {
 }
 
 //@description 查询单个{{.Table.TableComment}}
-//@tags {{.Table.TableComment}}管理
+//@tags {{.Table.TableComment}}
 // @Security JWT
 // @Accept       json
 // @Produce      json
-//@param req    query  vo.List{{.Table.TableName}}Request  false  "name search by q"  Format(email)
-//@success 200 {object} vo.Pager{{.Table.TableName}}
+//@param req    query  vo.List{{.Table.TableName}}Request  false  "入参req"
+//@success 200 {object} vo.List{{.Table.TableName}}Response
 //@middleware auth,transition
 // @router /{{.Table.Uri}} [get]
 func (c *{{.Table.TableName}}Controller) List(ctx *gin.Context, req *vo.List{{.Table.TableName}}Request) (interface{}, error) {
@@ -29,12 +29,12 @@ func (c *{{.Table.TableName}}Controller) List(ctx *gin.Context, req *vo.List{{.T
 
 
 //@description 查询{{.Table.TableComment}}列表
-//@tags {{.Table.TableComment}}管理
+//@tags {{.Table.TableComment}}
 // @Security JWT
 // @Accept       json
 // @Produce      json
-//@param req    query  vo.Get{{.Table.TableName}}Request  false  "name search by q"  Format(email)
-//@success 200 {object} vo.{{.Table.TableName}}
+//@param req    query  vo.Get{{.Table.TableName}}Request  false  "入参req"
+//@success 200 {object} vo.Get{{.Table.TableName}}Response
 //@middleware auth,transition
 // @router /{{.Table.Uri}}/:id [get]
 func (c *{{.Table.TableName}}Controller) GetById(ctx *gin.Context, req *vo.Get{{.Table.TableName}}Request) (interface{}, error) {
@@ -43,38 +43,26 @@ func (c *{{.Table.TableName}}Controller) GetById(ctx *gin.Context, req *vo.Get{{
 
 
 //@description 创建{{.Table.TableComment}}
-//@tags {{.Table.TableComment}}管理
+//@tags {{.Table.TableComment}}
 // @Security JWT
 // @Accept       json
 // @Produce      json
-//@param req    query  vo.Create{{.Table.TableName}}Request  false  "name search by q"  Format(email)
-//@success 200 {object} vo.{{.Table.TableName}}
+//@param req    query  vo.Create{{.Table.TableName}}Request  false "入参req"
+//@success 200 {object} vo.Create{{.Table.TableName}}Response
 //@middleware auth,transition
 // @router /{{.Table.Uri}} [post]
 func (c *{{.Table.TableName}}Controller) Create(ctx *gin.Context, req *vo.Create{{.Table.TableName}}Request) (interface{}, error) {
 	return c.{{.Table.Uri}}Service.Create(ctx, req)
 }
 
-//@description 删除单个{{.Table.TableComment}}
-//@tags {{.Table.TableComment}}管理
-// @Security JWT
-// @Accept       json
-// @Produce      json
-//@param req    query  vo.Delete{{.Table.TableName}}Request  false  "name search by q"  Format(email)
-//@success 200 int int64
-//@middleware auth,transition
-// @router /{{.Table.Uri}}/:id [delete]
-func (c *{{.Table.TableName}}Controller) Delete(ctx *gin.Context, req *vo.Delete{{.Table.TableName}}Request) (interface{}, error) {
-	return c.{{.Table.Uri}}Service.Delete(ctx, req)
-}
 
 //@description 批量删除{{.Table.TableComment}}
-//@tags {{.Table.TableComment}}管理
+//@tags {{.Table.TableComment}}
 // @Security JWT
 // @Accept       json
 // @Produce      json
-//@param req    query  vo.Delete{{.Table.TableName}}Request  false  "name search by q"  Format(email)
-//@success 200  int int64
+//@param req    query  vo.Delete{{.Table.TableName}}Request  false  "入参req"
+//@success 200  {object} vo.Delete{{.Table.TableName}}Response
 //@middleware auth,transition
 // @router /{{.Table.Uri}} [delete]
 func (c *{{.Table.TableName}}Controller) DeleteBatch(ctx *gin.Context, req *vo.Delete{{.Table.TableName}}Request) (interface{}, error) {
@@ -83,12 +71,12 @@ func (c *{{.Table.TableName}}Controller) DeleteBatch(ctx *gin.Context, req *vo.D
 
 
 //@description 更新{{.Table.TableComment}}
-// @tags {{.Table.TableComment}}管理
+// @tags {{.Table.TableComment}}
 // @Security JWT
 // @Accept       json
 // @Produce      json
-//@param req    query  vo.Update{{.Table.TableName}}Request  false  "name search by q"  Format(email)
-//@success 200 {object} vo.{{.Table.TableName}}
+//@param req    query  vo.Update{{.Table.TableName}}Request  false  "入参req"
+//@success 200 {object} vo.Update{{.Table.TableName}}Response
 //@middleware auth,transition
 // @router /{{.Table.Uri}}/:id [put]
 func (c *{{.Table.TableName}}Controller) Update(ctx *gin.Context, req *vo.Update{{.Table.TableName}}Request) (interface{}, error) {

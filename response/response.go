@@ -5,11 +5,7 @@ import (
 	"net/http"
 )
 
-//type Response struct {
-//	Code int `json:"code"`
-//	Data interface{} `json:"data"`
-//	Message string `json:"message"`
-//}
+
 
 // 返回前端
 func Response(c *gin.Context, httpStatus int, code int, data interface{}, message string) {

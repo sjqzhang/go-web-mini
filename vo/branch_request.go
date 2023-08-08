@@ -5,6 +5,9 @@ import (
 )
 
 
+
+
+
 // 查询Branch branch
 type Branch struct {
  
@@ -190,5 +193,33 @@ type DeleteBranchRequest struct {
 // 删除Branch branch
 type GetBranchRequest struct {
     ID      int64 `json:"id" uri:"id" form:"id"`
+}
+
+
+
+//以下结构体只用于生成文档
+type ListBranchResponse  struct {
+    Response
+    Data PagerBranch  `json:"data"`
+}
+
+type GetBranchResponse  struct {
+    Response
+    Data Branch  `json:"data"`
+}
+
+type CreateBranchResponse  struct {
+    Response
+    Data Branch  `json:"data"`
+}
+
+type UpdateBranchResponse  struct {
+    Response
+    Data Branch  `json:"data"`
+}
+
+type DeleteBranchResponse  struct {
+    Response
+    Data int `json:"data"`
 }
 
