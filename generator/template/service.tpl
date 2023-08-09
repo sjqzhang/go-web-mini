@@ -23,13 +23,13 @@ type {{.Table.TableName}}Service struct {
 	{{.Table.Uri}}Repository repository.{{.Table.TableName}}Repository
 }
 
-func (s *{{.Table.TableName}}Service) List(ctx context.Context, req *vo.List{{.Table.TableName}}Request) (*vo.Pager{{.Table.TableName}}, error) {
+func (s *{{.Table.TableName}}Service) List(ctx context.Context, req *vo.List{{.Table.TableName}}Request) (*vo.List{{.Table.TableName}}Response, error) {
 	var query model.{{.Table.TableName}}Query
 	err := copier.Copy(&query, req)
 	if err != nil {
 		return nil, err
 	}
-    var resp vo.Pager{{.Table.TableName}}
+    var resp vo.List{{.Table.TableName}}Response
     objs,err:= s.{{.Table.Uri}}Repository.List(ctx, &query)
     if err != nil {
         return nil, err
@@ -38,23 +38,23 @@ func (s *{{.Table.TableName}}Service) List(ctx context.Context, req *vo.List{{.T
     return &resp, err
 }
 
-func (s *{{.Table.TableName}}Service) GetById(ctx context.Context, req *vo.Get{{.Table.TableName}}Request) (*vo.{{.Table.TableName}}, error) {
+func (s *{{.Table.TableName}}Service) GetById(ctx context.Context, req *vo.Get{{.Table.TableName}}Request) (*vo.{{.Table.TableName}}Response, error) {
     obj,err:= s.{{.Table.Uri}}Repository.GetById(ctx, req.ID)
     if err != nil {
         return nil, err
     }
-    var resp vo.{{.Table.TableName}}
+    var resp vo.{{.Table.TableName}}Response
     err = copier.Copy(&resp, obj)
     return &resp, err
 }
 
-func (s *{{.Table.TableName}}Service) Create(ctx *gin.Context, req *vo.Create{{.Table.TableName}}Request) (*vo.{{.Table.TableName}}, error) {
+func (s *{{.Table.TableName}}Service) Create(ctx *gin.Context, req *vo.Create{{.Table.TableName}}Request) (*vo.Create{{.Table.TableName}}Response, error) {
 	var obj model.{{.Table.TableName}}
 	err := copier.Copy(&obj, req)
 	if err != nil {
 		return nil, err
 	}
-	var resp vo.{{.Table.TableName}}
+	var resp vo.Create{{.Table.TableName}}Response
 	_,err= s.{{.Table.Uri}}Repository.Create(ctx, &obj)
 	if err != nil {
         return nil, err
@@ -64,13 +64,13 @@ func (s *{{.Table.TableName}}Service) Create(ctx *gin.Context, req *vo.Create{{.
 }
 
 
-func (s *{{.Table.TableName}}Service) Update(ctx *gin.Context, req *vo.Update{{.Table.TableName}}Request) (*vo.{{.Table.TableName}}, error) {
+func (s *{{.Table.TableName}}Service) Update(ctx *gin.Context, req *vo.Update{{.Table.TableName}}Request) (*vo.Update{{.Table.TableName}}Response, error) {
 	var obj model.{{.Table.TableName}}
 	err := copier.Copy(&obj, req)
 	if err != nil {
 		return nil, err
 	}
-	var resp vo.{{.Table.TableName}}
+	var resp vo.Update{{.Table.TableName}}Response
 	_,err= s.{{.Table.Uri}}Repository.Update(ctx, &obj)
 	if err != nil {
         return nil, err

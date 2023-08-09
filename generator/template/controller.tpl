@@ -14,7 +14,7 @@ type {{.Table.TableName}}Controller struct {
    {{.Table.Uri}}Service service.{{.Table.TableName}}Service
 }
 
-//@description 查询单个{{.Table.TableComment}}
+//@description 查询{{.Table.TableComment}}
 //@tags {{.Table.TableName}}
 // @Security JWT
 // @Accept       json
@@ -28,7 +28,7 @@ func (c *{{.Table.TableName}}Controller) List(ctx *gin.Context, req *vo.List{{.T
 }
 
 
-//@description 查询{{.Table.TableComment}}列表
+//@description 查询单个{{.Table.TableComment}}列表
 //@tags {{.Table.TableName}}
 // @Security JWT
 // @Accept       json

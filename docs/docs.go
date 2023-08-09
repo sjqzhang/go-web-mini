@@ -72,7 +72,7 @@ const docTemplate = `{
                         "JWT": []
                     }
                 ],
-                "description": "查询单个branch",
+                "description": "查询branch",
                 "consumes": [
                     "application/json"
                 ],
@@ -249,7 +249,7 @@ const docTemplate = `{
                         "JWT": []
                     }
                 ],
-                "description": "查询branch列表",
+                "description": "查询单个branch列表",
                 "consumes": [
                     "application/json"
                 ],
@@ -383,7 +383,7 @@ const docTemplate = `{
                         "JWT": []
                     }
                 ],
-                "description": "查询单个新闻",
+                "description": "查询新闻",
                 "consumes": [
                     "application/json"
                 ],
@@ -512,7 +512,7 @@ const docTemplate = `{
                         "JWT": []
                     }
                 ],
-                "description": "查询新闻列表",
+                "description": "查询单个新闻列表",
                 "consumes": [
                     "application/json"
                 ],
@@ -806,15 +806,64 @@ const docTemplate = `{
         "vo.CreateBranchResponse": {
             "type": "object",
             "properties": {
-                "code": {
-                    "description": "0:成功，非0:失败",
+                "branch_name": {
+                    "description": "branch_name",
+                    "type": "string"
+                },
+                "branch_type": {
+                    "description": "branch_type",
                     "type": "integer"
                 },
-                "data": {
-                    "$ref": "#/definitions/vo.Branch"
+                "commit_id": {
+                    "description": "commit_id",
+                    "type": "string"
                 },
-                "message": {
-                    "description": "提示信息",
+                "commit_time": {
+                    "description": "commit_time",
+                    "type": "integer"
+                },
+                "commit_title": {
+                    "description": "commit_title",
+                    "type": "string"
+                },
+                "committer": {
+                    "description": "committer",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "created_at",
+                    "type": "string"
+                },
+                "creator": {
+                    "description": "creator",
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "description": "deleted_at",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "id",
+                    "type": "integer"
+                },
+                "is_dev": {
+                    "description": "is_dev",
+                    "type": "integer"
+                },
+                "jira_key": {
+                    "description": "jira_key",
+                    "type": "string"
+                },
+                "repo": {
+                    "description": "repo",
+                    "type": "string"
+                },
+                "sync_time": {
+                    "description": "sync_time",
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "description": "updated_at",
                     "type": "string"
                 }
             }
@@ -839,15 +888,32 @@ const docTemplate = `{
         "vo.CreateNewsResponse": {
             "type": "object",
             "properties": {
-                "code": {
-                    "description": "0:成功，非0:失败",
+                "content": {
+                    "description": "新闻内容",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "created_at",
+                    "type": "string"
+                },
+                "creator": {
+                    "description": "新闻创建者",
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "description": "deleted_at",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "id",
                     "type": "integer"
                 },
-                "data": {
-                    "$ref": "#/definitions/vo.News"
+                "title": {
+                    "description": "新闻标题",
+                    "type": "string"
                 },
-                "message": {
-                    "description": "提示信息",
+                "updated_at": {
+                    "description": "updated_at",
                     "type": "string"
                 }
             }
@@ -911,15 +977,64 @@ const docTemplate = `{
         "vo.GetBranchResponse": {
             "type": "object",
             "properties": {
-                "code": {
-                    "description": "0:成功，非0:失败",
+                "branch_name": {
+                    "description": "branch_name",
+                    "type": "string"
+                },
+                "branch_type": {
+                    "description": "branch_type",
                     "type": "integer"
                 },
-                "data": {
-                    "$ref": "#/definitions/vo.Branch"
+                "commit_id": {
+                    "description": "commit_id",
+                    "type": "string"
                 },
-                "message": {
-                    "description": "提示信息",
+                "commit_time": {
+                    "description": "commit_time",
+                    "type": "integer"
+                },
+                "commit_title": {
+                    "description": "commit_title",
+                    "type": "string"
+                },
+                "committer": {
+                    "description": "committer",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "created_at",
+                    "type": "string"
+                },
+                "creator": {
+                    "description": "creator",
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "description": "deleted_at",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "id",
+                    "type": "integer"
+                },
+                "is_dev": {
+                    "description": "is_dev",
+                    "type": "integer"
+                },
+                "jira_key": {
+                    "description": "jira_key",
+                    "type": "string"
+                },
+                "repo": {
+                    "description": "repo",
+                    "type": "string"
+                },
+                "sync_time": {
+                    "description": "sync_time",
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "description": "updated_at",
                     "type": "string"
                 }
             }
@@ -927,15 +1042,32 @@ const docTemplate = `{
         "vo.GetNewsResponse": {
             "type": "object",
             "properties": {
-                "code": {
-                    "description": "0:成功，非0:失败",
+                "content": {
+                    "description": "新闻内容",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "created_at",
+                    "type": "string"
+                },
+                "creator": {
+                    "description": "新闻创建者",
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "description": "deleted_at",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "id",
                     "type": "integer"
                 },
-                "data": {
-                    "$ref": "#/definitions/vo.News"
+                "title": {
+                    "description": "新闻标题",
+                    "type": "string"
                 },
-                "message": {
-                    "description": "提示信息",
+                "updated_at": {
+                    "description": "updated_at",
                     "type": "string"
                 }
             }
@@ -943,32 +1075,48 @@ const docTemplate = `{
         "vo.ListBranchResponse": {
             "type": "object",
             "properties": {
-                "code": {
-                    "description": "0:成功，非0:失败",
+                "extra": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/vo.Branch"
+                    }
+                },
+                "pageNum": {
                     "type": "integer"
                 },
-                "data": {
-                    "$ref": "#/definitions/vo.PagerBranch"
+                "pageSize": {
+                    "type": "integer"
                 },
-                "message": {
-                    "description": "提示信息",
-                    "type": "string"
+                "total": {
+                    "type": "integer"
                 }
             }
         },
         "vo.ListNewsResponse": {
             "type": "object",
             "properties": {
-                "code": {
-                    "description": "0:成功，非0:失败",
+                "extra": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/vo.News"
+                    }
+                },
+                "pageNum": {
                     "type": "integer"
                 },
-                "data": {
-                    "$ref": "#/definitions/vo.PagerNews"
+                "pageSize": {
+                    "type": "integer"
                 },
-                "message": {
-                    "description": "提示信息",
-                    "type": "string"
+                "total": {
+                    "type": "integer"
                 }
             }
         },
@@ -1002,54 +1150,6 @@ const docTemplate = `{
                 "updated_at": {
                     "description": "updated_at",
                     "type": "string"
-                }
-            }
-        },
-        "vo.PagerBranch": {
-            "type": "object",
-            "properties": {
-                "extra": {
-                    "type": "object",
-                    "additionalProperties": true
-                },
-                "list": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/vo.Branch"
-                    }
-                },
-                "pageNum": {
-                    "type": "integer"
-                },
-                "pageSize": {
-                    "type": "integer"
-                },
-                "total": {
-                    "type": "integer"
-                }
-            }
-        },
-        "vo.PagerNews": {
-            "type": "object",
-            "properties": {
-                "extra": {
-                    "type": "object",
-                    "additionalProperties": true
-                },
-                "list": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/vo.News"
-                    }
-                },
-                "pageNum": {
-                    "type": "integer"
-                },
-                "pageSize": {
-                    "type": "integer"
-                },
-                "total": {
-                    "type": "integer"
                 }
             }
         },
@@ -1108,15 +1208,64 @@ const docTemplate = `{
         "vo.UpdateBranchResponse": {
             "type": "object",
             "properties": {
-                "code": {
-                    "description": "0:成功，非0:失败",
+                "branch_name": {
+                    "description": "branch_name",
+                    "type": "string"
+                },
+                "branch_type": {
+                    "description": "branch_type",
                     "type": "integer"
                 },
-                "data": {
-                    "$ref": "#/definitions/vo.Branch"
+                "commit_id": {
+                    "description": "commit_id",
+                    "type": "string"
                 },
-                "message": {
-                    "description": "提示信息",
+                "commit_time": {
+                    "description": "commit_time",
+                    "type": "integer"
+                },
+                "commit_title": {
+                    "description": "commit_title",
+                    "type": "string"
+                },
+                "committer": {
+                    "description": "committer",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "created_at",
+                    "type": "string"
+                },
+                "creator": {
+                    "description": "creator",
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "description": "deleted_at",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "id",
+                    "type": "integer"
+                },
+                "is_dev": {
+                    "description": "is_dev",
+                    "type": "integer"
+                },
+                "jira_key": {
+                    "description": "jira_key",
+                    "type": "string"
+                },
+                "repo": {
+                    "description": "repo",
+                    "type": "string"
+                },
+                "sync_time": {
+                    "description": "sync_time",
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "description": "updated_at",
                     "type": "string"
                 }
             }
@@ -1144,15 +1293,32 @@ const docTemplate = `{
         "vo.UpdateNewsResponse": {
             "type": "object",
             "properties": {
-                "code": {
-                    "description": "0:成功，非0:失败",
+                "content": {
+                    "description": "新闻内容",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "created_at",
+                    "type": "string"
+                },
+                "creator": {
+                    "description": "新闻创建者",
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "description": "deleted_at",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "id",
                     "type": "integer"
                 },
-                "data": {
-                    "$ref": "#/definitions/vo.News"
+                "title": {
+                    "description": "新闻标题",
+                    "type": "string"
                 },
-                "message": {
-                    "description": "提示信息",
+                "updated_at": {
+                    "description": "updated_at",
                     "type": "string"
                 }
             }

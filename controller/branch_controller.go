@@ -14,7 +14,7 @@ type BranchController struct {
    branchService service.BranchService
 }
 
-//@description 查询单个branch
+//@description 查询branch
 //@tags Branch
 // @Security JWT
 // @Accept       json
@@ -28,7 +28,7 @@ func (c *BranchController) List(ctx *gin.Context, req *vo.ListBranchRequest) (in
 }
 
 
-//@description 查询branch列表
+//@description 查询单个branch列表
 //@tags Branch
 // @Security JWT
 // @Accept       json
