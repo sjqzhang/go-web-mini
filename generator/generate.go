@@ -6,6 +6,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"os"
+	"os/exec"
 	"strings"
 	"sync"
 	"text/template"
@@ -45,6 +46,7 @@ type CommonObject struct {
 type Config struct {
 	Tables      []string
 	WebRoot     string
+	ServerRoot  string
 	DSN         string
 	ModuleName  string
 	TablePrefix string
@@ -72,6 +74,10 @@ func DoGenerate() {
 	}
 
 	generate(cfg.DSN, cfg.Tables, cfg.ModuleName)
+	cmds := []string{
+		"cd", cfg.ServerRoot, "&&", "go", "list", "./...", "|", "xargs", "go", "fmt",
+	}
+	exec.Command("sh", "-c", strings.Join(cmds, " ")).Run()
 }
 
 // generate 生成代码
@@ -183,19 +189,19 @@ func checkField(field string) bool {
 func createFiles(obj CommonObject, tableName string) {
 
 	// 创建po
-	createGoFile(obj, tableName, fmt.Sprintf("%v.go", tableName), "../model", "./template/po.tpl", "po")
+	createGoFile(obj, tableName, fmt.Sprintf("%v.go", tableName), fmt.Sprintf("%v/model", cfg.ServerRoot), "./template/po.tpl", "po")
 
 	// 创建vo
-	createGoFile(obj, tableName, fmt.Sprintf("%v_request.go", tableName), "../vo", "./template/vo.tpl", "vo")
+	createGoFile(obj, tableName, fmt.Sprintf("%v_request.go", tableName), fmt.Sprintf("%v/vo", cfg.ServerRoot), "./template/vo.tpl", "vo")
 
 	// 创建add dto
 	//createGoFile(obj, tableName, "AddDTO.go", "./dto", "./template/addDto.tpl", "addDto")
 
 	// 创建page dto
-	createGoFile(obj, tableName, fmt.Sprintf("%v_repository.go", tableName), "../repository", "./template/dao.tpl", "repository")
+	createGoFile(obj, tableName, fmt.Sprintf("%v_repository.go", tableName), fmt.Sprintf("%v/repository", cfg.ServerRoot), "./template/dao.tpl", "repository")
 
 	// 创建controller
-	createGoFile(obj, tableName, fmt.Sprintf("%v_controller.go", tableName), "../controller", "./template/controller.tpl", "controller")
+	createGoFile(obj, tableName, fmt.Sprintf("%v_controller.go", tableName), fmt.Sprintf("%v/controller", cfg.ServerRoot), "./template/controller.tpl", "controller")
 
 	// 创建router
 	//createGoFile(obj, tableName, "Router.go", "./router", "./template/router.tpl", "router")

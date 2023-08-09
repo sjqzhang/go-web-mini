@@ -65,13 +65,14 @@ func (s *{{.Table.TableName}}Service) Create(ctx *gin.Context, req *vo.Create{{.
 
 
 func (s *{{.Table.TableName}}Service) Update(ctx *gin.Context, req *vo.Update{{.Table.TableName}}Request) (*vo.Update{{.Table.TableName}}Response, error) {
-	var obj model.{{.Table.TableName}}
-	err := copier.Copy(&obj, req)
+	//var obj model.{{.Table.TableName}}
+    obj,err:=s.{{.Table.Uri}}Repository.GetById(ctx, int64(*req.ID))
 	if err != nil {
 		return nil, err
 	}
+    err = copier.Copy(&obj, req)
 	var resp vo.Update{{.Table.TableName}}Response
-	_,err= s.{{.Table.Uri}}Repository.Update(ctx, &obj)
+	_,err= s.{{.Table.Uri}}Repository.Update(ctx, obj)
 	if err != nil {
         return nil, err
     }
