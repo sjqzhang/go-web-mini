@@ -164,7 +164,7 @@ export default {
 
     // 新增
     create() {
-      this.dialogFormTitle = '新增接口'
+      this.dialogFormTitle = '新增'
       this.dialogType = 'create'
       this.dialogFormVisible = true
     },
@@ -174,7 +174,7 @@ export default {
       this.dialogFormData.id = row.id
       {{range .Fields}}{{if  checkField .ColumnName}}this.dialogFormData.{{.ColumnName}} = row.{{.ColumnName}}
       {{end}}{{end}}
-      this.dialogFormTitle = '修改接口'
+      this.dialogFormTitle = '修改'
       this.dialogType = 'update'
       this.dialogFormVisible = true
     },

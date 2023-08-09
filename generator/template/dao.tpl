@@ -54,12 +54,14 @@ func (r *{{.Table.TableName}}Repository) GetById(ctx context.Context,  id int64)
 	return &obj,err
 }
 
+
+
 func (r *{{.Table.TableName}}Repository) Update(ctx context.Context, obj *model.{{.Table.TableName}}) (*model.{{.Table.TableName}}, error) {
 	db := common.GetDB(ctx)
 	if obj.ID==0  {
 		return nil, fmt.Errorf("id is empty")
 	}
-	count := db.Model(obj).Updates(obj).RowsAffected
+	count := db.Model(obj).Where("id=?",obj.ID).Save(obj).RowsAffected
 	if count > 0 {
 		return obj, db.First(obj).Error
 	}

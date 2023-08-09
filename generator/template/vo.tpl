@@ -8,36 +8,32 @@ import (
 
 
 type {{.Table.TableName}}Response struct {
-{{range .Fields}}
-    {{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }} form:"{{.ColumnName}}"` {{.ColumnComment}}
+{{range .Fields}}{{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }} form:"{{.ColumnName}}"` {{.ColumnComment}}
 {{end}}
 }
 
 
 // 查询{{.Table.TableName}} {{.Table.TableComment}}
 type {{.Table.TableName}} struct {
- {{range .Fields}}
-    {{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }} form:"{{.ColumnName}}"` {{.ColumnComment}}
-     {{end}}
+ {{range .Fields}}{{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }} form:"{{.ColumnName}}"` {{.ColumnComment}}
+ {{end}}
 }
 
 // 查询{{.Table.TableName}} {{.Table.TableComment}}
 type List{{.Table.TableName}}Response struct {
-	Total    int64                  `json:"total"`
-	List     []{{.Table.TableName}}          `json:"list"`
-	PageNum  int                    `json:"pageNum" form:"pageNum"`
-	PageSize int                    `json:"pageSize" form:"pageSize"`
-	Extra    map[string]interface{} `json:"extra"`
+	Total    int64                  `json:"total"` //总数
+	List     []{{.Table.TableName}}          `json:"list"` //列表
+	PageNum  int                    `json:"pageNum" form:"pageNum"`  //第几页
+	PageSize int                    `json:"pageSize" form:"pageSize"` //每页多少条
+	Extra    map[string]interface{} `json:"extra"` //扩展
 }
 
 
 
 // 查询{{.Table.TableName}} {{.Table.TableComment}}
 type List{{.Table.TableName}}Request struct {
-    {{range .Fields}}{{if  checkField .ColumnName}}
-    {{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }}  form:"{{.ColumnName}}"` {{.ColumnComment}}
-    {{end}}
-     {{end}}
+    {{range .Fields}}{{if  checkField .ColumnName}}{{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }}  form:"{{.ColumnName}}"` {{.ColumnComment}}
+    {{end}}{{end}}
      PageNum  *uint   `json:"pageNum" form:"pageNum"` //第几页
      PageSize *uint   `json:"pageSize" form:"pageSize"` //每页多少条
 }
@@ -49,10 +45,8 @@ type Get{{.Table.TableName}}Response struct {
 
 // 创建{{.Table.TableName}} {{.Table.TableComment}}
 type Create{{.Table.TableName}}Request struct {
-    {{range .Fields}}{{if  checkField .ColumnName}}
-    {{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }} form:"{{.ColumnName}}"` {{.ColumnComment}}
-    {{end}}
-     {{end}}
+    {{range .Fields}}{{if  checkField .ColumnName}}{{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }} form:"{{.ColumnName}}"` {{.ColumnComment}}
+    {{end}}{{end}}
 }
 
 type Create{{.Table.TableName}}Response struct {
@@ -64,10 +58,8 @@ type Create{{.Table.TableName}}Response struct {
 // 更新{{.Table.TableName}} {{.Table.TableComment}}
 type Update{{.Table.TableName}}Request struct {
     ID      *int `json:""`
-    {{range .Fields}}{{if  checkField .ColumnName}}
-    {{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }} form:"{{.ColumnName}}"` {{.ColumnComment}}
-    {{end}}
-     {{end}}
+    {{range .Fields}}{{if  checkField .ColumnName}}{{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }} form:"{{.ColumnName}}"` {{.ColumnComment}}
+    {{end}}{{end}}
 }
 
 type Update{{.Table.TableName}}Response struct {
@@ -76,7 +68,7 @@ type Update{{.Table.TableName}}Response struct {
 
 // 删除{{.Table.TableName}} {{.Table.TableComment}}
 type Delete{{.Table.TableName}}Request struct {
-    Ids      []int64 `json:"ids" uri:"ids" form:"ids"` //待编号
+    Ids      []int64 `json:"ids" uri:"ids" form:"ids"` //编号列表
 }
 
 
@@ -84,7 +76,7 @@ type Delete{{.Table.TableName}}Request struct {
 
 // 删除{{.Table.TableName}} {{.Table.TableComment}}
 type Get{{.Table.TableName}}Request struct {
-    ID      int64 `json:"id" uri:"id" form:"id"` //待编号
+    ID      int64 `json:"id" uri:"id" form:"id"` //编号
 }
 
 
