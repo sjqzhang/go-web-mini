@@ -23,13 +23,13 @@ type NewsService struct {
 	newsRepository repository.NewsRepository
 }
 
-func (s *NewsService) List(ctx context.Context, req *vo.ListNewsRequest) (*vo.PagerNews, error) {
+func (s *NewsService) List(ctx context.Context, req *vo.ListNewsRequest) (*vo.ListNewsResponse, error) {
 	var query model.NewsQuery
 	err := copier.Copy(&query, req)
 	if err != nil {
 		return nil, err
 	}
-    var resp vo.PagerNews
+    var resp vo.ListNewsResponse
     objs,err:= s.newsRepository.List(ctx, &query)
     if err != nil {
         return nil, err
@@ -38,23 +38,23 @@ func (s *NewsService) List(ctx context.Context, req *vo.ListNewsRequest) (*vo.Pa
     return &resp, err
 }
 
-func (s *NewsService) GetById(ctx context.Context, req *vo.GetNewsRequest) (*vo.News, error) {
+func (s *NewsService) GetById(ctx context.Context, req *vo.GetNewsRequest) (*vo.NewsResponse, error) {
     obj,err:= s.newsRepository.GetById(ctx, req.ID)
     if err != nil {
         return nil, err
     }
-    var resp vo.News
+    var resp vo.NewsResponse
     err = copier.Copy(&resp, obj)
     return &resp, err
 }
 
-func (s *NewsService) Create(ctx *gin.Context, req *vo.CreateNewsRequest) (*vo.News, error) {
+func (s *NewsService) Create(ctx *gin.Context, req *vo.CreateNewsRequest) (*vo.CreateNewsResponse, error) {
 	var obj model.News
 	err := copier.Copy(&obj, req)
 	if err != nil {
 		return nil, err
 	}
-	var resp vo.News
+	var resp vo.CreateNewsResponse
 	_,err= s.newsRepository.Create(ctx, &obj)
 	if err != nil {
         return nil, err
@@ -64,13 +64,13 @@ func (s *NewsService) Create(ctx *gin.Context, req *vo.CreateNewsRequest) (*vo.N
 }
 
 
-func (s *NewsService) Update(ctx *gin.Context, req *vo.UpdateNewsRequest) (*vo.News, error) {
+func (s *NewsService) Update(ctx *gin.Context, req *vo.UpdateNewsRequest) (*vo.UpdateNewsResponse, error) {
 	var obj model.News
 	err := copier.Copy(&obj, req)
 	if err != nil {
 		return nil, err
 	}
-	var resp vo.News
+	var resp vo.UpdateNewsResponse
 	_,err= s.newsRepository.Update(ctx, &obj)
 	if err != nil {
         return nil, err

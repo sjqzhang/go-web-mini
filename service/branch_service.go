@@ -23,13 +23,13 @@ type BranchService struct {
 	branchRepository repository.BranchRepository
 }
 
-func (s *BranchService) List(ctx context.Context, req *vo.ListBranchRequest) (*vo.PagerBranch, error) {
+func (s *BranchService) List(ctx context.Context, req *vo.ListBranchRequest) (*vo.ListBranchResponse, error) {
 	var query model.BranchQuery
 	err := copier.Copy(&query, req)
 	if err != nil {
 		return nil, err
 	}
-    var resp vo.PagerBranch
+    var resp vo.ListBranchResponse
     objs,err:= s.branchRepository.List(ctx, &query)
     if err != nil {
         return nil, err
@@ -38,23 +38,23 @@ func (s *BranchService) List(ctx context.Context, req *vo.ListBranchRequest) (*v
     return &resp, err
 }
 
-func (s *BranchService) GetById(ctx context.Context, req *vo.GetBranchRequest) (*vo.Branch, error) {
+func (s *BranchService) GetById(ctx context.Context, req *vo.GetBranchRequest) (*vo.BranchResponse, error) {
     obj,err:= s.branchRepository.GetById(ctx, req.ID)
     if err != nil {
         return nil, err
     }
-    var resp vo.Branch
+    var resp vo.BranchResponse
     err = copier.Copy(&resp, obj)
     return &resp, err
 }
 
-func (s *BranchService) Create(ctx *gin.Context, req *vo.CreateBranchRequest) (*vo.Branch, error) {
+func (s *BranchService) Create(ctx *gin.Context, req *vo.CreateBranchRequest) (*vo.CreateBranchResponse, error) {
 	var obj model.Branch
 	err := copier.Copy(&obj, req)
 	if err != nil {
 		return nil, err
 	}
-	var resp vo.Branch
+	var resp vo.CreateBranchResponse
 	_,err= s.branchRepository.Create(ctx, &obj)
 	if err != nil {
         return nil, err
@@ -64,13 +64,13 @@ func (s *BranchService) Create(ctx *gin.Context, req *vo.CreateBranchRequest) (*
 }
 
 
-func (s *BranchService) Update(ctx *gin.Context, req *vo.UpdateBranchRequest) (*vo.Branch, error) {
+func (s *BranchService) Update(ctx *gin.Context, req *vo.UpdateBranchRequest) (*vo.UpdateBranchResponse, error) {
 	var obj model.Branch
 	err := copier.Copy(&obj, req)
 	if err != nil {
 		return nil, err
 	}
-	var resp vo.Branch
+	var resp vo.UpdateBranchResponse
 	_,err= s.branchRepository.Update(ctx, &obj)
 	if err != nil {
         return nil, err

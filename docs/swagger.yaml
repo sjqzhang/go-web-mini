@@ -86,13 +86,50 @@ definitions:
     type: object
   vo.CreateBranchResponse:
     properties:
-      code:
-        description: 0:成功，非0:失败
+      branch_name:
+        description: branch_name
+        type: string
+      branch_type:
+        description: branch_type
         type: integer
-      data:
-        $ref: '#/definitions/vo.Branch'
-      message:
-        description: 提示信息
+      commit_id:
+        description: commit_id
+        type: string
+      commit_time:
+        description: commit_time
+        type: integer
+      commit_title:
+        description: commit_title
+        type: string
+      committer:
+        description: committer
+        type: string
+      created_at:
+        description: created_at
+        type: string
+      creator:
+        description: creator
+        type: string
+      deleted_at:
+        description: deleted_at
+        type: string
+      id:
+        description: id
+        type: integer
+      is_dev:
+        description: is_dev
+        type: integer
+      jira_key:
+        description: jira_key
+        type: string
+      repo:
+        description: repo
+        type: string
+      sync_time:
+        description: sync_time
+        type: integer
+      updated_at:
+        description: updated_at
         type: string
     type: object
   vo.CreateNewsRequest:
@@ -109,13 +146,26 @@ definitions:
     type: object
   vo.CreateNewsResponse:
     properties:
-      code:
-        description: 0:成功，非0:失败
+      content:
+        description: 新闻内容
+        type: string
+      created_at:
+        description: created_at
+        type: string
+      creator:
+        description: 新闻创建者
+        type: string
+      deleted_at:
+        description: deleted_at
+        type: string
+      id:
+        description: id
         type: integer
-      data:
-        $ref: '#/definitions/vo.News'
-      message:
-        description: 提示信息
+      title:
+        description: 新闻标题
+        type: string
+      updated_at:
+        description: updated_at
         type: string
     type: object
   vo.DeleteBranchRequest:
@@ -158,47 +208,107 @@ definitions:
     type: object
   vo.GetBranchResponse:
     properties:
-      code:
-        description: 0:成功，非0:失败
+      branch_name:
+        description: branch_name
+        type: string
+      branch_type:
+        description: branch_type
         type: integer
-      data:
-        $ref: '#/definitions/vo.Branch'
-      message:
-        description: 提示信息
+      commit_id:
+        description: commit_id
+        type: string
+      commit_time:
+        description: commit_time
+        type: integer
+      commit_title:
+        description: commit_title
+        type: string
+      committer:
+        description: committer
+        type: string
+      created_at:
+        description: created_at
+        type: string
+      creator:
+        description: creator
+        type: string
+      deleted_at:
+        description: deleted_at
+        type: string
+      id:
+        description: id
+        type: integer
+      is_dev:
+        description: is_dev
+        type: integer
+      jira_key:
+        description: jira_key
+        type: string
+      repo:
+        description: repo
+        type: string
+      sync_time:
+        description: sync_time
+        type: integer
+      updated_at:
+        description: updated_at
         type: string
     type: object
   vo.GetNewsResponse:
     properties:
-      code:
-        description: 0:成功，非0:失败
+      content:
+        description: 新闻内容
+        type: string
+      created_at:
+        description: created_at
+        type: string
+      creator:
+        description: 新闻创建者
+        type: string
+      deleted_at:
+        description: deleted_at
+        type: string
+      id:
+        description: id
         type: integer
-      data:
-        $ref: '#/definitions/vo.News'
-      message:
-        description: 提示信息
+      title:
+        description: 新闻标题
+        type: string
+      updated_at:
+        description: updated_at
         type: string
     type: object
   vo.ListBranchResponse:
     properties:
-      code:
-        description: 0:成功，非0:失败
+      extra:
+        additionalProperties: true
+        type: object
+      list:
+        items:
+          $ref: '#/definitions/vo.Branch'
+        type: array
+      pageNum:
         type: integer
-      data:
-        $ref: '#/definitions/vo.PagerBranch'
-      message:
-        description: 提示信息
-        type: string
+      pageSize:
+        type: integer
+      total:
+        type: integer
     type: object
   vo.ListNewsResponse:
     properties:
-      code:
-        description: 0:成功，非0:失败
+      extra:
+        additionalProperties: true
+        type: object
+      list:
+        items:
+          $ref: '#/definitions/vo.News'
+        type: array
+      pageNum:
         type: integer
-      data:
-        $ref: '#/definitions/vo.PagerNews'
-      message:
-        description: 提示信息
-        type: string
+      pageSize:
+        type: integer
+      total:
+        type: integer
     type: object
   vo.News:
     properties:
@@ -223,38 +333,6 @@ definitions:
       updated_at:
         description: updated_at
         type: string
-    type: object
-  vo.PagerBranch:
-    properties:
-      extra:
-        additionalProperties: true
-        type: object
-      list:
-        items:
-          $ref: '#/definitions/vo.Branch'
-        type: array
-      pageNum:
-        type: integer
-      pageSize:
-        type: integer
-      total:
-        type: integer
-    type: object
-  vo.PagerNews:
-    properties:
-      extra:
-        additionalProperties: true
-        type: object
-      list:
-        items:
-          $ref: '#/definitions/vo.News'
-        type: array
-      pageNum:
-        type: integer
-      pageSize:
-        type: integer
-      total:
-        type: integer
     type: object
   vo.UpdateBranchRequest:
     properties:
@@ -296,13 +374,50 @@ definitions:
     type: object
   vo.UpdateBranchResponse:
     properties:
-      code:
-        description: 0:成功，非0:失败
+      branch_name:
+        description: branch_name
+        type: string
+      branch_type:
+        description: branch_type
         type: integer
-      data:
-        $ref: '#/definitions/vo.Branch'
-      message:
-        description: 提示信息
+      commit_id:
+        description: commit_id
+        type: string
+      commit_time:
+        description: commit_time
+        type: integer
+      commit_title:
+        description: commit_title
+        type: string
+      committer:
+        description: committer
+        type: string
+      created_at:
+        description: created_at
+        type: string
+      creator:
+        description: creator
+        type: string
+      deleted_at:
+        description: deleted_at
+        type: string
+      id:
+        description: id
+        type: integer
+      is_dev:
+        description: is_dev
+        type: integer
+      jira_key:
+        description: jira_key
+        type: string
+      repo:
+        description: repo
+        type: string
+      sync_time:
+        description: sync_time
+        type: integer
+      updated_at:
+        description: updated_at
         type: string
     type: object
   vo.UpdateNewsRequest:
@@ -321,13 +436,26 @@ definitions:
     type: object
   vo.UpdateNewsResponse:
     properties:
-      code:
-        description: 0:成功，非0:失败
+      content:
+        description: 新闻内容
+        type: string
+      created_at:
+        description: created_at
+        type: string
+      creator:
+        description: 新闻创建者
+        type: string
+      deleted_at:
+        description: deleted_at
+        type: string
+      id:
+        description: id
         type: integer
-      data:
-        $ref: '#/definitions/vo.News'
-      message:
-        description: 提示信息
+      title:
+        description: 新闻标题
+        type: string
+      updated_at:
+        description: updated_at
         type: string
     type: object
 info:
@@ -392,7 +520,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: 查询单个branch
+      description: 查询branch
       parameters:
       - description: branch_name
         in: query
@@ -482,7 +610,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: 查询branch列表
+      description: 查询单个branch列表
       parameters:
       - description: 待编号
         in: query
@@ -585,7 +713,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: 查询单个新闻
+      description: 查询新闻
       parameters:
       - description: 新闻内容
         in: query
@@ -643,7 +771,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: 查询新闻列表
+      description: 查询单个新闻列表
       parameters:
       - description: 待编号
         in: query

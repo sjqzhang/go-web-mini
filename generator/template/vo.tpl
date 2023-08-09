@@ -7,6 +7,12 @@ import (
 
 
 
+type {{.Table.TableName}}Response struct {
+{{range .Fields}}
+    {{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }} form:"{{.ColumnName}}"` {{.ColumnComment}}
+{{end}}
+}
+
 
 // 查询{{.Table.TableName}} {{.Table.TableComment}}
 type {{.Table.TableName}} struct {
@@ -16,7 +22,7 @@ type {{.Table.TableName}} struct {
 }
 
 // 查询{{.Table.TableName}} {{.Table.TableComment}}
-type Pager{{.Table.TableName}} struct {
+type List{{.Table.TableName}}Response struct {
 	Total    int64                  `json:"total"`
 	List     []{{.Table.TableName}}          `json:"list"`
 	PageNum  int                    `json:"pageNum" form:"pageNum"`
@@ -36,6 +42,10 @@ type List{{.Table.TableName}}Request struct {
      PageSize *uint   `json:"pageSize" form:"pageSize"` //每页多少条
 }
 
+type Get{{.Table.TableName}}Response struct {
+    {{.Table.TableName}}Response
+}
+
 
 // 创建{{.Table.TableName}} {{.Table.TableComment}}
 type Create{{.Table.TableName}}Request struct {
@@ -44,6 +54,11 @@ type Create{{.Table.TableName}}Request struct {
     {{end}}
      {{end}}
 }
+
+type Create{{.Table.TableName}}Response struct {
+    {{.Table.TableName}}Response
+}
+
 
 
 // 更新{{.Table.TableName}} {{.Table.TableComment}}
@@ -55,10 +70,17 @@ type Update{{.Table.TableName}}Request struct {
      {{end}}
 }
 
+type Update{{.Table.TableName}}Response struct {
+    {{.Table.TableName}}Response
+}
+
 // 删除{{.Table.TableName}} {{.Table.TableComment}}
 type Delete{{.Table.TableName}}Request struct {
     Ids      []int64 `json:"ids" uri:"ids" form:"ids"` //待编号
 }
+
+
+
 
 // 删除{{.Table.TableName}} {{.Table.TableComment}}
 type Get{{.Table.TableName}}Request struct {
@@ -66,31 +88,10 @@ type Get{{.Table.TableName}}Request struct {
 }
 
 
-
-//以下结构体只用于生成swagger文档
-type List{{.Table.TableName}}Response  struct {
-    Response
-    Data Pager{{.Table.TableName}}  `json:"data"`
-}
-
-type Get{{.Table.TableName}}Response  struct {
-    Response
-    Data {{.Table.TableName}}  `json:"data"`
-}
-
-type Create{{.Table.TableName}}Response  struct {
-    Response
-    Data {{.Table.TableName}}  `json:"data"`
-}
-
-type Update{{.Table.TableName}}Response  struct {
-    Response
-    Data {{.Table.TableName}}  `json:"data"`
-}
-
-type Delete{{.Table.TableName}}Response  struct {
+type Delete{{.Table.TableName}}Response struct {
     Response
     Data int `json:"data"`
 }
+
 
 {{end}}

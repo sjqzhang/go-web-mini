@@ -14,7 +14,7 @@ type NewsController struct {
    newsService service.NewsService
 }
 
-//@description 查询单个新闻
+//@description 查询新闻
 //@tags News
 // @Security JWT
 // @Accept       json
@@ -28,7 +28,7 @@ func (c *NewsController) List(ctx *gin.Context, req *vo.ListNewsRequest) (interf
 }
 
 
-//@description 查询新闻列表
+//@description 查询单个新闻列表
 //@tags News
 // @Security JWT
 // @Accept       json
