@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"go-web-mini/common"
+	"go-web-mini/global"
 	"go-web-mini/model"
 	"go-web-mini/repository"
 	"go-web-mini/response"
@@ -70,8 +70,8 @@ func (mc MenuController) CreateMenu(c *gin.Context) {
 		return
 	}
 	// 参数校验
-	if err := common.Validate.Struct(&req); err != nil {
-		errStr := err.(validator.ValidationErrors)[0].Translate(common.Trans)
+	if err := global.Validate.Struct(&req); err != nil {
+		errStr := err.(validator.ValidationErrors)[0].Translate(global.Trans)
 		response.Fail(c, nil, errStr)
 		return
 	}
@@ -121,8 +121,8 @@ func (mc MenuController) UpdateMenuById(c *gin.Context) {
 		return
 	}
 	// 参数校验
-	if err := common.Validate.Struct(&req); err != nil {
-		errStr := err.(validator.ValidationErrors)[0].Translate(common.Trans)
+	if err := global.Validate.Struct(&req); err != nil {
+		errStr := err.(validator.ValidationErrors)[0].Translate(global.Trans)
 		response.Fail(c, nil, errStr)
 		return
 	}
@@ -183,8 +183,8 @@ func (mc MenuController) BatchDeleteMenuByIds(c *gin.Context) {
 		return
 	}
 	// 参数校验
-	if err := common.Validate.Struct(&req); err != nil {
-		errStr := err.(validator.ValidationErrors)[0].Translate(common.Trans)
+	if err := global.Validate.Struct(&req); err != nil {
+		errStr := err.(validator.ValidationErrors)[0].Translate(global.Trans)
 		response.Fail(c, nil, errStr)
 		return
 	}

@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/sjqzhang/gdi"
-	"go-web-mini/common"
 	"go-web-mini/config"
+	"go-web-mini/global"
 	"go-web-mini/middleware"
 	"go-web-mini/repository"
 	"go-web-mini/routes"
@@ -31,19 +31,21 @@ func main() {
 	config.InitConfig()
 
 	// 初始化日志
-	common.InitLogger()
+	global.InitLogger()
 
 	// 初始化数据库(mysql)
-	common.InitMysql()
+	global.InitMysql()
+
+	global.InitRedis()
 
 	// 初始化casbin策略管理器
-	common.InitCasbinEnforcer()
+	global.InitCasbinEnforcer()
 
 	// 初始化Validator数据校验
-	common.InitValidate()
+	global.InitValidate()
 
 	// 初始化mysql数据
-	common.InitData()
+	global.InitData()
 
 	//bs,err:=gdiEmbededFiles.ReadFile("config/config.go")
 	//fmt.Println(string(bs),err)
@@ -72,11 +74,11 @@ func main() {
 	// it won't block the graceful shutdown handling below
 	go func() {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			common.Log.Fatalf("listen: %s\n", err)
+			global.Log.Fatalf("listen: %s\n", err)
 		}
 	}()
 
-	common.Log.Info(fmt.Sprintf("Server is running at %s:%d/%s", host, port, config.Conf.System.UrlPathPrefix))
+	global.Log.Info(fmt.Sprintf("Server is running at %s:%d/%s", host, port, config.Conf.System.UrlPathPrefix))
 
 	// Wait for interrupt signal to gracefully shutdown the server with
 	// a timeout of 5 seconds.
@@ -86,16 +88,16 @@ func main() {
 	// kill -9 is syscall.SIGKILL but can't be catch, so don't need add it
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
-	common.Log.Info("Shutting down server...")
+	global.Log.Info("Shutting down server...")
 
 	// The context is used to inform the server it has 5 seconds to finish
 	// the request it is currently handling
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
-		common.Log.Fatal("Server forced to shutdown:", err)
+		global.Log.Fatal("Server forced to shutdown:", err)
 	}
 
-	common.Log.Info("Server exiting!")
+	global.Log.Info("Server exiting!")
 
 }

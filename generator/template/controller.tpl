@@ -8,15 +8,16 @@ import (
 )
 
 //@description {{.Table.TableComment}}管理
-//@middleware auth
+{{if .Table.IsAuth}}
+//@middleware auth{{end}}
 //@router /api
 type {{.Table.TableName}}Controller struct {
    {{.Table.Uri}}Service service.{{.Table.TableName}}Service
 }
 
 //@description 查询{{.Table.TableComment}}
-//@tags {{.Table.TableName}}
-// @Security JWT
+//@tags {{.Table.TableName}}{{if .Table.IsAuth}}
+// @Security JWT{{end}}}
 // @Accept       json
 // @Produce      json
 //@param req    query  vo.List{{.Table.TableName}}Request  false  "入参req"
@@ -29,8 +30,8 @@ func (c *{{.Table.TableName}}Controller) List(ctx *gin.Context, req *vo.List{{.T
 
 
 //@description 查询单个{{.Table.TableComment}}列表
-//@tags {{.Table.TableName}}
-// @Security JWT
+//@tags {{.Table.TableName}}{{if .Table.IsAuth}}
+// @Security JWT{{end}}
 // @Accept       json
 // @Produce      json
 //@param req    query  vo.Get{{.Table.TableName}}Request  false  "入参req"
@@ -43,8 +44,8 @@ func (c *{{.Table.TableName}}Controller) GetById(ctx *gin.Context, req *vo.Get{{
 
 
 //@description 创建{{.Table.TableComment}}
-//@tags {{.Table.TableName}}
-// @Security JWT
+//@tags {{.Table.TableName}}{{if .Table.IsAuth}}
+// @Security JWT{{end}}
 // @Accept       json
 // @Produce      json
 //@param req    body  vo.Create{{.Table.TableName}}Request  false "入参req"
@@ -57,8 +58,8 @@ func (c *{{.Table.TableName}}Controller) Create(ctx *gin.Context, req *vo.Create
 
 
 //@description 批量删除{{.Table.TableComment}}
-//@tags {{.Table.TableName}}
-// @Security JWT
+//@tags {{.Table.TableName}}{{if .Table.IsAuth}}
+// @Security JWT{{end}}
 // @Accept       json
 // @Produce      json
 //@param req    body  vo.Delete{{.Table.TableName}}Request  false  "入参req"
@@ -71,8 +72,8 @@ func (c *{{.Table.TableName}}Controller) DeleteBatch(ctx *gin.Context, req *vo.D
 
 
 //@description 更新{{.Table.TableComment}}
-// @tags {{.Table.TableName}}
-// @Security JWT
+// @tags {{.Table.TableName}}{{if .Table.IsAuth}}
+// @Security JWT{{end}}
 // @Accept       json
 // @Produce      json
 //@param req    body  vo.Update{{.Table.TableName}}Request  false  "入参req"

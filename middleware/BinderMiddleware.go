@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"go-web-mini/common"
+	"go-web-mini/global"
 	"go-web-mini/response"
 	"reflect"
+	"time"
 )
 
 // CORS跨域中间件
@@ -51,22 +52,42 @@ func BinderMiddleware(method reflect.Value) gin.HandlerFunc {
 		//		return
 		//	}
 		//}
-		err = common.Validate.Struct(req)
+		err = global.Validate.Struct(req)
 		if err != nil {
-			errStr := err.(validator.ValidationErrors)[0].Translate(common.Trans)
+			errStr := err.(validator.ValidationErrors)[0].Translate(global.Trans)
 			response.Fail(c, nil, errStr)
 			return
+		}
+		var cacheKey string
+		if key, ok := c.Get(CACHE_KEY); ok {
+			cacheKey = key.(string)
+			result, err := global.Redis().Get(c, key.(string)).Result()
+			if err == nil {
+				c.String(200, result)
+				return
+			}
 		}
 
 		results := method.Call([]reflect.Value{reflect.ValueOf(c), reflect.ValueOf(req)})
 		if len(results) > 0 {
 			if len(results) == 2 {
 				if results[1].Interface() != nil {
-					response.Fail(c, nil, results[1].Interface().(string))
+					response.Fail(c, nil, fmt.Sprintf("%v", results[1].Interface()))
 					return
 				}
 			}
 			if results[0].Interface() != nil {
+
+				if cacheKey != "" {
+					data, err := response.EncodeResponse(200, results[0].Interface(), "Success")
+					if err != nil {
+
+					}
+					global.Redis().Set(c,cacheKey,string(data),time.Minute*10)
+					c.String(200, string(data))
+					return
+				}
+
 				response.Response(c, 200, 0, results[0].Interface(), "Success")
 				return
 			}

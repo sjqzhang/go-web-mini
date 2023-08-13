@@ -1,4 +1,4 @@
-package common
+package global
 
 import (
 	"github.com/go-playground/locales/zh"

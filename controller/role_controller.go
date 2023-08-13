@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/thoas/go-funk"
-	"go-web-mini/common"
+	"go-web-mini/global"
 	"go-web-mini/model"
 	"go-web-mini/repository"
 	"go-web-mini/response"
@@ -50,8 +50,8 @@ func (rc RoleController) GetRoles(c *gin.Context) {
 		return
 	}
 	// 参数校验
-	if err := common.Validate.Struct(&req); err != nil {
-		errStr := err.(validator.ValidationErrors)[0].Translate(common.Trans)
+	if err := global.Validate.Struct(&req); err != nil {
+		errStr := err.(validator.ValidationErrors)[0].Translate(global.Trans)
 		response.Fail(c, nil, errStr)
 		return
 	}
@@ -76,8 +76,8 @@ func (rc RoleController) CreateRole(c *gin.Context) {
 		return
 	}
 	// 参数校验
-	if err := common.Validate.Struct(&req); err != nil {
-		errStr := err.(validator.ValidationErrors)[0].Translate(common.Trans)
+	if err := global.Validate.Struct(&req); err != nil {
+		errStr := err.(validator.ValidationErrors)[0].Translate(global.Trans)
 		response.Fail(c, nil, errStr)
 		return
 	}
@@ -126,8 +126,8 @@ func (rc RoleController) UpdateRoleById(c *gin.Context) {
 		return
 	}
 	// 参数校验
-	if err := common.Validate.Struct(&req); err != nil {
-		errStr := err.(validator.ValidationErrors)[0].Translate(common.Trans)
+	if err := global.Validate.Struct(&req); err != nil {
+		errStr := err.(validator.ValidationErrors)[0].Translate(global.Trans)
 		response.Fail(c, nil, errStr)
 		return
 	}
@@ -187,7 +187,7 @@ func (rc RoleController) UpdateRoleById(c *gin.Context) {
 	// 如果更新成功，且更新了角色的keyword, 则更新casbin中policy
 	if req.Keyword != roles[0].Keyword {
 		// 获取policy
-		rolePolicies := common.CasbinEnforcer.GetFilteredPolicy(0, roles[0].Keyword)
+		rolePolicies := global.CasbinEnforcer.GetFilteredPolicy(0, roles[0].Keyword)
 		if len(rolePolicies) == 0 {
 			response.Success(c, nil, "更新角色成功")
 			return
@@ -209,17 +209,17 @@ func (rc RoleController) UpdateRoleById(c *gin.Context) {
 		//}
 
 		// 这里需要先新增再删除（先删除再增加会出错）
-		isAdded, _ := common.CasbinEnforcer.AddPolicies(rolePolicies)
+		isAdded, _ := global.CasbinEnforcer.AddPolicies(rolePolicies)
 		if !isAdded {
 			response.Fail(c, nil, "更新角色成功，但角色关键字关联的权限接口更新失败")
 			return
 		}
-		isRemoved, _ := common.CasbinEnforcer.RemovePolicies(rolePoliciesCopy)
+		isRemoved, _ := global.CasbinEnforcer.RemovePolicies(rolePoliciesCopy)
 		if !isRemoved {
 			response.Fail(c, nil, "更新角色成功，但角色关键字关联的权限接口更新失败")
 			return
 		}
-		err := common.CasbinEnforcer.LoadPolicy()
+		err := global.CasbinEnforcer.LoadPolicy()
 		if err != nil {
 			response.Fail(c, nil, "更新角色成功，但角色关键字关联角色的权限接口策略加载失败")
 			return
@@ -265,8 +265,8 @@ func (rc RoleController) UpdateRoleMenusById(c *gin.Context) {
 		return
 	}
 	// 参数校验
-	if err := common.Validate.Struct(&req); err != nil {
-		errStr := err.(validator.ValidationErrors)[0].Translate(common.Trans)
+	if err := global.Validate.Struct(&req); err != nil {
+		errStr := err.(validator.ValidationErrors)[0].Translate(global.Trans)
 		response.Fail(c, nil, errStr)
 		return
 	}
@@ -410,8 +410,8 @@ func (rc RoleController) UpdateRoleApisById(c *gin.Context) {
 		return
 	}
 	// 参数校验
-	if err := common.Validate.Struct(&req); err != nil {
-		errStr := err.(validator.ValidationErrors)[0].Translate(common.Trans)
+	if err := global.Validate.Struct(&req); err != nil {
+		errStr := err.(validator.ValidationErrors)[0].Translate(global.Trans)
 		response.Fail(c, nil, errStr)
 		return
 	}
@@ -453,7 +453,7 @@ func (rc RoleController) UpdateRoleApisById(c *gin.Context) {
 	ctxRoles := ctxUser.Roles
 	ctxRolesPolicies := make([][]string, 0)
 	for _, role := range ctxRoles {
-		policy := common.CasbinEnforcer.GetFilteredPolicy(0, role.Keyword)
+		policy := global.CasbinEnforcer.GetFilteredPolicy(0, role.Keyword)
 		ctxRolesPolicies = append(ctxRolesPolicies, policy...)
 	}
 	// 得到path中的角色ID对应角色能够设置的权限接口集合
@@ -510,8 +510,8 @@ func (rc RoleController) BatchDeleteRoleByIds(c *gin.Context) {
 		return
 	}
 	// 参数校验
-	if err := common.Validate.Struct(&req); err != nil {
-		errStr := err.(validator.ValidationErrors)[0].Translate(common.Trans)
+	if err := global.Validate.Struct(&req); err != nil {
+		errStr := err.(validator.ValidationErrors)[0].Translate(global.Trans)
 		response.Fail(c, nil, errStr)
 		return
 	}

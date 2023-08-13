@@ -1,4 +1,4 @@
-package common
+package global
 
 import (
 	"context"
@@ -90,5 +90,6 @@ func dbAutoMigrate() {
 		&model.OperationLog{},
 		&model.News{},
 		&model.Branch{},
+		&model.Module{},
 	)
 }

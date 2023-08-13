@@ -22,6 +22,7 @@ type config struct {
 	Casbin    *CasbinConfig    `mapstructure:"casbin" json:"casbin"`
 	Jwt       *JwtConfig       `mapstructure:"jwt" json:"jwt"`
 	RateLimit *RateLimitConfig `mapstructure:"rate-limit" json:"rateLimit"`
+	Redis     *RedisConfig     `mapstructure:"redis" json:"redis"`
 }
 
 // 设置读取配置信息
@@ -109,4 +110,11 @@ type JwtConfig struct {
 type RateLimitConfig struct {
 	FillInterval int64 `mapstructure:"fill-interval" json:"fillInterval"`
 	Capacity     int64 `mapstructure:"capacity" json:"capacity"`
+}
+
+type RedisConfig struct {
+	Enable   bool   `mapstructure:"enable" json:"enable"`
+	Addr     string `mapstructure:"addr" json:"addr"`
+	DB       int    `mapstructure:"db" json:"db"`
+	Password string `mapstructure:"password" json:"password"`
 }

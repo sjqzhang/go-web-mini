@@ -67,11 +67,6 @@ const docTemplate = `{
         },
         "/branch": {
             "get": {
-                "security": [
-                    {
-                        "JWT": []
-                    }
-                ],
                 "description": "查询branch",
                 "consumes": [
                     "application/json"
@@ -80,7 +75,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Branch"
+                    "Branch}"
                 ],
                 "parameters": [
                     {
@@ -91,7 +86,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "branch_type",
+                        "description": "''branch_type''",
                         "name": "branch_type",
                         "in": "query"
                     },
@@ -103,7 +98,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "commit_time",
+                        "description": "''commit_time''",
                         "name": "commit_time",
                         "in": "query"
                     },
@@ -127,7 +122,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "is_dev",
+                        "description": "''is_dev''",
                         "name": "is_dev",
                         "in": "query"
                     },
@@ -157,7 +152,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "sync_time",
+                        "description": "''sync_time''",
                         "name": "sync_time",
                         "in": "query"
                     }
@@ -172,11 +167,6 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "security": [
-                    {
-                        "JWT": []
-                    }
-                ],
                 "description": "创建branch",
                 "consumes": [
                     "application/json"
@@ -207,11 +197,6 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "security": [
-                    {
-                        "JWT": []
-                    }
-                ],
                 "description": "批量删除branch",
                 "consumes": [
                     "application/json"
@@ -244,11 +229,6 @@ const docTemplate = `{
         },
         "/branch/:id": {
             "get": {
-                "security": [
-                    {
-                        "JWT": []
-                    }
-                ],
                 "description": "查询单个branch列表",
                 "consumes": [
                     "application/json"
@@ -262,7 +242,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "待编号",
+                        "description": "编号",
                         "name": "id",
                         "in": "query"
                     }
@@ -277,11 +257,6 @@ const docTemplate = `{
                 }
             },
             "put": {
-                "security": [
-                    {
-                        "JWT": []
-                    }
-                ],
                 "description": "更新branch",
                 "consumes": [
                     "application/json"
@@ -376,14 +351,9 @@ const docTemplate = `{
                 "responses": {}
             }
         },
-        "/news": {
+        "/module": {
             "get": {
-                "security": [
-                    {
-                        "JWT": []
-                    }
-                ],
-                "description": "查询新闻",
+                "description": "查询模块配置表",
                 "consumes": [
                     "application/json"
                 ],
@@ -391,18 +361,270 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "News"
+                    "Module}"
                 ],
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "新闻内容",
+                        "description": "添加参数",
+                        "name": "add_param",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "''单页模式''",
+                        "name": "is_single",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "''排序字段''",
+                        "name": "is_sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "''状态字段''",
+                        "name": "is_status",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "查询字段",
+                        "name": "list_fields",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "模型名称",
+                        "name": "model_name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "模块名称",
+                        "name": "module_name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "第几页",
+                        "name": "pageNum",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页多少条",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "主键",
+                        "name": "pk",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "备注",
+                        "name": "remark",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "右侧按钮",
+                        "name": "right_button",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "''查看全部''",
+                        "name": "show_all",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "''排序''",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "表注释",
+                        "name": "table_comment",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "表类型",
+                        "name": "table_type",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "表名称",
+                        "name": "tablename",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "顶部按钮",
+                        "name": "top_button",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/vo.ListModuleResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "创建模块配置表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Module"
+                ],
+                "parameters": [
+                    {
+                        "description": "入参req",
+                        "name": "req",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/vo.CreateModuleRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/vo.CreateModuleResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "批量删除模块配置表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Module"
+                ],
+                "parameters": [
+                    {
+                        "description": "入参req",
+                        "name": "req",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/vo.DeleteModuleRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/vo.DeleteModuleResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/module/:id": {
+            "get": {
+                "description": "查询单个模块配置表列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Module"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "编号",
+                        "name": "id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/vo.GetModuleResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "更新模块配置表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Module"
+                ],
+                "parameters": [
+                    {
+                        "description": "入参req",
+                        "name": "req",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/vo.UpdateModuleRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/vo.UpdateModuleResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/news": {
+            "get": {
+                "description": "查询news",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "News}"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "content",
                         "name": "content",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "新闻创建者",
+                        "description": "creator",
                         "name": "creator",
                         "in": "query"
                     },
@@ -420,7 +642,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "新闻标题",
+                        "description": "title:\"标题\";type:\"input\";validate:\"required:min=0,max=35\"",
                         "name": "title",
                         "in": "query"
                     }
@@ -435,12 +657,7 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "security": [
-                    {
-                        "JWT": []
-                    }
-                ],
-                "description": "创建新闻",
+                "description": "创建news",
                 "consumes": [
                     "application/json"
                 ],
@@ -470,12 +687,7 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "security": [
-                    {
-                        "JWT": []
-                    }
-                ],
-                "description": "批量删除新闻",
+                "description": "批量删除news",
                 "consumes": [
                     "application/json"
                 ],
@@ -507,12 +719,7 @@ const docTemplate = `{
         },
         "/news/:id": {
             "get": {
-                "security": [
-                    {
-                        "JWT": []
-                    }
-                ],
-                "description": "查询单个新闻列表",
+                "description": "查询单个news列表",
                 "consumes": [
                     "application/json"
                 ],
@@ -525,7 +732,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "待编号",
+                        "description": "编号",
                         "name": "id",
                         "in": "query"
                     }
@@ -540,12 +747,7 @@ const docTemplate = `{
                 }
             },
             "put": {
-                "security": [
-                    {
-                        "JWT": []
-                    }
-                ],
-                "description": "更新新闻",
+                "description": "更新news",
                 "consumes": [
                     "application/json"
                 ],
@@ -697,7 +899,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "branch_type": {
-                    "description": "branch_type",
+                    "description": "''branch_type''",
                     "type": "integer"
                 },
                 "commit_id": {
@@ -705,7 +907,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "commit_time": {
-                    "description": "commit_time",
+                    "description": "''commit_time''",
                     "type": "integer"
                 },
                 "commit_title": {
@@ -733,7 +935,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "is_dev": {
-                    "description": "is_dev",
+                    "description": "''is_dev''",
                     "type": "integer"
                 },
                 "jira_key": {
@@ -745,7 +947,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "sync_time": {
-                    "description": "sync_time",
+                    "description": "''sync_time''",
                     "type": "integer"
                 },
                 "updated_at": {
@@ -762,7 +964,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "branch_type": {
-                    "description": "branch_type",
+                    "description": "''branch_type''",
                     "type": "integer"
                 },
                 "commit_id": {
@@ -770,7 +972,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "commit_time": {
-                    "description": "commit_time",
+                    "description": "''commit_time''",
                     "type": "integer"
                 },
                 "commit_title": {
@@ -786,7 +988,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "is_dev": {
-                    "description": "is_dev",
+                    "description": "''is_dev''",
                     "type": "integer"
                 },
                 "jira_key": {
@@ -798,7 +1000,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "sync_time": {
-                    "description": "sync_time",
+                    "description": "''sync_time''",
                     "type": "integer"
                 }
             }
@@ -811,7 +1013,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "branch_type": {
-                    "description": "branch_type",
+                    "description": "''branch_type''",
                     "type": "integer"
                 },
                 "commit_id": {
@@ -819,7 +1021,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "commit_time": {
-                    "description": "commit_time",
+                    "description": "''commit_time''",
                     "type": "integer"
                 },
                 "commit_title": {
@@ -847,7 +1049,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "is_dev": {
-                    "description": "is_dev",
+                    "description": "''is_dev''",
                     "type": "integer"
                 },
                 "jira_key": {
@@ -859,8 +1061,162 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "sync_time": {
-                    "description": "sync_time",
+                    "description": "''sync_time''",
                     "type": "integer"
+                },
+                "updated_at": {
+                    "description": "updated_at",
+                    "type": "string"
+                }
+            }
+        },
+        "vo.CreateModuleRequest": {
+            "type": "object",
+            "properties": {
+                "add_param": {
+                    "description": "添加参数",
+                    "type": "string"
+                },
+                "is_single": {
+                    "description": "''单页模式''",
+                    "type": "integer"
+                },
+                "is_sort": {
+                    "description": "''排序字段''",
+                    "type": "integer"
+                },
+                "is_status": {
+                    "description": "''状态字段''",
+                    "type": "integer"
+                },
+                "list_fields": {
+                    "description": "查询字段",
+                    "type": "string"
+                },
+                "model_name": {
+                    "description": "模型名称",
+                    "type": "string"
+                },
+                "module_name": {
+                    "description": "模块名称",
+                    "type": "string"
+                },
+                "pk": {
+                    "description": "主键",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "right_button": {
+                    "description": "右侧按钮",
+                    "type": "string"
+                },
+                "show_all": {
+                    "description": "''查看全部''",
+                    "type": "integer"
+                },
+                "sort": {
+                    "description": "''排序''",
+                    "type": "integer"
+                },
+                "table_comment": {
+                    "description": "表注释",
+                    "type": "string"
+                },
+                "table_type": {
+                    "description": "表类型",
+                    "type": "string"
+                },
+                "tablename": {
+                    "description": "表名称",
+                    "type": "string"
+                },
+                "top_button": {
+                    "description": "顶部按钮",
+                    "type": "string"
+                }
+            }
+        },
+        "vo.CreateModuleResponse": {
+            "type": "object",
+            "properties": {
+                "add_param": {
+                    "description": "添加参数",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "created_at",
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "description": "deleted_at",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "编号",
+                    "type": "integer"
+                },
+                "is_single": {
+                    "description": "''单页模式''",
+                    "type": "integer"
+                },
+                "is_sort": {
+                    "description": "''排序字段''",
+                    "type": "integer"
+                },
+                "is_status": {
+                    "description": "''状态字段''",
+                    "type": "integer"
+                },
+                "list_fields": {
+                    "description": "查询字段",
+                    "type": "string"
+                },
+                "model_name": {
+                    "description": "模型名称",
+                    "type": "string"
+                },
+                "module_name": {
+                    "description": "模块名称",
+                    "type": "string"
+                },
+                "pk": {
+                    "description": "主键",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "right_button": {
+                    "description": "右侧按钮",
+                    "type": "string"
+                },
+                "show_all": {
+                    "description": "''查看全部''",
+                    "type": "integer"
+                },
+                "sort": {
+                    "description": "''排序''",
+                    "type": "integer"
+                },
+                "table_comment": {
+                    "description": "表注释",
+                    "type": "string"
+                },
+                "table_type": {
+                    "description": "表类型",
+                    "type": "string"
+                },
+                "tablename": {
+                    "description": "表名称",
+                    "type": "string"
+                },
+                "top_button": {
+                    "description": "顶部按钮",
+                    "type": "string"
                 },
                 "updated_at": {
                     "description": "updated_at",
@@ -872,15 +1228,15 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "content": {
-                    "description": "新闻内容",
+                    "description": "content",
                     "type": "string"
                 },
                 "creator": {
-                    "description": "新闻创建者",
+                    "description": "creator",
                     "type": "string"
                 },
                 "title": {
-                    "description": "新闻标题",
+                    "description": "title:\"标题\";type:\"input\";validate:\"required:min=0,max=35\"",
                     "type": "string"
                 }
             }
@@ -889,7 +1245,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "content": {
-                    "description": "新闻内容",
+                    "description": "content",
                     "type": "string"
                 },
                 "created_at": {
@@ -897,7 +1253,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "creator": {
-                    "description": "新闻创建者",
+                    "description": "creator",
                     "type": "string"
                 },
                 "deleted_at": {
@@ -909,7 +1265,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "title": {
-                    "description": "新闻标题",
+                    "description": "title:\"标题\";type:\"input\";validate:\"required:min=0,max=35\"",
                     "type": "string"
                 },
                 "updated_at": {
@@ -922,7 +1278,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "ids": {
-                    "description": "待编号",
+                    "description": "编号列表",
                     "type": "array",
                     "items": {
                         "type": "integer"
@@ -946,11 +1302,39 @@ const docTemplate = `{
                 }
             }
         },
+        "vo.DeleteModuleRequest": {
+            "type": "object",
+            "properties": {
+                "ids": {
+                    "description": "编号列表",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            }
+        },
+        "vo.DeleteModuleResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "0:成功，非0:失败",
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "integer"
+                },
+                "message": {
+                    "description": "提示信息",
+                    "type": "string"
+                }
+            }
+        },
         "vo.DeleteNewsRequest": {
             "type": "object",
             "properties": {
                 "ids": {
-                    "description": "待编号",
+                    "description": "编号列表",
                     "type": "array",
                     "items": {
                         "type": "integer"
@@ -982,7 +1366,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "branch_type": {
-                    "description": "branch_type",
+                    "description": "''branch_type''",
                     "type": "integer"
                 },
                 "commit_id": {
@@ -990,7 +1374,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "commit_time": {
-                    "description": "commit_time",
+                    "description": "''commit_time''",
                     "type": "integer"
                 },
                 "commit_title": {
@@ -1018,7 +1402,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "is_dev": {
-                    "description": "is_dev",
+                    "description": "''is_dev''",
                     "type": "integer"
                 },
                 "jira_key": {
@@ -1030,8 +1414,93 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "sync_time": {
-                    "description": "sync_time",
+                    "description": "''sync_time''",
                     "type": "integer"
+                },
+                "updated_at": {
+                    "description": "updated_at",
+                    "type": "string"
+                }
+            }
+        },
+        "vo.GetModuleResponse": {
+            "type": "object",
+            "properties": {
+                "add_param": {
+                    "description": "添加参数",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "created_at",
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "description": "deleted_at",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "编号",
+                    "type": "integer"
+                },
+                "is_single": {
+                    "description": "''单页模式''",
+                    "type": "integer"
+                },
+                "is_sort": {
+                    "description": "''排序字段''",
+                    "type": "integer"
+                },
+                "is_status": {
+                    "description": "''状态字段''",
+                    "type": "integer"
+                },
+                "list_fields": {
+                    "description": "查询字段",
+                    "type": "string"
+                },
+                "model_name": {
+                    "description": "模型名称",
+                    "type": "string"
+                },
+                "module_name": {
+                    "description": "模块名称",
+                    "type": "string"
+                },
+                "pk": {
+                    "description": "主键",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "right_button": {
+                    "description": "右侧按钮",
+                    "type": "string"
+                },
+                "show_all": {
+                    "description": "''查看全部''",
+                    "type": "integer"
+                },
+                "sort": {
+                    "description": "''排序''",
+                    "type": "integer"
+                },
+                "table_comment": {
+                    "description": "表注释",
+                    "type": "string"
+                },
+                "table_type": {
+                    "description": "表类型",
+                    "type": "string"
+                },
+                "tablename": {
+                    "description": "表名称",
+                    "type": "string"
+                },
+                "top_button": {
+                    "description": "顶部按钮",
+                    "type": "string"
                 },
                 "updated_at": {
                     "description": "updated_at",
@@ -1043,7 +1512,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "content": {
-                    "description": "新闻内容",
+                    "description": "content",
                     "type": "string"
                 },
                 "created_at": {
@@ -1051,7 +1520,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "creator": {
-                    "description": "新闻创建者",
+                    "description": "creator",
                     "type": "string"
                 },
                 "deleted_at": {
@@ -1063,7 +1532,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "title": {
-                    "description": "新闻标题",
+                    "description": "title:\"标题\";type:\"input\";validate:\"required:min=0,max=35\"",
                     "type": "string"
                 },
                 "updated_at": {
@@ -1076,22 +1545,56 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "extra": {
+                    "description": "扩展",
                     "type": "object",
                     "additionalProperties": true
                 },
                 "list": {
+                    "description": "列表",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/vo.Branch"
                     }
                 },
                 "pageNum": {
+                    "description": "第几页",
                     "type": "integer"
                 },
                 "pageSize": {
+                    "description": "每页多少条",
                     "type": "integer"
                 },
                 "total": {
+                    "description": "总数",
+                    "type": "integer"
+                }
+            }
+        },
+        "vo.ListModuleResponse": {
+            "type": "object",
+            "properties": {
+                "extra": {
+                    "description": "扩展",
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "list": {
+                    "description": "列表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/vo.Module"
+                    }
+                },
+                "pageNum": {
+                    "description": "第几页",
+                    "type": "integer"
+                },
+                "pageSize": {
+                    "description": "每页多少条",
+                    "type": "integer"
+                },
+                "total": {
+                    "description": "总数",
                     "type": "integer"
                 }
             }
@@ -1100,23 +1603,113 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "extra": {
+                    "description": "扩展",
                     "type": "object",
                     "additionalProperties": true
                 },
                 "list": {
+                    "description": "列表",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/vo.News"
                     }
                 },
                 "pageNum": {
+                    "description": "第几页",
                     "type": "integer"
                 },
                 "pageSize": {
+                    "description": "每页多少条",
                     "type": "integer"
                 },
                 "total": {
+                    "description": "总数",
                     "type": "integer"
+                }
+            }
+        },
+        "vo.Module": {
+            "type": "object",
+            "properties": {
+                "add_param": {
+                    "description": "添加参数",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "created_at",
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "description": "deleted_at",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "编号",
+                    "type": "integer"
+                },
+                "is_single": {
+                    "description": "''单页模式''",
+                    "type": "integer"
+                },
+                "is_sort": {
+                    "description": "''排序字段''",
+                    "type": "integer"
+                },
+                "is_status": {
+                    "description": "''状态字段''",
+                    "type": "integer"
+                },
+                "list_fields": {
+                    "description": "查询字段",
+                    "type": "string"
+                },
+                "model_name": {
+                    "description": "模型名称",
+                    "type": "string"
+                },
+                "module_name": {
+                    "description": "模块名称",
+                    "type": "string"
+                },
+                "pk": {
+                    "description": "主键",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "right_button": {
+                    "description": "右侧按钮",
+                    "type": "string"
+                },
+                "show_all": {
+                    "description": "''查看全部''",
+                    "type": "integer"
+                },
+                "sort": {
+                    "description": "''排序''",
+                    "type": "integer"
+                },
+                "table_comment": {
+                    "description": "表注释",
+                    "type": "string"
+                },
+                "table_type": {
+                    "description": "表类型",
+                    "type": "string"
+                },
+                "tablename": {
+                    "description": "表名称",
+                    "type": "string"
+                },
+                "top_button": {
+                    "description": "顶部按钮",
+                    "type": "string"
+                },
+                "updated_at": {
+                    "description": "updated_at",
+                    "type": "string"
                 }
             }
         },
@@ -1124,7 +1717,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "content": {
-                    "description": "新闻内容",
+                    "description": "content",
                     "type": "string"
                 },
                 "created_at": {
@@ -1132,7 +1725,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "creator": {
-                    "description": "新闻创建者",
+                    "description": "creator",
                     "type": "string"
                 },
                 "deleted_at": {
@@ -1144,7 +1737,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "title": {
-                    "description": "新闻标题",
+                    "description": "title:\"标题\";type:\"input\";validate:\"required:min=0,max=35\"",
                     "type": "string"
                 },
                 "updated_at": {
@@ -1161,7 +1754,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "branch_type": {
-                    "description": "branch_type",
+                    "description": "''branch_type''",
                     "type": "integer"
                 },
                 "commit_id": {
@@ -1169,7 +1762,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "commit_time": {
-                    "description": "commit_time",
+                    "description": "''commit_time''",
                     "type": "integer"
                 },
                 "commit_title": {
@@ -1188,7 +1781,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "is_dev": {
-                    "description": "is_dev",
+                    "description": "''is_dev''",
                     "type": "integer"
                 },
                 "jira_key": {
@@ -1200,7 +1793,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "sync_time": {
-                    "description": "sync_time",
+                    "description": "''sync_time''",
                     "type": "integer"
                 }
             }
@@ -1213,7 +1806,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "branch_type": {
-                    "description": "branch_type",
+                    "description": "''branch_type''",
                     "type": "integer"
                 },
                 "commit_id": {
@@ -1221,7 +1814,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "commit_time": {
-                    "description": "commit_time",
+                    "description": "''commit_time''",
                     "type": "integer"
                 },
                 "commit_title": {
@@ -1249,7 +1842,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "is_dev": {
-                    "description": "is_dev",
+                    "description": "''is_dev''",
                     "type": "integer"
                 },
                 "jira_key": {
@@ -1261,8 +1854,165 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "sync_time": {
-                    "description": "sync_time",
+                    "description": "''sync_time''",
                     "type": "integer"
+                },
+                "updated_at": {
+                    "description": "updated_at",
+                    "type": "string"
+                }
+            }
+        },
+        "vo.UpdateModuleRequest": {
+            "type": "object",
+            "properties": {
+                "add_param": {
+                    "description": "添加参数",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "is_single": {
+                    "description": "''单页模式''",
+                    "type": "integer"
+                },
+                "is_sort": {
+                    "description": "''排序字段''",
+                    "type": "integer"
+                },
+                "is_status": {
+                    "description": "''状态字段''",
+                    "type": "integer"
+                },
+                "list_fields": {
+                    "description": "查询字段",
+                    "type": "string"
+                },
+                "model_name": {
+                    "description": "模型名称",
+                    "type": "string"
+                },
+                "module_name": {
+                    "description": "模块名称",
+                    "type": "string"
+                },
+                "pk": {
+                    "description": "主键",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "right_button": {
+                    "description": "右侧按钮",
+                    "type": "string"
+                },
+                "show_all": {
+                    "description": "''查看全部''",
+                    "type": "integer"
+                },
+                "sort": {
+                    "description": "''排序''",
+                    "type": "integer"
+                },
+                "table_comment": {
+                    "description": "表注释",
+                    "type": "string"
+                },
+                "table_type": {
+                    "description": "表类型",
+                    "type": "string"
+                },
+                "tablename": {
+                    "description": "表名称",
+                    "type": "string"
+                },
+                "top_button": {
+                    "description": "顶部按钮",
+                    "type": "string"
+                }
+            }
+        },
+        "vo.UpdateModuleResponse": {
+            "type": "object",
+            "properties": {
+                "add_param": {
+                    "description": "添加参数",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "created_at",
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "description": "deleted_at",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "编号",
+                    "type": "integer"
+                },
+                "is_single": {
+                    "description": "''单页模式''",
+                    "type": "integer"
+                },
+                "is_sort": {
+                    "description": "''排序字段''",
+                    "type": "integer"
+                },
+                "is_status": {
+                    "description": "''状态字段''",
+                    "type": "integer"
+                },
+                "list_fields": {
+                    "description": "查询字段",
+                    "type": "string"
+                },
+                "model_name": {
+                    "description": "模型名称",
+                    "type": "string"
+                },
+                "module_name": {
+                    "description": "模块名称",
+                    "type": "string"
+                },
+                "pk": {
+                    "description": "主键",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "right_button": {
+                    "description": "右侧按钮",
+                    "type": "string"
+                },
+                "show_all": {
+                    "description": "''查看全部''",
+                    "type": "integer"
+                },
+                "sort": {
+                    "description": "''排序''",
+                    "type": "integer"
+                },
+                "table_comment": {
+                    "description": "表注释",
+                    "type": "string"
+                },
+                "table_type": {
+                    "description": "表类型",
+                    "type": "string"
+                },
+                "tablename": {
+                    "description": "表名称",
+                    "type": "string"
+                },
+                "top_button": {
+                    "description": "顶部按钮",
+                    "type": "string"
                 },
                 "updated_at": {
                     "description": "updated_at",
@@ -1274,18 +2024,18 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "content": {
-                    "description": "新闻内容",
+                    "description": "content",
                     "type": "string"
                 },
                 "creator": {
-                    "description": "新闻创建者",
+                    "description": "creator",
                     "type": "string"
                 },
                 "id": {
                     "type": "integer"
                 },
                 "title": {
-                    "description": "新闻标题",
+                    "description": "title:\"标题\";type:\"input\";validate:\"required:min=0,max=35\"",
                     "type": "string"
                 }
             }
@@ -1294,7 +2044,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "content": {
-                    "description": "新闻内容",
+                    "description": "content",
                     "type": "string"
                 },
                 "created_at": {
@@ -1302,7 +2052,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "creator": {
-                    "description": "新闻创建者",
+                    "description": "creator",
                     "type": "string"
                 },
                 "deleted_at": {
@@ -1314,7 +2064,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "title": {
-                    "description": "新闻标题",
+                    "description": "title:\"标题\";type:\"input\";validate:\"required:min=0,max=35\"",
                     "type": "string"
                 },
                 "updated_at": {

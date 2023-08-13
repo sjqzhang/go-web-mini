@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/patrickmn/go-cache"
 	"github.com/thoas/go-funk"
-	"go-web-mini/common"
+	"go-web-mini/global"
 	"go-web-mini/model"
 	"go-web-mini/util"
 	"go-web-mini/vo"
@@ -49,7 +49,7 @@ var userInfoCache = cache.New(24*time.Hour, 48*time.Hour)
 func (ur UserRepository) Login(ctx context.Context, user *model.User) (*model.User, error) {
 	// 根据用户名获取用户(正常状态:用户状态正常)
 	var firstUser model.User
-	err := common.DB.
+	err := global.DB.
 		Where("username = ?", user.Username).
 		Preload("Roles").
 		First(&firstUser).Error
@@ -139,14 +139,14 @@ func (ur UserRepository) GetCurrentUserMinRoleSort(ctx context.Context, c *gin.C
 // 获取单个用户
 func (ur UserRepository) GetUserById(ctx context.Context, id uint) (model.User, error) {
 	var user model.User
-	err := common.DB.Where("id = ?", id).Preload("Roles").First(&user).Error
+	err := global.DB.Where("id = ?", id).Preload("Roles").First(&user).Error
 	return user, err
 }
 
 // 获取用户列表
 func (ur UserRepository) GetUsers(ctx context.Context, req *vo.UserListRequest) ([]*model.User, int64, error) {
 	var list []*model.User
-	db := common.DB.Model(&model.User{}).Order("created_at DESC")
+	db := global.DB.Model(&model.User{}).Order("created_at DESC")
 
 	username := strings.TrimSpace(req.Username)
 	if username != "" {
@@ -183,7 +183,7 @@ func (ur UserRepository) GetUsers(ctx context.Context, req *vo.UserListRequest) 
 
 // 更新密码
 func (ur UserRepository) ChangePwd(ctx context.Context, username string, newPasswd string) error {
-	err := common.DB.Model(&model.User{}).Where("username = ?", username).Update("password", newPasswd).Error
+	err := global.DB.Model(&model.User{}).Where("username = ?", username).Update("password", newPasswd).Error
 	// 如果更新密码成功，则更新当前用户信息缓存
 	// 先获取缓存
 	cacheUser, found := userInfoCache.Get(username)
@@ -195,7 +195,7 @@ func (ur UserRepository) ChangePwd(ctx context.Context, username string, newPass
 		} else {
 			// 没有缓存就获取用户信息缓存
 			var user model.User
-			common.DB.Where("username = ?", username).First(&user)
+			global.DB.Where("username = ?", username).First(&user)
 			userInfoCache.Set(username, user, cache.DefaultExpiration)
 		}
 	}
@@ -205,17 +205,17 @@ func (ur UserRepository) ChangePwd(ctx context.Context, username string, newPass
 
 // 创建用户
 func (ur UserRepository) CreateUser(ctx context.Context, user *model.User) error {
-	err := common.DB.Create(user).Error
+	err := global.DB.Create(user).Error
 	return err
 }
 
 // 更新用户
 func (ur UserRepository) UpdateUser(ctx context.Context, user *model.User) error {
-	err := common.DB.Model(user).Updates(user).Error
+	err := global.DB.Model(user).Updates(user).Error
 	if err != nil {
 		return err
 	}
-	err = common.DB.Model(user).Association("Roles").Replace(user.Roles)
+	err = global.DB.Model(user).Association("Roles").Replace(user.Roles)
 
 	//err := common.DB.Session(&gorm.Session{FullSaveAssociations: true}).Updates(&user).Error
 
@@ -239,7 +239,7 @@ func (ur UserRepository) BatchDeleteUserByIds(ctx context.Context, ids []uint) e
 		users = append(users, user)
 	}
 
-	err := common.DB.Select("Roles").Unscoped().Delete(&users).Error
+	err := global.DB.Select("Roles").Unscoped().Delete(&users).Error
 	// 删除用户成功，则删除用户信息缓存
 	if err == nil {
 		for _, user := range users {
@@ -253,7 +253,7 @@ func (ur UserRepository) BatchDeleteUserByIds(ctx context.Context, ids []uint) e
 func (ur UserRepository) GetUserMinRoleSortsByIds(ctx context.Context, ids []uint) ([]int, error) {
 	// 根据用户ID获取用户信息
 	var userList []model.User
-	err := common.DB.Where("id IN (?)", ids).Preload("Roles").Find(&userList).Error
+	err := global.DB.Where("id IN (?)", ids).Preload("Roles").Find(&userList).Error
 	if err != nil {
 		return []int{}, err
 	}
@@ -282,7 +282,7 @@ func (ur UserRepository) SetUserInfoCache(ctx context.Context, username string, 
 func (ur UserRepository) UpdateUserInfoCacheByRoleId(ctx context.Context, roleId uint) error {
 
 	var role model.Role
-	err := common.DB.Where("id = ?", roleId).Preload("Users").First(&role).Error
+	err := global.DB.Where("id = ?", roleId).Preload("Users").First(&role).Error
 	if err != nil {
 		return errors.New("根据角色ID角色信息失败")
 	}

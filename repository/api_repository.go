@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/thoas/go-funk"
-	"go-web-mini/common"
+	"go-web-mini/global"
 	"go-web-mini/dto"
 	"go-web-mini/model"
 	"go-web-mini/vo"
@@ -32,7 +32,7 @@ type ApiRepository struct {
 // 获取接口列表
 func (a ApiRepository) GetApis(ctx context.Context, req *vo.ApiListRequest) ([]*model.Api, int64, error) {
 	var list []*model.Api
-	db := common.DB.Model(&model.Api{}).Order("created_at DESC")
+	db := global.DB.Model(&model.Api{}).Order("created_at DESC")
 
 	method := strings.TrimSpace(req.Method)
 	if method != "" {
@@ -71,14 +71,14 @@ func (a ApiRepository) GetApis(ctx context.Context, req *vo.ApiListRequest) ([]*
 // 根据接口ID获取接口列表
 func (a ApiRepository) GetApisById(ctx context.Context, apiIds []uint) ([]*model.Api, error) {
 	var apis []*model.Api
-	err := common.DB.Where("id IN (?)", apiIds).Find(&apis).Error
+	err := global.DB.Where("id IN (?)", apiIds).Find(&apis).Error
 	return apis, err
 }
 
 // 获取接口树(按接口Category字段分类)
 func (a ApiRepository) GetApiTree(context.Context) ([]*dto.ApiTreeDto, error) {
 	var apiList []*model.Api
-	err := common.DB.Order("category").Order("created_at").Find(&apiList).Error
+	err := global.DB.Order("category").Order("created_at").Find(&apiList).Error
 	// 获取所有的分类
 	var categoryList []string
 	for _, api := range apiList {
@@ -108,7 +108,7 @@ func (a ApiRepository) GetApiTree(context.Context) ([]*dto.ApiTreeDto, error) {
 
 // 创建接口
 func (a ApiRepository) CreateApi(ctx context.Context, api *model.Api) error {
-	err := common.DB.Create(api).Error
+	err := global.DB.Create(api).Error
 
 	return err
 }
@@ -117,21 +117,21 @@ func (a ApiRepository) CreateApi(ctx context.Context, api *model.Api) error {
 func (a ApiRepository) UpdateApiById(ctx context.Context, apiId uint, api *model.Api) error {
 	// 根据id获取接口信息
 	var oldApi model.Api
-	err := common.DB.First(&oldApi, apiId).Error
+	err := global.DB.First(&oldApi, apiId).Error
 	if err != nil {
 		return errors.New("根据接口ID获取接口信息失败")
 	}
-	err = common.DB.Model(api).Where("id = ?", apiId).Updates(api).Error
+	err = global.DB.Model(api).Where("id = ?", apiId).Updates(api).Error
 	if err != nil {
 		return err
 	}
 	// 更新了method和path就更新casbin中policy
 	if oldApi.Path != api.Path || oldApi.Method != api.Method {
-		policies := common.CasbinEnforcer.GetFilteredPolicy(1, oldApi.Path, oldApi.Method)
+		policies := global.CasbinEnforcer.GetFilteredPolicy(1, oldApi.Path, oldApi.Method)
 		// 接口在casbin的policy中存在才进行操作
 		if len(policies) > 0 {
 			// 先删除
-			isRemoved, _ := common.CasbinEnforcer.RemovePolicies(policies)
+			isRemoved, _ := global.CasbinEnforcer.RemovePolicies(policies)
 			if !isRemoved {
 				return errors.New("更新权限接口失败")
 			}
@@ -140,12 +140,12 @@ func (a ApiRepository) UpdateApiById(ctx context.Context, apiId uint, api *model
 				policy[2] = api.Method
 			}
 			// 新增
-			isAdded, _ := common.CasbinEnforcer.AddPolicies(policies)
+			isAdded, _ := global.CasbinEnforcer.AddPolicies(policies)
 			if !isAdded {
 				return errors.New("更新权限接口失败")
 			}
 			// 加载policy
-			err := common.CasbinEnforcer.LoadPolicy()
+			err := global.CasbinEnforcer.LoadPolicy()
 			if err != nil {
 				return errors.New("更新权限接口成功，权限接口策略加载失败")
 			} else {
@@ -167,20 +167,20 @@ func (a ApiRepository) BatchDeleteApiByIds(ctx context.Context, apiIds []uint) e
 		return errors.New("根据接口ID未获取到接口列表")
 	}
 
-	err = common.DB.Where("id IN (?)", apiIds).Unscoped().Delete(&model.Api{}).Error
+	err = global.DB.Where("id IN (?)", apiIds).Unscoped().Delete(&model.Api{}).Error
 	// 如果删除成功，删除casbin中policy
 	if err == nil {
 		for _, api := range apis {
-			policies := common.CasbinEnforcer.GetFilteredPolicy(1, api.Path, api.Method)
+			policies := global.CasbinEnforcer.GetFilteredPolicy(1, api.Path, api.Method)
 			if len(policies) > 0 {
-				isRemoved, _ := common.CasbinEnforcer.RemovePolicies(policies)
+				isRemoved, _ := global.CasbinEnforcer.RemovePolicies(policies)
 				if !isRemoved {
 					return errors.New("删除权限接口失败")
 				}
 			}
 		}
 		// 重新加载策略
-		err := common.CasbinEnforcer.LoadPolicy()
+		err := global.CasbinEnforcer.LoadPolicy()
 		if err != nil {
 			return errors.New("删除权限接口成功，权限接口策略加载失败")
 		} else {
@@ -193,6 +193,6 @@ func (a ApiRepository) BatchDeleteApiByIds(ctx context.Context, apiIds []uint) e
 // 根据接口路径和请求方式获取接口描述
 func (a ApiRepository) GetApiDescByPath(ctx context.Context, path string, method string) (string, error) {
 	var api model.Api
-	err := common.DB.Where("path = ?", path).Where("method = ?", method).First(&api).Error
+	err := global.DB.Where("path = ?", path).Where("method = ?", method).First(&api).Error
 	return api.Desc, err
 }
