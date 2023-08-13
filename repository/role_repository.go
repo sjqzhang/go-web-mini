@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"go-web-mini/common"
+	"go-web-mini/global"
 	"go-web-mini/model"
 	"go-web-mini/vo"
 	"strings"
@@ -32,7 +32,7 @@ type RoleRepository struct {
 // 获取角色列表
 func (r RoleRepository) GetRoles(ctx context.Context, req *vo.RoleListRequest) ([]model.Role, int64, error) {
 	var list []model.Role
-	db := common.DB.Model(&model.Role{}).Order("created_at DESC")
+	db := global.DB.Model(&model.Role{}).Order("created_at DESC")
 
 	name := strings.TrimSpace(req.Name)
 	if name != "" {
@@ -66,42 +66,42 @@ func (r RoleRepository) GetRoles(ctx context.Context, req *vo.RoleListRequest) (
 //根据角色ID获取角色
 func (r RoleRepository) GetRolesByIds(ctx context.Context, roleIds []uint) ([]*model.Role, error) {
 	var list []*model.Role
-	err := common.DB.Where("id IN (?)", roleIds).Find(&list).Error
+	err := global.DB.Where("id IN (?)", roleIds).Find(&list).Error
 	return list, err
 }
 
 // 创建角色
 func (r RoleRepository) CreateRole(ctx context.Context, role *model.Role) error {
-	err := common.DB.Create(role).Error
+	err := global.DB.Create(role).Error
 	return err
 }
 
 // 更新角色
 func (r RoleRepository) UpdateRoleById(ctx context.Context, roleId uint, role *model.Role) error {
-	err := common.DB.Model(&model.Role{}).Where("id = ?", roleId).Updates(role).Error
+	err := global.DB.Model(&model.Role{}).Where("id = ?", roleId).Updates(role).Error
 	return err
 }
 
 // 获取角色的权限菜单
 func (r RoleRepository) GetRoleMenusById(ctx context.Context, roleId uint) ([]*model.Menu, error) {
 	var role model.Role
-	err := common.DB.Where("id = ?", roleId).Preload("Menus").First(&role).Error
+	err := global.DB.Where("id = ?", roleId).Preload("Menus").First(&role).Error
 	return role.Menus, err
 }
 
 // 更新角色的权限菜单
 func (r RoleRepository) UpdateRoleMenus(ctx context.Context, role *model.Role) error {
-	err := common.DB.Model(role).Association("Menus").Replace(role.Menus)
+	err := global.DB.Model(role).Association("Menus").Replace(role.Menus)
 	return err
 }
 
 // 根据角色关键字获取角色的权限接口
 func (r RoleRepository) GetRoleApisByRoleKeyword(ctx context.Context, roleKeyword string) ([]*model.Api, error) {
-	policies := common.CasbinEnforcer.GetFilteredPolicy(0, roleKeyword)
+	policies := global.CasbinEnforcer.GetFilteredPolicy(0, roleKeyword)
 
 	// 获取所有接口
 	var apis []*model.Api
-	err := common.DB.Find(&apis).Error
+	err := global.DB.Find(&apis).Error
 	if err != nil {
 		return apis, errors.New("获取角色的权限接口失败")
 	}
@@ -126,22 +126,22 @@ func (r RoleRepository) GetRoleApisByRoleKeyword(ctx context.Context, roleKeywor
 // 更新角色的权限接口（先全部删除再新增）
 func (r RoleRepository) UpdateRoleApis(ctx context.Context, roleKeyword string, reqRolePolicies [][]string) error {
 	// 先获取path中的角色ID对应角色已有的police(需要先删除的)
-	err := common.CasbinEnforcer.LoadPolicy()
+	err := global.CasbinEnforcer.LoadPolicy()
 	if err != nil {
 		return errors.New("角色的权限接口策略加载失败")
 	}
-	rmPolicies := common.CasbinEnforcer.GetFilteredPolicy(0, roleKeyword)
+	rmPolicies := global.CasbinEnforcer.GetFilteredPolicy(0, roleKeyword)
 	if len(rmPolicies) > 0 {
-		isRemoved, _ := common.CasbinEnforcer.RemovePolicies(rmPolicies)
+		isRemoved, _ := global.CasbinEnforcer.RemovePolicies(rmPolicies)
 		if !isRemoved {
 			return errors.New("更新角色的权限接口失败")
 		}
 	}
-	isAdded, _ := common.CasbinEnforcer.AddPolicies(reqRolePolicies)
+	isAdded, _ := global.CasbinEnforcer.AddPolicies(reqRolePolicies)
 	if !isAdded {
 		return errors.New("更新角色的权限接口失败")
 	}
-	err = common.CasbinEnforcer.LoadPolicy()
+	err = global.CasbinEnforcer.LoadPolicy()
 	if err != nil {
 		return errors.New("更新角色的权限接口成功，角色的权限接口策略加载失败")
 	} else {
@@ -152,18 +152,18 @@ func (r RoleRepository) UpdateRoleApis(ctx context.Context, roleKeyword string, 
 // 删除角色
 func (r RoleRepository) BatchDeleteRoleByIds(ctx context.Context, roleIds []uint) error {
 	var roles []*model.Role
-	err := common.DB.Where("id IN (?)", roleIds).Find(&roles).Error
+	err := global.DB.Where("id IN (?)", roleIds).Find(&roles).Error
 	if err != nil {
 		return err
 	}
-	err = common.DB.Select("Users", "Menus").Unscoped().Delete(&roles).Error
+	err = global.DB.Select("Users", "Menus").Unscoped().Delete(&roles).Error
 	// 删除成功就删除casbin policy
 	if err == nil {
 		for _, role := range roles {
 			roleKeyword := role.Keyword
-			rmPolicies := common.CasbinEnforcer.GetFilteredPolicy(0, roleKeyword)
+			rmPolicies := global.CasbinEnforcer.GetFilteredPolicy(0, roleKeyword)
 			if len(rmPolicies) > 0 {
-				isRemoved, _ := common.CasbinEnforcer.RemovePolicies(rmPolicies)
+				isRemoved, _ := global.CasbinEnforcer.RemovePolicies(rmPolicies)
 				if !isRemoved {
 					return errors.New("删除角色成功, 删除角色关联权限接口失败")
 				}

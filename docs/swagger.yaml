@@ -6,13 +6,13 @@ definitions:
         description: branch_name
         type: string
       branch_type:
-        description: branch_type
+        description: '''''branch_type'''''
         type: integer
       commit_id:
         description: commit_id
         type: string
       commit_time:
-        description: commit_time
+        description: '''''commit_time'''''
         type: integer
       commit_title:
         description: commit_title
@@ -33,7 +33,7 @@ definitions:
         description: id
         type: integer
       is_dev:
-        description: is_dev
+        description: '''''is_dev'''''
         type: integer
       jira_key:
         description: jira_key
@@ -42,7 +42,7 @@ definitions:
         description: repo
         type: string
       sync_time:
-        description: sync_time
+        description: '''''sync_time'''''
         type: integer
       updated_at:
         description: updated_at
@@ -54,13 +54,13 @@ definitions:
         description: branch_name
         type: string
       branch_type:
-        description: branch_type
+        description: '''''branch_type'''''
         type: integer
       commit_id:
         description: commit_id
         type: string
       commit_time:
-        description: commit_time
+        description: '''''commit_time'''''
         type: integer
       commit_title:
         description: commit_title
@@ -72,7 +72,7 @@ definitions:
         description: creator
         type: string
       is_dev:
-        description: is_dev
+        description: '''''is_dev'''''
         type: integer
       jira_key:
         description: jira_key
@@ -81,7 +81,7 @@ definitions:
         description: repo
         type: string
       sync_time:
-        description: sync_time
+        description: '''''sync_time'''''
         type: integer
     type: object
   vo.CreateBranchResponse:
@@ -90,13 +90,13 @@ definitions:
         description: branch_name
         type: string
       branch_type:
-        description: branch_type
+        description: '''''branch_type'''''
         type: integer
       commit_id:
         description: commit_id
         type: string
       commit_time:
-        description: commit_time
+        description: '''''commit_time'''''
         type: integer
       commit_title:
         description: commit_title
@@ -117,7 +117,7 @@ definitions:
         description: id
         type: integer
       is_dev:
-        description: is_dev
+        description: '''''is_dev'''''
         type: integer
       jira_key:
         description: jira_key
@@ -126,8 +126,122 @@ definitions:
         description: repo
         type: string
       sync_time:
-        description: sync_time
+        description: '''''sync_time'''''
         type: integer
+      updated_at:
+        description: updated_at
+        type: string
+    type: object
+  vo.CreateModuleRequest:
+    properties:
+      add_param:
+        description: 添加参数
+        type: string
+      is_single:
+        description: '''''单页模式'''''
+        type: integer
+      is_sort:
+        description: '''''排序字段'''''
+        type: integer
+      is_status:
+        description: '''''状态字段'''''
+        type: integer
+      list_fields:
+        description: 查询字段
+        type: string
+      model_name:
+        description: 模型名称
+        type: string
+      module_name:
+        description: 模块名称
+        type: string
+      pk:
+        description: 主键
+        type: string
+      remark:
+        description: 备注
+        type: string
+      right_button:
+        description: 右侧按钮
+        type: string
+      show_all:
+        description: '''''查看全部'''''
+        type: integer
+      sort:
+        description: '''''排序'''''
+        type: integer
+      table_comment:
+        description: 表注释
+        type: string
+      table_type:
+        description: 表类型
+        type: string
+      tablename:
+        description: 表名称
+        type: string
+      top_button:
+        description: 顶部按钮
+        type: string
+    type: object
+  vo.CreateModuleResponse:
+    properties:
+      add_param:
+        description: 添加参数
+        type: string
+      created_at:
+        description: created_at
+        type: string
+      deleted_at:
+        description: deleted_at
+        type: string
+      id:
+        description: 编号
+        type: integer
+      is_single:
+        description: '''''单页模式'''''
+        type: integer
+      is_sort:
+        description: '''''排序字段'''''
+        type: integer
+      is_status:
+        description: '''''状态字段'''''
+        type: integer
+      list_fields:
+        description: 查询字段
+        type: string
+      model_name:
+        description: 模型名称
+        type: string
+      module_name:
+        description: 模块名称
+        type: string
+      pk:
+        description: 主键
+        type: string
+      remark:
+        description: 备注
+        type: string
+      right_button:
+        description: 右侧按钮
+        type: string
+      show_all:
+        description: '''''查看全部'''''
+        type: integer
+      sort:
+        description: '''''排序'''''
+        type: integer
+      table_comment:
+        description: 表注释
+        type: string
+      table_type:
+        description: 表类型
+        type: string
+      tablename:
+        description: 表名称
+        type: string
+      top_button:
+        description: 顶部按钮
+        type: string
       updated_at:
         description: updated_at
         type: string
@@ -135,25 +249,25 @@ definitions:
   vo.CreateNewsRequest:
     properties:
       content:
-        description: 新闻内容
+        description: content
         type: string
       creator:
-        description: 新闻创建者
+        description: creator
         type: string
       title:
-        description: 新闻标题
+        description: title:"标题";type:"input";validate:"required:min=0,max=35"
         type: string
     type: object
   vo.CreateNewsResponse:
     properties:
       content:
-        description: 新闻内容
+        description: content
         type: string
       created_at:
         description: created_at
         type: string
       creator:
-        description: 新闻创建者
+        description: creator
         type: string
       deleted_at:
         description: deleted_at
@@ -162,7 +276,7 @@ definitions:
         description: id
         type: integer
       title:
-        description: 新闻标题
+        description: title:"标题";type:"input";validate:"required:min=0,max=35"
         type: string
       updated_at:
         description: updated_at
@@ -171,7 +285,7 @@ definitions:
   vo.DeleteBranchRequest:
     properties:
       ids:
-        description: 待编号
+        description: 编号列表
         items:
           type: integer
         type: array
@@ -187,10 +301,29 @@ definitions:
         description: 提示信息
         type: string
     type: object
+  vo.DeleteModuleRequest:
+    properties:
+      ids:
+        description: 编号列表
+        items:
+          type: integer
+        type: array
+    type: object
+  vo.DeleteModuleResponse:
+    properties:
+      code:
+        description: 0:成功，非0:失败
+        type: integer
+      data:
+        type: integer
+      message:
+        description: 提示信息
+        type: string
+    type: object
   vo.DeleteNewsRequest:
     properties:
       ids:
-        description: 待编号
+        description: 编号列表
         items:
           type: integer
         type: array
@@ -212,13 +345,13 @@ definitions:
         description: branch_name
         type: string
       branch_type:
-        description: branch_type
+        description: '''''branch_type'''''
         type: integer
       commit_id:
         description: commit_id
         type: string
       commit_time:
-        description: commit_time
+        description: '''''commit_time'''''
         type: integer
       commit_title:
         description: commit_title
@@ -239,7 +372,7 @@ definitions:
         description: id
         type: integer
       is_dev:
-        description: is_dev
+        description: '''''is_dev'''''
         type: integer
       jira_key:
         description: jira_key
@@ -248,8 +381,71 @@ definitions:
         description: repo
         type: string
       sync_time:
-        description: sync_time
+        description: '''''sync_time'''''
         type: integer
+      updated_at:
+        description: updated_at
+        type: string
+    type: object
+  vo.GetModuleResponse:
+    properties:
+      add_param:
+        description: 添加参数
+        type: string
+      created_at:
+        description: created_at
+        type: string
+      deleted_at:
+        description: deleted_at
+        type: string
+      id:
+        description: 编号
+        type: integer
+      is_single:
+        description: '''''单页模式'''''
+        type: integer
+      is_sort:
+        description: '''''排序字段'''''
+        type: integer
+      is_status:
+        description: '''''状态字段'''''
+        type: integer
+      list_fields:
+        description: 查询字段
+        type: string
+      model_name:
+        description: 模型名称
+        type: string
+      module_name:
+        description: 模块名称
+        type: string
+      pk:
+        description: 主键
+        type: string
+      remark:
+        description: 备注
+        type: string
+      right_button:
+        description: 右侧按钮
+        type: string
+      show_all:
+        description: '''''查看全部'''''
+        type: integer
+      sort:
+        description: '''''排序'''''
+        type: integer
+      table_comment:
+        description: 表注释
+        type: string
+      table_type:
+        description: 表类型
+        type: string
+      tablename:
+        description: 表名称
+        type: string
+      top_button:
+        description: 顶部按钮
+        type: string
       updated_at:
         description: updated_at
         type: string
@@ -257,13 +453,13 @@ definitions:
   vo.GetNewsResponse:
     properties:
       content:
-        description: 新闻内容
+        description: content
         type: string
       created_at:
         description: created_at
         type: string
       creator:
-        description: 新闻创建者
+        description: creator
         type: string
       deleted_at:
         description: deleted_at
@@ -272,7 +468,7 @@ definitions:
         description: id
         type: integer
       title:
-        description: 新闻标题
+        description: title:"标题";type:"input";validate:"required:min=0,max=35"
         type: string
       updated_at:
         description: updated_at
@@ -282,44 +478,138 @@ definitions:
     properties:
       extra:
         additionalProperties: true
+        description: 扩展
         type: object
       list:
+        description: 列表
         items:
           $ref: '#/definitions/vo.Branch'
         type: array
       pageNum:
+        description: 第几页
         type: integer
       pageSize:
+        description: 每页多少条
         type: integer
       total:
+        description: 总数
+        type: integer
+    type: object
+  vo.ListModuleResponse:
+    properties:
+      extra:
+        additionalProperties: true
+        description: 扩展
+        type: object
+      list:
+        description: 列表
+        items:
+          $ref: '#/definitions/vo.Module'
+        type: array
+      pageNum:
+        description: 第几页
+        type: integer
+      pageSize:
+        description: 每页多少条
+        type: integer
+      total:
+        description: 总数
         type: integer
     type: object
   vo.ListNewsResponse:
     properties:
       extra:
         additionalProperties: true
+        description: 扩展
         type: object
       list:
+        description: 列表
         items:
           $ref: '#/definitions/vo.News'
         type: array
       pageNum:
+        description: 第几页
         type: integer
       pageSize:
+        description: 每页多少条
         type: integer
       total:
+        description: 总数
         type: integer
+    type: object
+  vo.Module:
+    properties:
+      add_param:
+        description: 添加参数
+        type: string
+      created_at:
+        description: created_at
+        type: string
+      deleted_at:
+        description: deleted_at
+        type: string
+      id:
+        description: 编号
+        type: integer
+      is_single:
+        description: '''''单页模式'''''
+        type: integer
+      is_sort:
+        description: '''''排序字段'''''
+        type: integer
+      is_status:
+        description: '''''状态字段'''''
+        type: integer
+      list_fields:
+        description: 查询字段
+        type: string
+      model_name:
+        description: 模型名称
+        type: string
+      module_name:
+        description: 模块名称
+        type: string
+      pk:
+        description: 主键
+        type: string
+      remark:
+        description: 备注
+        type: string
+      right_button:
+        description: 右侧按钮
+        type: string
+      show_all:
+        description: '''''查看全部'''''
+        type: integer
+      sort:
+        description: '''''排序'''''
+        type: integer
+      table_comment:
+        description: 表注释
+        type: string
+      table_type:
+        description: 表类型
+        type: string
+      tablename:
+        description: 表名称
+        type: string
+      top_button:
+        description: 顶部按钮
+        type: string
+      updated_at:
+        description: updated_at
+        type: string
     type: object
   vo.News:
     properties:
       content:
-        description: 新闻内容
+        description: content
         type: string
       created_at:
         description: created_at
         type: string
       creator:
-        description: 新闻创建者
+        description: creator
         type: string
       deleted_at:
         description: deleted_at
@@ -328,7 +618,7 @@ definitions:
         description: id
         type: integer
       title:
-        description: 新闻标题
+        description: title:"标题";type:"input";validate:"required:min=0,max=35"
         type: string
       updated_at:
         description: updated_at
@@ -340,13 +630,13 @@ definitions:
         description: branch_name
         type: string
       branch_type:
-        description: branch_type
+        description: '''''branch_type'''''
         type: integer
       commit_id:
         description: commit_id
         type: string
       commit_time:
-        description: commit_time
+        description: '''''commit_time'''''
         type: integer
       commit_title:
         description: commit_title
@@ -360,7 +650,7 @@ definitions:
       id:
         type: integer
       is_dev:
-        description: is_dev
+        description: '''''is_dev'''''
         type: integer
       jira_key:
         description: jira_key
@@ -369,7 +659,7 @@ definitions:
         description: repo
         type: string
       sync_time:
-        description: sync_time
+        description: '''''sync_time'''''
         type: integer
     type: object
   vo.UpdateBranchResponse:
@@ -378,13 +668,13 @@ definitions:
         description: branch_name
         type: string
       branch_type:
-        description: branch_type
+        description: '''''branch_type'''''
         type: integer
       commit_id:
         description: commit_id
         type: string
       commit_time:
-        description: commit_time
+        description: '''''commit_time'''''
         type: integer
       commit_title:
         description: commit_title
@@ -405,7 +695,7 @@ definitions:
         description: id
         type: integer
       is_dev:
-        description: is_dev
+        description: '''''is_dev'''''
         type: integer
       jira_key:
         description: jira_key
@@ -414,8 +704,124 @@ definitions:
         description: repo
         type: string
       sync_time:
-        description: sync_time
+        description: '''''sync_time'''''
         type: integer
+      updated_at:
+        description: updated_at
+        type: string
+    type: object
+  vo.UpdateModuleRequest:
+    properties:
+      add_param:
+        description: 添加参数
+        type: string
+      id:
+        type: integer
+      is_single:
+        description: '''''单页模式'''''
+        type: integer
+      is_sort:
+        description: '''''排序字段'''''
+        type: integer
+      is_status:
+        description: '''''状态字段'''''
+        type: integer
+      list_fields:
+        description: 查询字段
+        type: string
+      model_name:
+        description: 模型名称
+        type: string
+      module_name:
+        description: 模块名称
+        type: string
+      pk:
+        description: 主键
+        type: string
+      remark:
+        description: 备注
+        type: string
+      right_button:
+        description: 右侧按钮
+        type: string
+      show_all:
+        description: '''''查看全部'''''
+        type: integer
+      sort:
+        description: '''''排序'''''
+        type: integer
+      table_comment:
+        description: 表注释
+        type: string
+      table_type:
+        description: 表类型
+        type: string
+      tablename:
+        description: 表名称
+        type: string
+      top_button:
+        description: 顶部按钮
+        type: string
+    type: object
+  vo.UpdateModuleResponse:
+    properties:
+      add_param:
+        description: 添加参数
+        type: string
+      created_at:
+        description: created_at
+        type: string
+      deleted_at:
+        description: deleted_at
+        type: string
+      id:
+        description: 编号
+        type: integer
+      is_single:
+        description: '''''单页模式'''''
+        type: integer
+      is_sort:
+        description: '''''排序字段'''''
+        type: integer
+      is_status:
+        description: '''''状态字段'''''
+        type: integer
+      list_fields:
+        description: 查询字段
+        type: string
+      model_name:
+        description: 模型名称
+        type: string
+      module_name:
+        description: 模块名称
+        type: string
+      pk:
+        description: 主键
+        type: string
+      remark:
+        description: 备注
+        type: string
+      right_button:
+        description: 右侧按钮
+        type: string
+      show_all:
+        description: '''''查看全部'''''
+        type: integer
+      sort:
+        description: '''''排序'''''
+        type: integer
+      table_comment:
+        description: 表注释
+        type: string
+      table_type:
+        description: 表类型
+        type: string
+      tablename:
+        description: 表名称
+        type: string
+      top_button:
+        description: 顶部按钮
+        type: string
       updated_at:
         description: updated_at
         type: string
@@ -423,27 +829,27 @@ definitions:
   vo.UpdateNewsRequest:
     properties:
       content:
-        description: 新闻内容
+        description: content
         type: string
       creator:
-        description: 新闻创建者
+        description: creator
         type: string
       id:
         type: integer
       title:
-        description: 新闻标题
+        description: title:"标题";type:"input";validate:"required:min=0,max=35"
         type: string
     type: object
   vo.UpdateNewsResponse:
     properties:
       content:
-        description: 新闻内容
+        description: content
         type: string
       created_at:
         description: created_at
         type: string
       creator:
-        description: 新闻创建者
+        description: creator
         type: string
       deleted_at:
         description: deleted_at
@@ -452,7 +858,7 @@ definitions:
         description: id
         type: integer
       title:
-        description: 新闻标题
+        description: title:"标题";type:"input";validate:"required:min=0,max=35"
         type: string
       updated_at:
         description: updated_at
@@ -513,8 +919,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/vo.DeleteBranchResponse'
-      security:
-      - JWT: []
       tags:
       - Branch
     get:
@@ -526,7 +930,7 @@ paths:
         in: query
         name: branch_name
         type: string
-      - description: branch_type
+      - description: '''''branch_type'''''
         in: query
         name: branch_type
         type: integer
@@ -534,7 +938,7 @@ paths:
         in: query
         name: commit_id
         type: string
-      - description: commit_time
+      - description: '''''commit_time'''''
         in: query
         name: commit_time
         type: integer
@@ -550,7 +954,7 @@ paths:
         in: query
         name: creator
         type: string
-      - description: is_dev
+      - description: '''''is_dev'''''
         in: query
         name: is_dev
         type: integer
@@ -570,7 +974,7 @@ paths:
         in: query
         name: repo
         type: string
-      - description: sync_time
+      - description: '''''sync_time'''''
         in: query
         name: sync_time
         type: integer
@@ -581,10 +985,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/vo.ListBranchResponse'
-      security:
-      - JWT: []
       tags:
-      - Branch
+      - Branch}
     post:
       consumes:
       - application/json
@@ -602,8 +1004,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/vo.CreateBranchResponse'
-      security:
-      - JWT: []
       tags:
       - Branch
   /branch/:id:
@@ -612,7 +1012,7 @@ paths:
       - application/json
       description: 查询单个branch列表
       parameters:
-      - description: 待编号
+      - description: 编号
         in: query
         name: id
         type: integer
@@ -623,8 +1023,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/vo.GetBranchResponse'
-      security:
-      - JWT: []
       tags:
       - Branch
     put:
@@ -644,8 +1042,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/vo.UpdateBranchResponse'
-      security:
-      - JWT: []
       tags:
       - Branch
   /log/operation/delete/batch:
@@ -688,11 +1084,174 @@ paths:
       responses: {}
       tags:
       - menu
+  /module:
+    delete:
+      consumes:
+      - application/json
+      description: 批量删除模块配置表
+      parameters:
+      - description: 入参req
+        in: body
+        name: req
+        schema:
+          $ref: '#/definitions/vo.DeleteModuleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.DeleteModuleResponse'
+      tags:
+      - Module
+    get:
+      consumes:
+      - application/json
+      description: 查询模块配置表
+      parameters:
+      - description: 添加参数
+        in: query
+        name: add_param
+        type: string
+      - description: '''''单页模式'''''
+        in: query
+        name: is_single
+        type: integer
+      - description: '''''排序字段'''''
+        in: query
+        name: is_sort
+        type: integer
+      - description: '''''状态字段'''''
+        in: query
+        name: is_status
+        type: integer
+      - description: 查询字段
+        in: query
+        name: list_fields
+        type: string
+      - description: 模型名称
+        in: query
+        name: model_name
+        type: string
+      - description: 模块名称
+        in: query
+        name: module_name
+        type: string
+      - description: 第几页
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页多少条
+        in: query
+        name: pageSize
+        type: integer
+      - description: 主键
+        in: query
+        name: pk
+        type: string
+      - description: 备注
+        in: query
+        name: remark
+        type: string
+      - description: 右侧按钮
+        in: query
+        name: right_button
+        type: string
+      - description: '''''查看全部'''''
+        in: query
+        name: show_all
+        type: integer
+      - description: '''''排序'''''
+        in: query
+        name: sort
+        type: integer
+      - description: 表注释
+        in: query
+        name: table_comment
+        type: string
+      - description: 表类型
+        in: query
+        name: table_type
+        type: string
+      - description: 表名称
+        in: query
+        name: tablename
+        type: string
+      - description: 顶部按钮
+        in: query
+        name: top_button
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.ListModuleResponse'
+      tags:
+      - Module}
+    post:
+      consumes:
+      - application/json
+      description: 创建模块配置表
+      parameters:
+      - description: 入参req
+        in: body
+        name: req
+        schema:
+          $ref: '#/definitions/vo.CreateModuleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.CreateModuleResponse'
+      tags:
+      - Module
+  /module/:id:
+    get:
+      consumes:
+      - application/json
+      description: 查询单个模块配置表列表
+      parameters:
+      - description: 编号
+        in: query
+        name: id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.GetModuleResponse'
+      tags:
+      - Module
+    put:
+      consumes:
+      - application/json
+      description: 更新模块配置表
+      parameters:
+      - description: 入参req
+        in: body
+        name: req
+        schema:
+          $ref: '#/definitions/vo.UpdateModuleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.UpdateModuleResponse'
+      tags:
+      - Module
   /news:
     delete:
       consumes:
       - application/json
-      description: 批量删除新闻
+      description: 批量删除news
       parameters:
       - description: 入参req
         in: body
@@ -706,20 +1265,18 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/vo.DeleteNewsResponse'
-      security:
-      - JWT: []
       tags:
       - News
     get:
       consumes:
       - application/json
-      description: 查询新闻
+      description: 查询news
       parameters:
-      - description: 新闻内容
+      - description: content
         in: query
         name: content
         type: string
-      - description: 新闻创建者
+      - description: creator
         in: query
         name: creator
         type: string
@@ -731,7 +1288,7 @@ paths:
         in: query
         name: pageSize
         type: integer
-      - description: 新闻标题
+      - description: title:"标题";type:"input";validate:"required:min=0,max=35"
         in: query
         name: title
         type: string
@@ -742,14 +1299,12 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/vo.ListNewsResponse'
-      security:
-      - JWT: []
       tags:
-      - News
+      - News}
     post:
       consumes:
       - application/json
-      description: 创建新闻
+      description: 创建news
       parameters:
       - description: 入参req
         in: body
@@ -763,17 +1318,15 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/vo.CreateNewsResponse'
-      security:
-      - JWT: []
       tags:
       - News
   /news/:id:
     get:
       consumes:
       - application/json
-      description: 查询单个新闻列表
+      description: 查询单个news列表
       parameters:
-      - description: 待编号
+      - description: 编号
         in: query
         name: id
         type: integer
@@ -784,14 +1337,12 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/vo.GetNewsResponse'
-      security:
-      - JWT: []
       tags:
       - News
     put:
       consumes:
       - application/json
-      description: 更新新闻
+      description: 更新news
       parameters:
       - description: 入参req
         in: body
@@ -805,8 +1356,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/vo.UpdateNewsResponse'
-      security:
-      - JWT: []
       tags:
       - News
   /role/apis/get/:roleId:

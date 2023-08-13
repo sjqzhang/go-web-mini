@@ -5,7 +5,7 @@ import (
 	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/gin-gonic/gin"
 	"github.com/sjqzhang/gdi"
-	"go-web-mini/common"
+	"go-web-mini/global"
 	"go-web-mini/config"
 	"go-web-mini/model"
 	"go-web-mini/repository"
@@ -109,7 +109,7 @@ func authorizator(data interface{}, c *gin.Context) bool {
 
 // 用户登录校验失败处理
 func unauthorized(c *gin.Context, code int, message string) {
-	common.Log.Debugf("JWT认证失败, 错误码: %d, 错误信息: %s", code, message)
+	global.Log.Debugf("JWT认证失败, 错误码: %d, 错误信息: %s", code, message)
 	response.Response(c, code, code, nil, fmt.Sprintf("JWT认证失败, 错误码: %d, 错误信息: %s", code, message))
 }
 

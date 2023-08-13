@@ -14,6 +14,7 @@ import (
 
 type FieldResult struct {
 	ColumnName           string
+	ColumnType           string
 	CamelField           string
 	DataType             string
 	RealType             string
@@ -35,6 +36,9 @@ type TableResult struct {
 	TableComment    string
 	TableNameOrigin string
 	TableNameTrim   string
+	IsAuth          bool
+	//ButtonTop       []string
+	//ButtonRight     []string
 }
 
 type CommonObject struct {
@@ -51,6 +55,7 @@ type Config struct {
 	ModuleName  string
 	TablePrefix string
 	TableSuffix string
+	IsAuth      bool
 }
 
 var cfg Config
@@ -123,6 +128,7 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 	// 查询属性信息
 	fieldQuery, _ := con.Raw("select "+
 		"COLUMN_NAME as ColumnName ,"+
+		"COLUMN_TYPE AS ColumnType,"+
 		"COLUMN_DEFAULT as ColumnDefault ,"+
 		"DATA_TYPE as DataType,"+
 		"COLUMN_KEY as ColumnKey,"+

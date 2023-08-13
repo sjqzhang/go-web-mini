@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 	"github.com/thoas/go-funk"
-	"go-web-mini/common"
+	"go-web-mini/global"
 	"go-web-mini/model"
 )
 
@@ -28,14 +28,14 @@ type MenuRepository struct {
 // 获取菜单列表
 func (m MenuRepository) GetMenus(ctx context.Context) ([]*model.Menu, error) {
 	var menus []*model.Menu
-	err := common.DB.Order("sort").Find(&menus).Error
+	err := global.DB.Order("sort").Find(&menus).Error
 	return menus, err
 }
 
 // 获取菜单树
 func (m MenuRepository) GetMenuTree(ctx context.Context) ([]*model.Menu, error) {
 	var menus []*model.Menu
-	err := common.DB.Order("sort").Find(&menus).Error
+	err := global.DB.Order("sort").Find(&menus).Error
 	// parentId为0的是根菜单
 	return GenMenuTree(0, menus), err
 }
@@ -55,24 +55,24 @@ func GenMenuTree(parentId uint, menus []*model.Menu) []*model.Menu {
 
 // 创建菜单
 func (m MenuRepository) CreateMenu(ctx context.Context, menu *model.Menu) error {
-	err := common.DB.Create(menu).Error
+	err := global.DB.Create(menu).Error
 	return err
 }
 
 // 更新菜单
 func (m MenuRepository) UpdateMenuById(ctx context.Context, menuId uint, menu *model.Menu) error {
-	err := common.DB.Model(menu).Where("id = ?", menuId).Updates(menu).Error
+	err := global.DB.Model(menu).Where("id = ?", menuId).Updates(menu).Error
 	return err
 }
 
 // 批量删除菜单
 func (m MenuRepository) BatchDeleteMenuByIds(ctx context.Context, menuIds []uint) error {
 	var menus []*model.Menu
-	err := common.DB.Where("id IN (?)", menuIds).Find(&menus).Error
+	err := global.DB.Where("id IN (?)", menuIds).Find(&menus).Error
 	if err != nil {
 		return err
 	}
-	err = common.DB.Select("Roles").Unscoped().Delete(&menus).Error
+	err = global.DB.Select("Roles").Unscoped().Delete(&menus).Error
 	return err
 }
 
@@ -80,7 +80,7 @@ func (m MenuRepository) BatchDeleteMenuByIds(ctx context.Context, menuIds []uint
 func (m MenuRepository) GetUserMenusByUserId(ctx context.Context, userId uint) ([]*model.Menu, error) {
 	// 获取用户
 	var user model.User
-	err := common.DB.Where("id = ?", userId).Preload("Roles").First(&user).Error
+	err := global.DB.Where("id = ?", userId).Preload("Roles").First(&user).Error
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +90,7 @@ func (m MenuRepository) GetUserMenusByUserId(ctx context.Context, userId uint) (
 	allRoleMenus := make([]*model.Menu, 0)
 	for _, role := range roles {
 		var userRole model.Role
-		err := common.DB.Where("id = ?", role.ID).Preload("Menus").First(&userRole).Error
+		err := global.DB.Where("id = ?", role.ID).Preload("Menus").First(&userRole).Error
 		if err != nil {
 			return nil, err
 		}

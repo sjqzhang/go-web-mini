@@ -1,6 +1,7 @@
 package response
 
 import (
+	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -18,6 +19,14 @@ func Response(c *gin.Context, httpStatus int, code int, data interface{}, messag
 
 	}
 
+}
+
+func EncodeResponse(status int, data interface{}, message string) ([]byte, error) {
+	result := make(map[string]interface{})
+	result["code"] = status
+	result["data"] = data
+	result["message"] = message
+	return json.Marshal(result)
 }
 
 // 返回前端-成功

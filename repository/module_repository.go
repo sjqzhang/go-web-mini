@@ -9,13 +9,13 @@ import (
 	"time"
 )
 
-type BranchRepository struct {
+type ModuleRepository struct {
 }
 
-func (r *BranchRepository) List(ctx context.Context, query *model.BranchQuery) (*model.PagerModel, error) {
+func (r *ModuleRepository) List(ctx context.Context, query *model.ModuleQuery) (*model.PagerModel, error) {
 	db := global.GetDB(ctx)
-	var list []*model.Branch
-	var obj model.Branch
+	var list []*model.Module
+	var obj model.Module
 	copier.CopyWithOption(&obj, &query, copier.Option{IgnoreEmpty: true, DeepCopy: true})
 	var total int64
 	where, values, _ := model.BuildWhere(obj)
@@ -35,14 +35,14 @@ func (r *BranchRepository) List(ctx context.Context, query *model.BranchQuery) (
 	return &pagerModel, err
 }
 
-func (r *BranchRepository) Create(ctx context.Context, obj *model.Branch) (*model.Branch, error) {
+func (r *ModuleRepository) Create(ctx context.Context, obj *model.Module) (*model.Module, error) {
 	db := global.GetDB(ctx)
 	return obj, db.Create(obj).Error
 }
 
-func (r *BranchRepository) GetById(ctx context.Context, id int64) (*model.Branch, error) {
+func (r *ModuleRepository) GetById(ctx context.Context, id int64) (*model.Module, error) {
 	db := global.GetDB(ctx)
-	var obj model.Branch
+	var obj model.Module
 	err := db.Model(obj).Where("id=?", id).First(&obj).Error
 	if err != nil {
 		return nil, err
@@ -50,7 +50,7 @@ func (r *BranchRepository) GetById(ctx context.Context, id int64) (*model.Branch
 	return &obj, err
 }
 
-func (r *BranchRepository) Update(ctx context.Context, obj *model.Branch) (*model.Branch, error) {
+func (r *ModuleRepository) Update(ctx context.Context, obj *model.Module) (*model.Module, error) {
 	db := global.GetDB(ctx)
 	if obj.ID == 0 {
 		return nil, fmt.Errorf("id is empty")
@@ -62,8 +62,8 @@ func (r *BranchRepository) Update(ctx context.Context, obj *model.Branch) (*mode
 	return nil, fmt.Errorf("not found")
 }
 
-func (r *BranchRepository) Delete(ctx context.Context, ids []int64) (int64, error) {
+func (r *ModuleRepository) Delete(ctx context.Context, ids []int64) (int64, error) {
 	db := global.GetDB(ctx)
 	//软删除
-	return db.Model(model.Branch{}).Where("id in (?)", ids).UpdateColumn("deleted_at", time.Now()).RowsAffected, nil
+	return db.Model(model.Module{}).Where("id in (?)", ids).UpdateColumn("deleted_at", time.Now()).RowsAffected, nil
 }

@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-web-mini/common"
+	"go-web-mini/global"
 	"gorm.io/gorm"
 	"log"
 )
@@ -12,7 +12,7 @@ func TransitionMiddleware() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 
-		db := common.DB.Session(&gorm.Session{SkipDefaultTransaction: false})
+		db := global.DB.Session(&gorm.Session{SkipDefaultTransaction: false})
 		db.Transaction(func(tx *gorm.DB) error {
 			defer func() {
 				if err := recover(); err != nil {

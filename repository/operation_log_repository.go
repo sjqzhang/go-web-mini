@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 	"fmt"
-	"go-web-mini/common"
+	"go-web-mini/global"
 	"go-web-mini/model"
 	"go-web-mini/vo"
 	"strings"
@@ -24,7 +24,7 @@ type OperationLogRepository struct {
 
 func (o OperationLogRepository) GetOperationLogs(ctx context.Context, req *vo.OperationLogListRequest) ([]model.OperationLog, int64, error) {
 	var list []model.OperationLog
-	db := common.DB.Model(&model.OperationLog{}).Order("start_time DESC")
+	db := global.DB.Model(&model.OperationLog{}).Order("start_time DESC")
 
 	username := strings.TrimSpace(req.Username)
 	if username != "" {
@@ -62,7 +62,7 @@ func (o OperationLogRepository) GetOperationLogs(ctx context.Context, req *vo.Op
 }
 
 func (o OperationLogRepository) BatchDeleteOperationLogByIds(ctx context.Context, ids []uint) error {
-	err := common.DB.Where("id IN (?)", ids).Unscoped().Delete(&model.OperationLog{}).Error
+	err := global.DB.Where("id IN (?)", ids).Unscoped().Delete(&model.OperationLog{}).Error
 	return err
 }
 
@@ -77,7 +77,7 @@ func (o OperationLogRepository) SaveOperationLogChannel(ctx context.Context, olc
 		Logs = append(Logs, *log)
 		// 每10条记录到数据库
 		if len(Logs) > 5 {
-			common.DB.Create(&Logs)
+			global.DB.Create(&Logs)
 			Logs = make([]model.OperationLog, 0)
 		}
 	}

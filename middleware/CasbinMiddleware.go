@@ -3,7 +3,7 @@ package middleware
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/sjqzhang/gdi"
-	"go-web-mini/common"
+	"go-web-mini/global"
 	"go-web-mini/config"
 	"go-web-mini/repository"
 	"go-web-mini/response"
@@ -60,7 +60,7 @@ func check(subs []string, obj string, act string) bool {
 	defer checkLock.Unlock()
 	isPass := false
 	for _, sub := range subs {
-		pass, _ := common.CasbinEnforcer.Enforce(sub, obj, act)
+		pass, _ := global.CasbinEnforcer.Enforce(sub, obj, act)
 		if pass {
 			isPass = true
 			break

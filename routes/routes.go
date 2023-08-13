@@ -5,16 +5,16 @@ import (
 	"github.com/sjqzhang/gdi"
 	"go-web-mini/model"
 	"strings"
+	"time"
 
 	//"fmt"
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"go-web-mini/common"
+	"go-web-mini/global"
 	"go-web-mini/config"
 	_ "go-web-mini/docs"
 	"go-web-mini/middleware"
-	"time"
 )
 
 // 初始化
@@ -42,16 +42,22 @@ func InitRoutes() *gin.Engine {
 	// 创建不带中间件的路由:
 	r := gin.New()
 	r.Use(gin.Recovery())
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler, ginSwagger.URL("/swagger/doc.json")))
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler, ginSwagger.URL("/swagger/doc.json"),
+		ginSwagger.DeepLinking(true), ginSwagger.PersistAuthorization(true),
+		ginSwagger.DefaultModelsExpandDepth(5),
+	))
 
 	// 启用限流中间件
 	// 默认每50毫秒填充一个令牌，最多填充200个
-	fillInterval := time.Duration(config.Conf.RateLimit.FillInterval)
-	capacity := config.Conf.RateLimit.Capacity
-	r.Use(middleware.RateLimitMiddleware(time.Millisecond*fillInterval, capacity))
+	//fillInterval := time.Duration(config.Conf.RateLimit.FillInterval)
+	//capacity := config.Conf.RateLimit.Capacity
+	//r.Use(middleware.RateLimitMiddleware(time.Millisecond*fillInterval, capacity))
 
 	// 启用全局跨域中间件
 	r.Use(middleware.CORSMiddleware())
+
+
+	r.Use(middleware.CacheMiddleware(time.Hour*5))
 
 	// 启用操作日志中间件
 	r.Use(middleware.OperationLogMiddleware())
@@ -59,7 +65,7 @@ func InitRoutes() *gin.Engine {
 	// 初始化JWT认证中间件
 	authMiddleware, err := middleware.InitAuth()
 	if err != nil {
-		common.Log.Panicf("初始化JWT中间件失败：%v", err)
+		global.Log.Panicf("初始化JWT中间件失败：%v", err)
 		panic(fmt.Sprintf("初始化JWT中间件失败：%v", err))
 	}
 
@@ -78,7 +84,7 @@ func InitRoutes() *gin.Engine {
 	apiGroup.POST("/base/logout", authMiddleware.LogoutHandler)
 	apiGroup.POST("/base/refreshToken", authMiddleware.RefreshHandler)
 
-	common.Log.Info("初始化路由完成！")
+	global.Log.Info("初始化路由完成！")
 
 	middlewaresMaping := make(map[string]gin.HandlerFunc)
 
@@ -144,7 +150,7 @@ func InitRoutes() *gin.Engine {
 				Creator:  "系统",
 			}
 
-			common.DB.Model(model.Api{}).Create(&api)
+			global.DB.Model(model.Api{}).Create(&api)
 
 			switch x.(type) {
 			case func(*gin.Context):
