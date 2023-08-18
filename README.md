@@ -59,6 +59,19 @@ Go + Vue开发的管理系统脚手架, 前后端分离, 仅包含项目开发�
     go-web-mini-ui 
 <https://github.com/gnimli/go-web-mini-ui.git>
 
+## swagger 文档生成
+```shell
+ swag init
+```
+
+## 客户端生成
+```shell
+docker run --rm -v $(pwd):/local swaggerapi/swagger-codegen-cli generate -i /local/docs/swagger.json -l go -o /local/client
+
+```
+
+
+
 ## TODO
 
 - 增加图片服务器
