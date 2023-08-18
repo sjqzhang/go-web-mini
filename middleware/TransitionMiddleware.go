@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"go-web-mini/global"
 	"gorm.io/gorm"
@@ -17,7 +18,8 @@ func TransitionMiddleware() gin.HandlerFunc {
 		db.Transaction(func(tx *gorm.DB) error {
 			defer func() {
 				if err := recover(); err != nil || c.IsAborted() || c.Writer.Status() >= 400 {
-					global.TraceLog(c, "SQL rollback URI:"+c.Request.RequestURI+" SQL:"+tx.Statement.SQL.String())
+					sql:=c.Value("SQL")
+					global.TraceLog(c, "SQL rollback URI:"+c.Request.RequestURI+" SQL:"+fmt.Sprintf("%v",sql))
 					tx.Rollback()
 				} else {
 					tx.Commit()
