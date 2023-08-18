@@ -42,6 +42,7 @@ func InitRoutes() *gin.Engine {
 	// 创建不带中间件的路由:
 	r := gin.New()
 	r.Use(gin.Recovery())
+	r.Use(middleware.LoggerMiddleware())
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler, ginSwagger.URL("/swagger/doc.json"),
 		ginSwagger.DeepLinking(true), ginSwagger.PersistAuthorization(true),
 		ginSwagger.DefaultModelsExpandDepth(5),
@@ -60,6 +61,8 @@ func InitRoutes() *gin.Engine {
 
 	// 启用操作日志中间件
 	r.Use(middleware.OperationLogMiddleware())
+
+
 
 	// 初始化JWT认证中间件
 	authMiddleware, err := middleware.InitAuth()

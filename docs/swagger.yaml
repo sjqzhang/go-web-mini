@@ -6,13 +6,13 @@ definitions:
         description: branch_name
         type: string
       branch_type:
-        description: '''''branch_type'''''
+        description: '''''''''''branch_type'''''''''''
         type: integer
       commit_id:
         description: commit_id
         type: string
       commit_time:
-        description: '''''commit_time'''''
+        description: '''''''''''commit_time'''''''''''
         type: integer
       commit_title:
         description: commit_title
@@ -33,7 +33,7 @@ definitions:
         description: id
         type: integer
       is_dev:
-        description: '''''is_dev'''''
+        description: '''''''''''is_dev'''''''''''
         type: integer
       jira_key:
         description: jira_key
@@ -42,7 +42,7 @@ definitions:
         description: repo
         type: string
       sync_time:
-        description: '''''sync_time'''''
+        description: '''''''''''sync_time'''''''''''
         type: integer
       updated_at:
         description: updated_at
@@ -54,13 +54,13 @@ definitions:
         description: branch_name
         type: string
       branch_type:
-        description: '''''branch_type'''''
+        description: '''''''''''branch_type'''''''''''
         type: integer
       commit_id:
         description: commit_id
         type: string
       commit_time:
-        description: '''''commit_time'''''
+        description: '''''''''''commit_time'''''''''''
         type: integer
       commit_title:
         description: commit_title
@@ -72,7 +72,7 @@ definitions:
         description: creator
         type: string
       is_dev:
-        description: '''''is_dev'''''
+        description: '''''''''''is_dev'''''''''''
         type: integer
       jira_key:
         description: jira_key
@@ -81,7 +81,7 @@ definitions:
         description: repo
         type: string
       sync_time:
-        description: '''''sync_time'''''
+        description: '''''''''''sync_time'''''''''''
         type: integer
     type: object
   vo.CreateBranchResponse:
@@ -90,13 +90,13 @@ definitions:
         description: branch_name
         type: string
       branch_type:
-        description: '''''branch_type'''''
+        description: '''''''''''branch_type'''''''''''
         type: integer
       commit_id:
         description: commit_id
         type: string
       commit_time:
-        description: '''''commit_time'''''
+        description: '''''''''''commit_time'''''''''''
         type: integer
       commit_title:
         description: commit_title
@@ -117,7 +117,7 @@ definitions:
         description: id
         type: integer
       is_dev:
-        description: '''''is_dev'''''
+        description: '''''''''''is_dev'''''''''''
         type: integer
       jira_key:
         description: jira_key
@@ -126,7 +126,7 @@ definitions:
         description: repo
         type: string
       sync_time:
-        description: '''''sync_time'''''
+        description: '''''''''''sync_time'''''''''''
         type: integer
       updated_at:
         description: updated_at
@@ -138,13 +138,13 @@ definitions:
         description: 添加参数
         type: string
       is_single:
-        description: '''''单页模式'''''
+        description: '''''''''''单页模式'''''''''''
         type: integer
       is_sort:
-        description: '''''排序字段'''''
+        description: '''''''''''排序字段'''''''''''
         type: integer
       is_status:
-        description: '''''状态字段'''''
+        description: '''''''''''状态字段'''''''''''
         type: integer
       list_fields:
         description: 查询字段
@@ -165,10 +165,10 @@ definitions:
         description: 右侧按钮
         type: string
       show_all:
-        description: '''''查看全部'''''
+        description: '''''''''''查看全部'''''''''''
         type: integer
       sort:
-        description: '''''排序'''''
+        description: '''''''''''排序'''''''''''
         type: integer
       table_comment:
         description: 表注释
@@ -198,13 +198,13 @@ definitions:
         description: 编号
         type: integer
       is_single:
-        description: '''''单页模式'''''
+        description: '''''''''''单页模式'''''''''''
         type: integer
       is_sort:
-        description: '''''排序字段'''''
+        description: '''''''''''排序字段'''''''''''
         type: integer
       is_status:
-        description: '''''状态字段'''''
+        description: '''''''''''状态字段'''''''''''
         type: integer
       list_fields:
         description: 查询字段
@@ -225,10 +225,10 @@ definitions:
         description: 右侧按钮
         type: string
       show_all:
-        description: '''''查看全部'''''
+        description: '''''''''''查看全部'''''''''''
         type: integer
       sort:
-        description: '''''排序'''''
+        description: '''''''''''排序'''''''''''
         type: integer
       table_comment:
         description: 表注释
@@ -345,13 +345,13 @@ definitions:
         description: branch_name
         type: string
       branch_type:
-        description: '''''branch_type'''''
+        description: '''''''''''branch_type'''''''''''
         type: integer
       commit_id:
         description: commit_id
         type: string
       commit_time:
-        description: '''''commit_time'''''
+        description: '''''''''''commit_time'''''''''''
         type: integer
       commit_title:
         description: commit_title
@@ -372,7 +372,7 @@ definitions:
         description: id
         type: integer
       is_dev:
-        description: '''''is_dev'''''
+        description: '''''''''''is_dev'''''''''''
         type: integer
       jira_key:
         description: jira_key
@@ -381,7 +381,7 @@ definitions:
         description: repo
         type: string
       sync_time:
-        description: '''''sync_time'''''
+        description: '''''''''''sync_time'''''''''''
         type: integer
       updated_at:
         description: updated_at
@@ -402,13 +402,13 @@ definitions:
         description: 编号
         type: integer
       is_single:
-        description: '''''单页模式'''''
+        description: '''''''''''单页模式'''''''''''
         type: integer
       is_sort:
-        description: '''''排序字段'''''
+        description: '''''''''''排序字段'''''''''''
         type: integer
       is_status:
-        description: '''''状态字段'''''
+        description: '''''''''''状态字段'''''''''''
         type: integer
       list_fields:
         description: 查询字段
@@ -429,10 +429,10 @@ definitions:
         description: 右侧按钮
         type: string
       show_all:
-        description: '''''查看全部'''''
+        description: '''''''''''查看全部'''''''''''
         type: integer
       sort:
-        description: '''''排序'''''
+        description: '''''''''''排序'''''''''''
         type: integer
       table_comment:
         description: 表注释
@@ -552,13 +552,13 @@ definitions:
         description: 编号
         type: integer
       is_single:
-        description: '''''单页模式'''''
+        description: '''''''''''单页模式'''''''''''
         type: integer
       is_sort:
-        description: '''''排序字段'''''
+        description: '''''''''''排序字段'''''''''''
         type: integer
       is_status:
-        description: '''''状态字段'''''
+        description: '''''''''''状态字段'''''''''''
         type: integer
       list_fields:
         description: 查询字段
@@ -579,10 +579,10 @@ definitions:
         description: 右侧按钮
         type: string
       show_all:
-        description: '''''查看全部'''''
+        description: '''''''''''查看全部'''''''''''
         type: integer
       sort:
-        description: '''''排序'''''
+        description: '''''''''''排序'''''''''''
         type: integer
       table_comment:
         description: 表注释
@@ -630,13 +630,13 @@ definitions:
         description: branch_name
         type: string
       branch_type:
-        description: '''''branch_type'''''
+        description: '''''''''''branch_type'''''''''''
         type: integer
       commit_id:
         description: commit_id
         type: string
       commit_time:
-        description: '''''commit_time'''''
+        description: '''''''''''commit_time'''''''''''
         type: integer
       commit_title:
         description: commit_title
@@ -650,7 +650,7 @@ definitions:
       id:
         type: integer
       is_dev:
-        description: '''''is_dev'''''
+        description: '''''''''''is_dev'''''''''''
         type: integer
       jira_key:
         description: jira_key
@@ -659,7 +659,7 @@ definitions:
         description: repo
         type: string
       sync_time:
-        description: '''''sync_time'''''
+        description: '''''''''''sync_time'''''''''''
         type: integer
     type: object
   vo.UpdateBranchResponse:
@@ -668,13 +668,13 @@ definitions:
         description: branch_name
         type: string
       branch_type:
-        description: '''''branch_type'''''
+        description: '''''''''''branch_type'''''''''''
         type: integer
       commit_id:
         description: commit_id
         type: string
       commit_time:
-        description: '''''commit_time'''''
+        description: '''''''''''commit_time'''''''''''
         type: integer
       commit_title:
         description: commit_title
@@ -695,7 +695,7 @@ definitions:
         description: id
         type: integer
       is_dev:
-        description: '''''is_dev'''''
+        description: '''''''''''is_dev'''''''''''
         type: integer
       jira_key:
         description: jira_key
@@ -704,7 +704,7 @@ definitions:
         description: repo
         type: string
       sync_time:
-        description: '''''sync_time'''''
+        description: '''''''''''sync_time'''''''''''
         type: integer
       updated_at:
         description: updated_at
@@ -718,13 +718,13 @@ definitions:
       id:
         type: integer
       is_single:
-        description: '''''单页模式'''''
+        description: '''''''''''单页模式'''''''''''
         type: integer
       is_sort:
-        description: '''''排序字段'''''
+        description: '''''''''''排序字段'''''''''''
         type: integer
       is_status:
-        description: '''''状态字段'''''
+        description: '''''''''''状态字段'''''''''''
         type: integer
       list_fields:
         description: 查询字段
@@ -745,10 +745,10 @@ definitions:
         description: 右侧按钮
         type: string
       show_all:
-        description: '''''查看全部'''''
+        description: '''''''''''查看全部'''''''''''
         type: integer
       sort:
-        description: '''''排序'''''
+        description: '''''''''''排序'''''''''''
         type: integer
       table_comment:
         description: 表注释
@@ -778,13 +778,13 @@ definitions:
         description: 编号
         type: integer
       is_single:
-        description: '''''单页模式'''''
+        description: '''''''''''单页模式'''''''''''
         type: integer
       is_sort:
-        description: '''''排序字段'''''
+        description: '''''''''''排序字段'''''''''''
         type: integer
       is_status:
-        description: '''''状态字段'''''
+        description: '''''''''''状态字段'''''''''''
         type: integer
       list_fields:
         description: 查询字段
@@ -805,10 +805,10 @@ definitions:
         description: 右侧按钮
         type: string
       show_all:
-        description: '''''查看全部'''''
+        description: '''''''''''查看全部'''''''''''
         type: integer
       sort:
-        description: '''''排序'''''
+        description: '''''''''''排序'''''''''''
         type: integer
       table_comment:
         description: 表注释
@@ -930,7 +930,7 @@ paths:
         in: query
         name: branch_name
         type: string
-      - description: '''''branch_type'''''
+      - description: '''''''''''branch_type'''''''''''
         in: query
         name: branch_type
         type: integer
@@ -938,7 +938,7 @@ paths:
         in: query
         name: commit_id
         type: string
-      - description: '''''commit_time'''''
+      - description: '''''''''''commit_time'''''''''''
         in: query
         name: commit_time
         type: integer
@@ -954,7 +954,7 @@ paths:
         in: query
         name: creator
         type: string
-      - description: '''''is_dev'''''
+      - description: '''''''''''is_dev'''''''''''
         in: query
         name: is_dev
         type: integer
@@ -974,7 +974,7 @@ paths:
         in: query
         name: repo
         type: string
-      - description: '''''sync_time'''''
+      - description: '''''''''''sync_time'''''''''''
         in: query
         name: sync_time
         type: integer
@@ -986,7 +986,7 @@ paths:
           schema:
             $ref: '#/definitions/vo.ListBranchResponse'
       tags:
-      - Branch}
+      - Branch
     post:
       consumes:
       - application/json
@@ -1010,7 +1010,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: 查询单个branch列表
+      description: 查询单个branch
       parameters:
       - description: 编号
         in: query
@@ -1113,15 +1113,15 @@ paths:
         in: query
         name: add_param
         type: string
-      - description: '''''单页模式'''''
+      - description: '''''''''''单页模式'''''''''''
         in: query
         name: is_single
         type: integer
-      - description: '''''排序字段'''''
+      - description: '''''''''''排序字段'''''''''''
         in: query
         name: is_sort
         type: integer
-      - description: '''''状态字段'''''
+      - description: '''''''''''状态字段'''''''''''
         in: query
         name: is_status
         type: integer
@@ -1157,11 +1157,11 @@ paths:
         in: query
         name: right_button
         type: string
-      - description: '''''查看全部'''''
+      - description: '''''''''''查看全部'''''''''''
         in: query
         name: show_all
         type: integer
-      - description: '''''排序'''''
+      - description: '''''''''''排序'''''''''''
         in: query
         name: sort
         type: integer
@@ -1189,7 +1189,7 @@ paths:
           schema:
             $ref: '#/definitions/vo.ListModuleResponse'
       tags:
-      - Module}
+      - Module
     post:
       consumes:
       - application/json
@@ -1213,7 +1213,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: 查询单个模块配置表列表
+      description: 查询单个模块配置表
       parameters:
       - description: 编号
         in: query
@@ -1300,7 +1300,7 @@ paths:
           schema:
             $ref: '#/definitions/vo.ListNewsResponse'
       tags:
-      - News}
+      - News
     post:
       consumes:
       - application/json
@@ -1324,7 +1324,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: 查询单个news列表
+      description: 查询单个news
       parameters:
       - description: 编号
         in: query

@@ -7,6 +7,8 @@ import (
 	"go-web-mini/model"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
+	"time"
 )
 
 // 全局mysql数据库变量
@@ -22,13 +24,49 @@ var GinContextKey = "ginContext"
 //	//return context.WithValue(ctx, , db)
 //}
 func GetDB(ctx context.Context) *gorm.DB {
-
 	db := ctx.Value("db")
-
 	if db == nil {
-		return DB
+		return DB.WithContext(ctx)
 	}
+	db.(*gorm.DB).WithContext(ctx)
 	return db.(*gorm.DB)
+}
+
+type CustomLogger struct{}
+
+func (cl *CustomLogger) LogMode(logger.LogLevel) logger.Interface {
+	return cl
+}
+
+func (cl *CustomLogger) Info(ctx context.Context, msg string, data ...interface{}) {
+	requestID := getRequestIDFromContext(ctx)
+	fmt.Printf("[INFO] [Request ID: %v] %svn", requestID, fmt.Sprintf(msg, data...))
+}
+
+func (cl *CustomLogger) Warn(ctx context.Context, msg string, data ...interface{}) {
+	requestID := getRequestIDFromContext(ctx)
+	fmt.Printf("[WARN] [Request ID: %v] %v\n", requestID, fmt.Sprintf(msg, data...))
+}
+
+func (cl *CustomLogger) Error(ctx context.Context, msg string, data ...interface{}) {
+	requestID := getRequestIDFromContext(ctx)
+	fmt.Printf("[ERROR] [Request ID: %v] %v\n", requestID, fmt.Sprintf(msg, data...))
+}
+
+func (cl *CustomLogger) Trace(ctx context.Context, begin time.Time, fc func() (string, int64), err error) {
+	requestID := getRequestIDFromContext(ctx)
+	elapsed := time.Since(begin)
+	sql, rows := fc()
+	fmt.Printf("[TRACE] [Request ID: %v] [%.3fms] %v[SQL]: %v [%v]\n", requestID, float64(elapsed.Microseconds())/1000, sql, rows,err)
+}
+
+func getRequestIDFromContext(ctx context.Context) string {
+	if reqID := ctx.Value("X-Request-ID"); reqID != nil {
+		if id, ok := reqID.(string); ok {
+			return id
+		}
+	}
+	return ""
 }
 
 // 初始化mysql数据库
@@ -63,6 +101,7 @@ func InitMysql() {
 		//	TablePrefix: config.Conf.Mysql.TablePrefix + "_",
 		//},
 	})
+
 	db = db.Debug()
 	if err != nil {
 		Log.Panicf("初始化mysql数据库异常: %v", err)
@@ -77,6 +116,7 @@ func InitMysql() {
 	DB = db
 	// 自动迁移表结构
 	dbAutoMigrate()
+	db.Logger= &CustomLogger{}
 	Log.Infof("初始化mysql数据库完成! dsn: %s", showDsn)
 }
 

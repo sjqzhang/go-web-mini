@@ -38,8 +38,6 @@ func CacheMiddleware(paramMap sync.Map) gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 
-
-
 		if val, err := redis.String(global.Redis().Get(c, c.Request.RequestURI).Result()); err == nil {
 			c.Writer.Write([]byte(val))
 			c.Abort()

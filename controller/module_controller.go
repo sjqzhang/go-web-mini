@@ -14,7 +14,7 @@ type ModuleController struct {
 }
 
 //@description 查询模块配置表
-//@tags Module}
+//@tags Module
 // @Accept       json
 // @Produce      json
 //@param req    query  vo.ListModuleRequest  false  "入参req"
