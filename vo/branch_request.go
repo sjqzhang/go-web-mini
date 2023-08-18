@@ -11,15 +11,15 @@ type BranchResponse struct {
 	DeletedAt   *time.Time `json:"deleted_at" form:"deleted_at"`                   // deleted_at
 	Repo        *string    `json:"repo" form:"repo"`                               // repo
 	BranchName  *string    `json:"branch_name" form:"branch_name"`                 // branch_name
-	BranchType  *int32     `json:"branch_type" form:"branch_type"`                 // '''branch_type'''
-	IsDev       *int32     `json:"is_dev" form:"is_dev"`                           // '''is_dev'''
+	BranchType  *int32     `json:"branch_type" form:"branch_type"`                 // '''''branch_type'''''
+	IsDev       *int32     `json:"is_dev" form:"is_dev"`                           // '''''is_dev'''''
 	JiraKey     *string    `json:"jira_key" form:"jira_key"`                       // jira_key
 	CommitId    *string    `json:"commit_id" form:"commit_id"`                     // commit_id
 	CommitTitle *string    `json:"commit_title" form:"commit_title"`               // commit_title
 	Committer   *string    `json:"committer" form:"committer"`                     // committer
-	CommitTime  *int32     `json:"commit_time" form:"commit_time"`                 // '''commit_time'''
+	CommitTime  *int32     `json:"commit_time" form:"commit_time"`                 // '''''commit_time'''''
 	Creator     *string    `json:"creator" form:"creator"`                         // creator
-	SyncTime    *int32     `json:"sync_time" form:"sync_time"`                     // '''sync_time'''
+	SyncTime    *int32     `json:"sync_time" form:"sync_time"`                     // '''''sync_time'''''
 
 }
 
@@ -31,15 +31,15 @@ type Branch struct {
 	DeletedAt   *time.Time `json:"deleted_at" form:"deleted_at"`                   // deleted_at
 	Repo        *string    `json:"repo" form:"repo"`                               // repo
 	BranchName  *string    `json:"branch_name" form:"branch_name"`                 // branch_name
-	BranchType  *int32     `json:"branch_type" form:"branch_type"`                 // '''branch_type'''
-	IsDev       *int32     `json:"is_dev" form:"is_dev"`                           // '''is_dev'''
+	BranchType  *int32     `json:"branch_type" form:"branch_type"`                 // '''''branch_type'''''
+	IsDev       *int32     `json:"is_dev" form:"is_dev"`                           // '''''is_dev'''''
 	JiraKey     *string    `json:"jira_key" form:"jira_key"`                       // jira_key
 	CommitId    *string    `json:"commit_id" form:"commit_id"`                     // commit_id
 	CommitTitle *string    `json:"commit_title" form:"commit_title"`               // commit_title
 	Committer   *string    `json:"committer" form:"committer"`                     // committer
-	CommitTime  *int32     `json:"commit_time" form:"commit_time"`                 // '''commit_time'''
+	CommitTime  *int32     `json:"commit_time" form:"commit_time"`                 // '''''commit_time'''''
 	Creator     *string    `json:"creator" form:"creator"`                         // creator
-	SyncTime    *int32     `json:"sync_time" form:"sync_time"`                     // '''sync_time'''
+	SyncTime    *int32     `json:"sync_time" form:"sync_time"`                     // '''''sync_time'''''
 
 }
 
@@ -56,15 +56,15 @@ type ListBranchResponse struct {
 type ListBranchRequest struct {
 	Repo        *string `json:"repo"  form:"repo"`                 // repo
 	BranchName  *string `json:"branch_name"  form:"branch_name"`   // branch_name
-	BranchType  *int32  `json:"branch_type"  form:"branch_type"`   // '''branch_type'''
-	IsDev       *int32  `json:"is_dev"  form:"is_dev"`             // '''is_dev'''
+	BranchType  *int32  `json:"branch_type"  form:"branch_type"`   // '''''branch_type'''''
+	IsDev       *int32  `json:"is_dev"  form:"is_dev"`             // '''''is_dev'''''
 	JiraKey     *string `json:"jira_key"  form:"jira_key"`         // jira_key
 	CommitId    *string `json:"commit_id"  form:"commit_id"`       // commit_id
 	CommitTitle *string `json:"commit_title"  form:"commit_title"` // commit_title
 	Committer   *string `json:"committer"  form:"committer"`       // committer
-	CommitTime  *int32  `json:"commit_time"  form:"commit_time"`   // '''commit_time'''
+	CommitTime  *int32  `json:"commit_time"  form:"commit_time"`   // '''''commit_time'''''
 	Creator     *string `json:"creator"  form:"creator"`           // creator
-	SyncTime    *int32  `json:"sync_time"  form:"sync_time"`       // '''sync_time'''
+	SyncTime    *int32  `json:"sync_time"  form:"sync_time"`       // '''''sync_time'''''
 
 	PageNum  *uint `json:"pageNum" form:"pageNum"`   //第几页
 	PageSize *uint `json:"pageSize" form:"pageSize"` //每页多少条
@@ -78,15 +78,15 @@ type GetBranchResponse struct {
 type CreateBranchRequest struct {
 	Repo        *string `json:"repo" form:"repo"`                 // repo
 	BranchName  *string `json:"branch_name" form:"branch_name"`   // branch_name
-	BranchType  *int32  `json:"branch_type" form:"branch_type"`   // '''branch_type'''
-	IsDev       *int32  `json:"is_dev" form:"is_dev"`             // '''is_dev'''
+	BranchType  *int32  `json:"branch_type" form:"branch_type"`   // '''''branch_type'''''
+	IsDev       *int32  `json:"is_dev" form:"is_dev"`             // '''''is_dev'''''
 	JiraKey     *string `json:"jira_key" form:"jira_key"`         // jira_key
 	CommitId    *string `json:"commit_id" form:"commit_id"`       // commit_id
 	CommitTitle *string `json:"commit_title" form:"commit_title"` // commit_title
 	Committer   *string `json:"committer" form:"committer"`       // committer
-	CommitTime  *int32  `json:"commit_time" form:"commit_time"`   // '''commit_time'''
+	CommitTime  *int32  `json:"commit_time" form:"commit_time"`   // '''''commit_time'''''
 	Creator     *string `json:"creator" form:"creator"`           // creator
-	SyncTime    *int32  `json:"sync_time" form:"sync_time"`       // '''sync_time'''
+	SyncTime    *int32  `json:"sync_time" form:"sync_time"`       // '''''sync_time'''''
 
 }
 
@@ -99,15 +99,15 @@ type UpdateBranchRequest struct {
 	ID          *int    `json:""`
 	Repo        *string `json:"repo" form:"repo"`                 // repo
 	BranchName  *string `json:"branch_name" form:"branch_name"`   // branch_name
-	BranchType  *int32  `json:"branch_type" form:"branch_type"`   // '''branch_type'''
-	IsDev       *int32  `json:"is_dev" form:"is_dev"`             // '''is_dev'''
+	BranchType  *int32  `json:"branch_type" form:"branch_type"`   // '''''branch_type'''''
+	IsDev       *int32  `json:"is_dev" form:"is_dev"`             // '''''is_dev'''''
 	JiraKey     *string `json:"jira_key" form:"jira_key"`         // jira_key
 	CommitId    *string `json:"commit_id" form:"commit_id"`       // commit_id
 	CommitTitle *string `json:"commit_title" form:"commit_title"` // commit_title
 	Committer   *string `json:"committer" form:"committer"`       // committer
-	CommitTime  *int32  `json:"commit_time" form:"commit_time"`   // '''commit_time'''
+	CommitTime  *int32  `json:"commit_time" form:"commit_time"`   // '''''commit_time'''''
 	Creator     *string `json:"creator" form:"creator"`           // creator
-	SyncTime    *int32  `json:"sync_time" form:"sync_time"`       // '''sync_time'''
+	SyncTime    *int32  `json:"sync_time" form:"sync_time"`       // '''''sync_time'''''
 
 }
 

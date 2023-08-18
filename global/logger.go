@@ -1,6 +1,7 @@
 package global
 
 import (
+	"context"
 	"fmt"
 	"go-web-mini/config"
 	"go.uber.org/zap"
@@ -13,6 +14,7 @@ import (
 // 全局日志变量
 //var Log *zap.Logger
 var Log *zap.SugaredLogger
+var AccessLog *zap.SugaredLogger
 
 /**
  * 初始化日志
@@ -29,6 +31,7 @@ func InitLogger() {
 	now := time.Now()
 	infoLogFileName := fmt.Sprintf("%s/info/%04d-%02d-%02d.log", config.Conf.Logs.Path, now.Year(), now.Month(), now.Day())
 	errorLogFileName := fmt.Sprintf("%s/error/%04d-%02d-%02d.log", config.Conf.Logs.Path, now.Year(), now.Month(), now.Day())
+	accessLogFileName := fmt.Sprintf("%s/access/%04d-%02d-%02d.log", config.Conf.Logs.Path, now.Year(), now.Month(), now.Day())
 	var coreArr []zapcore.Core
 
 	// 获取编码器
@@ -60,6 +63,15 @@ func InitLogger() {
 		//ConsoleSeparator: "",
 	}
 	encoder := zapcore.NewConsoleEncoder(encoderConfig)
+
+	accessConfig:= zapcore.EncoderConfig{
+		MessageKey:    "msg",
+		LineEnding: zapcore.DefaultLineEnding,
+		EncodeTime: func(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
+			enc.AppendString(t.Format("2006-01-02 15:04:05"))
+		},
+	}
+	accessEncoder:= zapcore.NewConsoleEncoder(accessConfig)
 
 	// 日志级别
 	highPriority := zap.LevelEnablerFunc(func(level zapcore.Level) bool {
@@ -97,8 +109,26 @@ func InitLogger() {
 		LocalTime:  false,
 		Compress:   config.Conf.Logs.Compress, //是否压缩处理
 	})
+
+
+
 	// 第三个及之后的参数为写入文件的日志级别,ErrorLevel模式只记录error级别的日志
 	errorFileCore := zapcore.NewCore(encoder, zapcore.NewMultiWriteSyncer(errorFileWriteSyncer, zapcore.AddSync(os.Stdout)), highPriority)
+
+// access文件writeSyncer
+	accessFileWriteSyncer := zapcore.AddSync(&lumberjack.Logger{
+		Filename:   accessLogFileName,            //日志文件存放目录
+		MaxSize:    config.Conf.Logs.MaxSize,    //文件大小限制,单位MB
+		MaxAge:     config.Conf.Logs.MaxAge,     //日志文件保留天数
+		MaxBackups: config.Conf.Logs.MaxBackups, //最大保留日志文件数量
+		LocalTime:  false,
+		Compress:   config.Conf.Logs.Compress, //是否压缩处理
+	})
+	accessFileCore := zapcore.NewCore(accessEncoder, zapcore.NewMultiWriteSyncer(accessFileWriteSyncer), lowPriority)
+
+	accessLog:= zap.New(zapcore.NewTee( accessFileCore), zap.AddCaller())
+
+	AccessLog= accessLog.Sugar()
 
 	coreArr = append(coreArr, infoFileCore)
 	coreArr = append(coreArr, errorFileCore)
@@ -106,4 +136,11 @@ func InitLogger() {
 	logger := zap.New(zapcore.NewTee(coreArr...), zap.AddCaller())
 	Log = logger.Sugar()
 	Log.Info("初始化zap日志完成!")
+}
+
+
+
+func TraceLog(ctx context.Context, msg interface{}) {
+
+	Log.With("trace_id", ctx.Value("X-Request-ID")).Info(fmt.Sprintf("%v", msg))
 }

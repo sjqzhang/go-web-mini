@@ -14,12 +14,12 @@ type NewsController struct {
 }
 
 //@description 查询news
-//@tags News}
+//@tags News
 // @Accept       json
 // @Produce      json
 //@param req    query  vo.ListNewsRequest  false  "入参req"
 //@success 200 {object} vo.ListNewsResponse
-//@middleware ;cache(ttl=3)
+//@middleware ;cache(ttl=30)
 // @router /news [get]
 func (c *NewsController) List(ctx *gin.Context, req *vo.ListNewsRequest) (interface{}, error) {
 	return c.newsService.List(ctx, req)
@@ -43,7 +43,7 @@ func (c *NewsController) GetById(ctx *gin.Context, req *vo.GetNewsRequest) (inte
 // @Produce      json
 //@param req    body  vo.CreateNewsRequest  false "入参req"
 //@success 200 {object} vo.CreateNewsResponse
-//@middleware
+//@middleware transition
 // @router /news [post]
 func (c *NewsController) Create(ctx *gin.Context, req *vo.CreateNewsRequest) (interface{}, error) {
 	return c.newsService.Create(ctx, req)

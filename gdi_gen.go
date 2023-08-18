@@ -7,13 +7,14 @@ import (
 	p2 "go-web-mini/controller"
 	p4 "go-web-mini/dto"
 	p5 "go-web-mini/generator"
+	p6 "go-web-mini/global"
 	p8 "go-web-mini/model"
 	p9 "go-web-mini/repository"
 	p12 "go-web-mini/service"
 	p14 "go-web-mini/vo"
 )
 
-//go:embed controller docs model vo dto generator global middleware response service config util repository routes
+//go:embed generator model repository controller dto routes service util docs global response config vo middleware
 var gdiEmbedFiles embed.FS
 
 func init() {
@@ -41,6 +42,7 @@ func init() {
 	gdi.PlaceHolder((*p5.TableResult)(nil))
 	gdi.PlaceHolder((*p5.CommonObject)(nil))
 	gdi.PlaceHolder((*p5.Config)(nil))
+	gdi.PlaceHolder((*p6.CustomLogger)(nil))
 	gdi.PlaceHolder((*p8.Api)(nil))
 	gdi.PlaceHolder((*p8.Branch)(nil))
 	gdi.PlaceHolder((*p8.BranchQuery)(nil))

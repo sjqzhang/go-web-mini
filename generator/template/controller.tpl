@@ -17,7 +17,7 @@ type {{.Table.TableName}}Controller struct {
 
 //@description 查询{{.Table.TableComment}}
 //@tags {{.Table.TableName}}{{if .Table.IsAuth}}
-// @Security JWT{{end}}}
+// @Security JWT{{end}}
 // @Accept       json
 // @Produce      json
 //@param req    query  vo.List{{.Table.TableName}}Request  false  "入参req"

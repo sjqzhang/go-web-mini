@@ -75,7 +75,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Branch}"
+                    "Branch"
                 ],
                 "parameters": [
                     {
@@ -86,7 +86,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "''branch_type''",
+                        "description": "'''''branch_type'''''",
                         "name": "branch_type",
                         "in": "query"
                     },
@@ -98,7 +98,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "''commit_time''",
+                        "description": "'''''commit_time'''''",
                         "name": "commit_time",
                         "in": "query"
                     },
@@ -122,7 +122,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "''is_dev''",
+                        "description": "'''''is_dev'''''",
                         "name": "is_dev",
                         "in": "query"
                     },
@@ -152,7 +152,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "''sync_time''",
+                        "description": "'''''sync_time'''''",
                         "name": "sync_time",
                         "in": "query"
                     }
@@ -229,7 +229,7 @@ const docTemplate = `{
         },
         "/branch/:id": {
             "get": {
-                "description": "查询单个branch列表",
+                "description": "查询单个branch",
                 "consumes": [
                     "application/json"
                 ],
@@ -361,7 +361,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Module}"
+                    "Module"
                 ],
                 "parameters": [
                     {
@@ -372,19 +372,19 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "''单页模式''",
+                        "description": "'''''单页模式'''''",
                         "name": "is_single",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "''排序字段''",
+                        "description": "'''''排序字段'''''",
                         "name": "is_sort",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "''状态字段''",
+                        "description": "'''''状态字段'''''",
                         "name": "is_status",
                         "in": "query"
                     },
@@ -438,13 +438,13 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "''查看全部''",
+                        "description": "'''''查看全部'''''",
                         "name": "show_all",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "''排序''",
+                        "description": "'''''排序'''''",
                         "name": "sort",
                         "in": "query"
                     },
@@ -545,7 +545,7 @@ const docTemplate = `{
         },
         "/module/:id": {
             "get": {
-                "description": "查询单个模块配置表列表",
+                "description": "查询单个模块配置表",
                 "consumes": [
                     "application/json"
                 ],
@@ -613,7 +613,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "News}"
+                    "News"
                 ],
                 "parameters": [
                     {
@@ -719,7 +719,7 @@ const docTemplate = `{
         },
         "/news/:id": {
             "get": {
-                "description": "查询单个news列表",
+                "description": "查询单个news",
                 "consumes": [
                     "application/json"
                 ],
@@ -899,7 +899,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "branch_type": {
-                    "description": "''branch_type''",
+                    "description": "'''''branch_type'''''",
                     "type": "integer"
                 },
                 "commit_id": {
@@ -907,7 +907,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "commit_time": {
-                    "description": "''commit_time''",
+                    "description": "'''''commit_time'''''",
                     "type": "integer"
                 },
                 "commit_title": {
@@ -935,7 +935,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "is_dev": {
-                    "description": "''is_dev''",
+                    "description": "'''''is_dev'''''",
                     "type": "integer"
                 },
                 "jira_key": {
@@ -947,7 +947,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "sync_time": {
-                    "description": "''sync_time''",
+                    "description": "'''''sync_time'''''",
                     "type": "integer"
                 },
                 "updated_at": {
@@ -964,7 +964,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "branch_type": {
-                    "description": "''branch_type''",
+                    "description": "'''''branch_type'''''",
                     "type": "integer"
                 },
                 "commit_id": {
@@ -972,7 +972,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "commit_time": {
-                    "description": "''commit_time''",
+                    "description": "'''''commit_time'''''",
                     "type": "integer"
                 },
                 "commit_title": {
@@ -988,7 +988,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "is_dev": {
-                    "description": "''is_dev''",
+                    "description": "'''''is_dev'''''",
                     "type": "integer"
                 },
                 "jira_key": {
@@ -1000,7 +1000,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "sync_time": {
-                    "description": "''sync_time''",
+                    "description": "'''''sync_time'''''",
                     "type": "integer"
                 }
             }
@@ -1013,7 +1013,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "branch_type": {
-                    "description": "''branch_type''",
+                    "description": "'''''branch_type'''''",
                     "type": "integer"
                 },
                 "commit_id": {
@@ -1021,7 +1021,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "commit_time": {
-                    "description": "''commit_time''",
+                    "description": "'''''commit_time'''''",
                     "type": "integer"
                 },
                 "commit_title": {
@@ -1049,7 +1049,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "is_dev": {
-                    "description": "''is_dev''",
+                    "description": "'''''is_dev'''''",
                     "type": "integer"
                 },
                 "jira_key": {
@@ -1061,7 +1061,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "sync_time": {
-                    "description": "''sync_time''",
+                    "description": "'''''sync_time'''''",
                     "type": "integer"
                 },
                 "updated_at": {
@@ -1078,15 +1078,15 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "is_single": {
-                    "description": "''单页模式''",
+                    "description": "'''''单页模式'''''",
                     "type": "integer"
                 },
                 "is_sort": {
-                    "description": "''排序字段''",
+                    "description": "'''''排序字段'''''",
                     "type": "integer"
                 },
                 "is_status": {
-                    "description": "''状态字段''",
+                    "description": "'''''状态字段'''''",
                     "type": "integer"
                 },
                 "list_fields": {
@@ -1114,11 +1114,11 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "show_all": {
-                    "description": "''查看全部''",
+                    "description": "'''''查看全部'''''",
                     "type": "integer"
                 },
                 "sort": {
-                    "description": "''排序''",
+                    "description": "'''''排序'''''",
                     "type": "integer"
                 },
                 "table_comment": {
@@ -1159,15 +1159,15 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "is_single": {
-                    "description": "''单页模式''",
+                    "description": "'''''单页模式'''''",
                     "type": "integer"
                 },
                 "is_sort": {
-                    "description": "''排序字段''",
+                    "description": "'''''排序字段'''''",
                     "type": "integer"
                 },
                 "is_status": {
-                    "description": "''状态字段''",
+                    "description": "'''''状态字段'''''",
                     "type": "integer"
                 },
                 "list_fields": {
@@ -1195,11 +1195,11 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "show_all": {
-                    "description": "''查看全部''",
+                    "description": "'''''查看全部'''''",
                     "type": "integer"
                 },
                 "sort": {
-                    "description": "''排序''",
+                    "description": "'''''排序'''''",
                     "type": "integer"
                 },
                 "table_comment": {
@@ -1366,7 +1366,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "branch_type": {
-                    "description": "''branch_type''",
+                    "description": "'''''branch_type'''''",
                     "type": "integer"
                 },
                 "commit_id": {
@@ -1374,7 +1374,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "commit_time": {
-                    "description": "''commit_time''",
+                    "description": "'''''commit_time'''''",
                     "type": "integer"
                 },
                 "commit_title": {
@@ -1402,7 +1402,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "is_dev": {
-                    "description": "''is_dev''",
+                    "description": "'''''is_dev'''''",
                     "type": "integer"
                 },
                 "jira_key": {
@@ -1414,7 +1414,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "sync_time": {
-                    "description": "''sync_time''",
+                    "description": "'''''sync_time'''''",
                     "type": "integer"
                 },
                 "updated_at": {
@@ -1443,15 +1443,15 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "is_single": {
-                    "description": "''单页模式''",
+                    "description": "'''''单页模式'''''",
                     "type": "integer"
                 },
                 "is_sort": {
-                    "description": "''排序字段''",
+                    "description": "'''''排序字段'''''",
                     "type": "integer"
                 },
                 "is_status": {
-                    "description": "''状态字段''",
+                    "description": "'''''状态字段'''''",
                     "type": "integer"
                 },
                 "list_fields": {
@@ -1479,11 +1479,11 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "show_all": {
-                    "description": "''查看全部''",
+                    "description": "'''''查看全部'''''",
                     "type": "integer"
                 },
                 "sort": {
-                    "description": "''排序''",
+                    "description": "'''''排序'''''",
                     "type": "integer"
                 },
                 "table_comment": {
@@ -1648,15 +1648,15 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "is_single": {
-                    "description": "''单页模式''",
+                    "description": "'''''单页模式'''''",
                     "type": "integer"
                 },
                 "is_sort": {
-                    "description": "''排序字段''",
+                    "description": "'''''排序字段'''''",
                     "type": "integer"
                 },
                 "is_status": {
-                    "description": "''状态字段''",
+                    "description": "'''''状态字段'''''",
                     "type": "integer"
                 },
                 "list_fields": {
@@ -1684,11 +1684,11 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "show_all": {
-                    "description": "''查看全部''",
+                    "description": "'''''查看全部'''''",
                     "type": "integer"
                 },
                 "sort": {
-                    "description": "''排序''",
+                    "description": "'''''排序'''''",
                     "type": "integer"
                 },
                 "table_comment": {
@@ -1754,7 +1754,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "branch_type": {
-                    "description": "''branch_type''",
+                    "description": "'''''branch_type'''''",
                     "type": "integer"
                 },
                 "commit_id": {
@@ -1762,7 +1762,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "commit_time": {
-                    "description": "''commit_time''",
+                    "description": "'''''commit_time'''''",
                     "type": "integer"
                 },
                 "commit_title": {
@@ -1781,7 +1781,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "is_dev": {
-                    "description": "''is_dev''",
+                    "description": "'''''is_dev'''''",
                     "type": "integer"
                 },
                 "jira_key": {
@@ -1793,7 +1793,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "sync_time": {
-                    "description": "''sync_time''",
+                    "description": "'''''sync_time'''''",
                     "type": "integer"
                 }
             }
@@ -1806,7 +1806,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "branch_type": {
-                    "description": "''branch_type''",
+                    "description": "'''''branch_type'''''",
                     "type": "integer"
                 },
                 "commit_id": {
@@ -1814,7 +1814,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "commit_time": {
-                    "description": "''commit_time''",
+                    "description": "'''''commit_time'''''",
                     "type": "integer"
                 },
                 "commit_title": {
@@ -1842,7 +1842,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "is_dev": {
-                    "description": "''is_dev''",
+                    "description": "'''''is_dev'''''",
                     "type": "integer"
                 },
                 "jira_key": {
@@ -1854,7 +1854,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "sync_time": {
-                    "description": "''sync_time''",
+                    "description": "'''''sync_time'''''",
                     "type": "integer"
                 },
                 "updated_at": {
@@ -1874,15 +1874,15 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "is_single": {
-                    "description": "''单页模式''",
+                    "description": "'''''单页模式'''''",
                     "type": "integer"
                 },
                 "is_sort": {
-                    "description": "''排序字段''",
+                    "description": "'''''排序字段'''''",
                     "type": "integer"
                 },
                 "is_status": {
-                    "description": "''状态字段''",
+                    "description": "'''''状态字段'''''",
                     "type": "integer"
                 },
                 "list_fields": {
@@ -1910,11 +1910,11 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "show_all": {
-                    "description": "''查看全部''",
+                    "description": "'''''查看全部'''''",
                     "type": "integer"
                 },
                 "sort": {
-                    "description": "''排序''",
+                    "description": "'''''排序'''''",
                     "type": "integer"
                 },
                 "table_comment": {
@@ -1955,15 +1955,15 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "is_single": {
-                    "description": "''单页模式''",
+                    "description": "'''''单页模式'''''",
                     "type": "integer"
                 },
                 "is_sort": {
-                    "description": "''排序字段''",
+                    "description": "'''''排序字段'''''",
                     "type": "integer"
                 },
                 "is_status": {
-                    "description": "''状态字段''",
+                    "description": "'''''状态字段'''''",
                     "type": "integer"
                 },
                 "list_fields": {
@@ -1991,11 +1991,11 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "show_all": {
-                    "description": "''查看全部''",
+                    "description": "'''''查看全部'''''",
                     "type": "integer"
                 },
                 "sort": {
-                    "description": "''排序''",
+                    "description": "'''''排序'''''",
                     "type": "integer"
                 },
                 "table_comment": {

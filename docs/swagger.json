@@ -71,7 +71,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Branch}"
+                    "Branch"
                 ],
                 "parameters": [
                     {
@@ -82,7 +82,7 @@
                     },
                     {
                         "type": "integer",
-                        "description": "''branch_type''",
+                        "description": "'''''branch_type'''''",
                         "name": "branch_type",
                         "in": "query"
                     },
@@ -94,7 +94,7 @@
                     },
                     {
                         "type": "integer",
-                        "description": "''commit_time''",
+                        "description": "'''''commit_time'''''",
                         "name": "commit_time",
                         "in": "query"
                     },
@@ -118,7 +118,7 @@
                     },
                     {
                         "type": "integer",
-                        "description": "''is_dev''",
+                        "description": "'''''is_dev'''''",
                         "name": "is_dev",
                         "in": "query"
                     },
@@ -148,7 +148,7 @@
                     },
                     {
                         "type": "integer",
-                        "description": "''sync_time''",
+                        "description": "'''''sync_time'''''",
                         "name": "sync_time",
                         "in": "query"
                     }
@@ -225,7 +225,7 @@
         },
         "/branch/:id": {
             "get": {
-                "description": "查询单个branch列表",
+                "description": "查询单个branch",
                 "consumes": [
                     "application/json"
                 ],
@@ -357,7 +357,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Module}"
+                    "Module"
                 ],
                 "parameters": [
                     {
@@ -368,19 +368,19 @@
                     },
                     {
                         "type": "integer",
-                        "description": "''单页模式''",
+                        "description": "'''''单页模式'''''",
                         "name": "is_single",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "''排序字段''",
+                        "description": "'''''排序字段'''''",
                         "name": "is_sort",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "''状态字段''",
+                        "description": "'''''状态字段'''''",
                         "name": "is_status",
                         "in": "query"
                     },
@@ -434,13 +434,13 @@
                     },
                     {
                         "type": "integer",
-                        "description": "''查看全部''",
+                        "description": "'''''查看全部'''''",
                         "name": "show_all",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "''排序''",
+                        "description": "'''''排序'''''",
                         "name": "sort",
                         "in": "query"
                     },
@@ -541,7 +541,7 @@
         },
         "/module/:id": {
             "get": {
-                "description": "查询单个模块配置表列表",
+                "description": "查询单个模块配置表",
                 "consumes": [
                     "application/json"
                 ],
@@ -609,7 +609,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "News}"
+                    "News"
                 ],
                 "parameters": [
                     {
@@ -715,7 +715,7 @@
         },
         "/news/:id": {
             "get": {
-                "description": "查询单个news列表",
+                "description": "查询单个news",
                 "consumes": [
                     "application/json"
                 ],
@@ -895,7 +895,7 @@
                     "type": "string"
                 },
                 "branch_type": {
-                    "description": "''branch_type''",
+                    "description": "'''''branch_type'''''",
                     "type": "integer"
                 },
                 "commit_id": {
@@ -903,7 +903,7 @@
                     "type": "string"
                 },
                 "commit_time": {
-                    "description": "''commit_time''",
+                    "description": "'''''commit_time'''''",
                     "type": "integer"
                 },
                 "commit_title": {
@@ -931,7 +931,7 @@
                     "type": "integer"
                 },
                 "is_dev": {
-                    "description": "''is_dev''",
+                    "description": "'''''is_dev'''''",
                     "type": "integer"
                 },
                 "jira_key": {
@@ -943,7 +943,7 @@
                     "type": "string"
                 },
                 "sync_time": {
-                    "description": "''sync_time''",
+                    "description": "'''''sync_time'''''",
                     "type": "integer"
                 },
                 "updated_at": {
@@ -960,7 +960,7 @@
                     "type": "string"
                 },
                 "branch_type": {
-                    "description": "''branch_type''",
+                    "description": "'''''branch_type'''''",
                     "type": "integer"
                 },
                 "commit_id": {
@@ -968,7 +968,7 @@
                     "type": "string"
                 },
                 "commit_time": {
-                    "description": "''commit_time''",
+                    "description": "'''''commit_time'''''",
                     "type": "integer"
                 },
                 "commit_title": {
@@ -984,7 +984,7 @@
                     "type": "string"
                 },
                 "is_dev": {
-                    "description": "''is_dev''",
+                    "description": "'''''is_dev'''''",
                     "type": "integer"
                 },
                 "jira_key": {
@@ -996,7 +996,7 @@
                     "type": "string"
                 },
                 "sync_time": {
-                    "description": "''sync_time''",
+                    "description": "'''''sync_time'''''",
                     "type": "integer"
                 }
             }
@@ -1009,7 +1009,7 @@
                     "type": "string"
                 },
                 "branch_type": {
-                    "description": "''branch_type''",
+                    "description": "'''''branch_type'''''",
                     "type": "integer"
                 },
                 "commit_id": {
@@ -1017,7 +1017,7 @@
                     "type": "string"
                 },
                 "commit_time": {
-                    "description": "''commit_time''",
+                    "description": "'''''commit_time'''''",
                     "type": "integer"
                 },
                 "commit_title": {
@@ -1045,7 +1045,7 @@
                     "type": "integer"
                 },
                 "is_dev": {
-                    "description": "''is_dev''",
+                    "description": "'''''is_dev'''''",
                     "type": "integer"
                 },
                 "jira_key": {
@@ -1057,7 +1057,7 @@
                     "type": "string"
                 },
                 "sync_time": {
-                    "description": "''sync_time''",
+                    "description": "'''''sync_time'''''",
                     "type": "integer"
                 },
                 "updated_at": {
@@ -1074,15 +1074,15 @@
                     "type": "string"
                 },
                 "is_single": {
-                    "description": "''单页模式''",
+                    "description": "'''''单页模式'''''",
                     "type": "integer"
                 },
                 "is_sort": {
-                    "description": "''排序字段''",
+                    "description": "'''''排序字段'''''",
                     "type": "integer"
                 },
                 "is_status": {
-                    "description": "''状态字段''",
+                    "description": "'''''状态字段'''''",
                     "type": "integer"
                 },
                 "list_fields": {
@@ -1110,11 +1110,11 @@
                     "type": "string"
                 },
                 "show_all": {
-                    "description": "''查看全部''",
+                    "description": "'''''查看全部'''''",
                     "type": "integer"
                 },
                 "sort": {
-                    "description": "''排序''",
+                    "description": "'''''排序'''''",
                     "type": "integer"
                 },
                 "table_comment": {
@@ -1155,15 +1155,15 @@
                     "type": "integer"
                 },
                 "is_single": {
-                    "description": "''单页模式''",
+                    "description": "'''''单页模式'''''",
                     "type": "integer"
                 },
                 "is_sort": {
-                    "description": "''排序字段''",
+                    "description": "'''''排序字段'''''",
                     "type": "integer"
                 },
                 "is_status": {
-                    "description": "''状态字段''",
+                    "description": "'''''状态字段'''''",
                     "type": "integer"
                 },
                 "list_fields": {
@@ -1191,11 +1191,11 @@
                     "type": "string"
                 },
                 "show_all": {
-                    "description": "''查看全部''",
+                    "description": "'''''查看全部'''''",
                     "type": "integer"
                 },
                 "sort": {
-                    "description": "''排序''",
+                    "description": "'''''排序'''''",
                     "type": "integer"
                 },
                 "table_comment": {
@@ -1362,7 +1362,7 @@
                     "type": "string"
                 },
                 "branch_type": {
-                    "description": "''branch_type''",
+                    "description": "'''''branch_type'''''",
                     "type": "integer"
                 },
                 "commit_id": {
@@ -1370,7 +1370,7 @@
                     "type": "string"
                 },
                 "commit_time": {
-                    "description": "''commit_time''",
+                    "description": "'''''commit_time'''''",
                     "type": "integer"
                 },
                 "commit_title": {
@@ -1398,7 +1398,7 @@
                     "type": "integer"
                 },
                 "is_dev": {
-                    "description": "''is_dev''",
+                    "description": "'''''is_dev'''''",
                     "type": "integer"
                 },
                 "jira_key": {
@@ -1410,7 +1410,7 @@
                     "type": "string"
                 },
                 "sync_time": {
-                    "description": "''sync_time''",
+                    "description": "'''''sync_time'''''",
                     "type": "integer"
                 },
                 "updated_at": {
@@ -1439,15 +1439,15 @@
                     "type": "integer"
                 },
                 "is_single": {
-                    "description": "''单页模式''",
+                    "description": "'''''单页模式'''''",
                     "type": "integer"
                 },
                 "is_sort": {
-                    "description": "''排序字段''",
+                    "description": "'''''排序字段'''''",
                     "type": "integer"
                 },
                 "is_status": {
-                    "description": "''状态字段''",
+                    "description": "'''''状态字段'''''",
                     "type": "integer"
                 },
                 "list_fields": {
@@ -1475,11 +1475,11 @@
                     "type": "string"
                 },
                 "show_all": {
-                    "description": "''查看全部''",
+                    "description": "'''''查看全部'''''",
                     "type": "integer"
                 },
                 "sort": {
-                    "description": "''排序''",
+                    "description": "'''''排序'''''",
                     "type": "integer"
                 },
                 "table_comment": {
@@ -1644,15 +1644,15 @@
                     "type": "integer"
                 },
                 "is_single": {
-                    "description": "''单页模式''",
+                    "description": "'''''单页模式'''''",
                     "type": "integer"
                 },
                 "is_sort": {
-                    "description": "''排序字段''",
+                    "description": "'''''排序字段'''''",
                     "type": "integer"
                 },
                 "is_status": {
-                    "description": "''状态字段''",
+                    "description": "'''''状态字段'''''",
                     "type": "integer"
                 },
                 "list_fields": {
@@ -1680,11 +1680,11 @@
                     "type": "string"
                 },
                 "show_all": {
-                    "description": "''查看全部''",
+                    "description": "'''''查看全部'''''",
                     "type": "integer"
                 },
                 "sort": {
-                    "description": "''排序''",
+                    "description": "'''''排序'''''",
                     "type": "integer"
                 },
                 "table_comment": {
@@ -1750,7 +1750,7 @@
                     "type": "string"
                 },
                 "branch_type": {
-                    "description": "''branch_type''",
+                    "description": "'''''branch_type'''''",
                     "type": "integer"
                 },
                 "commit_id": {
@@ -1758,7 +1758,7 @@
                     "type": "string"
                 },
                 "commit_time": {
-                    "description": "''commit_time''",
+                    "description": "'''''commit_time'''''",
                     "type": "integer"
                 },
                 "commit_title": {
@@ -1777,7 +1777,7 @@
                     "type": "integer"
                 },
                 "is_dev": {
-                    "description": "''is_dev''",
+                    "description": "'''''is_dev'''''",
                     "type": "integer"
                 },
                 "jira_key": {
@@ -1789,7 +1789,7 @@
                     "type": "string"
                 },
                 "sync_time": {
-                    "description": "''sync_time''",
+                    "description": "'''''sync_time'''''",
                     "type": "integer"
                 }
             }
@@ -1802,7 +1802,7 @@
                     "type": "string"
                 },
                 "branch_type": {
-                    "description": "''branch_type''",
+                    "description": "'''''branch_type'''''",
                     "type": "integer"
                 },
                 "commit_id": {
@@ -1810,7 +1810,7 @@
                     "type": "string"
                 },
                 "commit_time": {
-                    "description": "''commit_time''",
+                    "description": "'''''commit_time'''''",
                     "type": "integer"
                 },
                 "commit_title": {
@@ -1838,7 +1838,7 @@
                     "type": "integer"
                 },
                 "is_dev": {
-                    "description": "''is_dev''",
+                    "description": "'''''is_dev'''''",
                     "type": "integer"
                 },
                 "jira_key": {
@@ -1850,7 +1850,7 @@
                     "type": "string"
                 },
                 "sync_time": {
-                    "description": "''sync_time''",
+                    "description": "'''''sync_time'''''",
                     "type": "integer"
                 },
                 "updated_at": {
@@ -1870,15 +1870,15 @@
                     "type": "integer"
                 },
                 "is_single": {
-                    "description": "''单页模式''",
+                    "description": "'''''单页模式'''''",
                     "type": "integer"
                 },
                 "is_sort": {
-                    "description": "''排序字段''",
+                    "description": "'''''排序字段'''''",
                     "type": "integer"
                 },
                 "is_status": {
-                    "description": "''状态字段''",
+                    "description": "'''''状态字段'''''",
                     "type": "integer"
                 },
                 "list_fields": {
@@ -1906,11 +1906,11 @@
                     "type": "string"
                 },
                 "show_all": {
-                    "description": "''查看全部''",
+                    "description": "'''''查看全部'''''",
                     "type": "integer"
                 },
                 "sort": {
-                    "description": "''排序''",
+                    "description": "'''''排序'''''",
                     "type": "integer"
                 },
                 "table_comment": {
@@ -1951,15 +1951,15 @@
                     "type": "integer"
                 },
                 "is_single": {
-                    "description": "''单页模式''",
+                    "description": "'''''单页模式'''''",
                     "type": "integer"
                 },
                 "is_sort": {
-                    "description": "''排序字段''",
+                    "description": "'''''排序字段'''''",
                     "type": "integer"
                 },
                 "is_status": {
-                    "description": "''状态字段''",
+                    "description": "'''''状态字段'''''",
                     "type": "integer"
                 },
                 "list_fields": {
@@ -1987,11 +1987,11 @@
                     "type": "string"
                 },
                 "show_all": {
-                    "description": "''查看全部''",
+                    "description": "'''''查看全部'''''",
                     "type": "integer"
                 },
                 "sort": {
-                    "description": "''排序''",
+                    "description": "'''''排序'''''",
                     "type": "integer"
                 },
                 "table_comment": {

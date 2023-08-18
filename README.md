@@ -55,23 +55,23 @@ Go + Vue开发的管理系统脚手架, 前后端分离, 仅包含项目开发�
 └─vo # 接收前端请求的数据结构
 
 ```
+
 ## 前端Vue项目
-    go-web-mini-ui 
-<https://github.com/gnimli/go-web-mini-ui.git>
+
+go-web-mini-ui 
+[https://github.com/gnimli/go-web-mini-ui.git](https://github.com/gnimli/go-web-mini-ui.git)
 
 ## swagger 文档生成
+
 ```shell
  swag init
 ```
-
 ## 客户端生成
+
 ```shell
 docker run --rm -v $(pwd):/local swaggerapi/swagger-codegen-cli generate -i /local/docs/swagger.json -l go -o /local/client
 
 ```
-
-
-
 ## TODO
 
 - 增加图片服务器
@@ -80,5 +80,4 @@ docker run --rm -v $(pwd):/local swaggerapi/swagger-codegen-cli generate -i /loc
 
 ## MIT License
 
-    Copyright (c) 2021 gnimli
-
+Copyright (c) 2021 gnimli

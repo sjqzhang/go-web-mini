@@ -14,7 +14,7 @@ type BranchController struct {
 }
 
 //@description 查询branch
-//@tags Branch}
+//@tags Branch
 // @Accept       json
 // @Produce      json
 //@param req    query  vo.ListBranchRequest  false  "入参req"
