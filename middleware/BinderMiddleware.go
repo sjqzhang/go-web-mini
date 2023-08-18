@@ -7,7 +7,6 @@ import (
 	"go-web-mini/global"
 	"go-web-mini/response"
 	"reflect"
-	"time"
 )
 
 // CORS跨域中间件
@@ -58,15 +57,15 @@ func BinderMiddleware(method reflect.Value) gin.HandlerFunc {
 			response.Fail(c, nil, errStr)
 			return
 		}
-		var cacheKey string
-		if key, ok := c.Get(CACHE_KEY); ok {
-			cacheKey = key.(string)
-			result, err := global.Redis().Get(c, key.(string)).Result()
-			if err == nil {
-				c.String(200, result)
-				return
-			}
-		}
+		//var cacheKey string
+		//if key, ok := c.Get(CACHE_KEY); ok {
+		//	cacheKey = key.(string)
+		//	result, err := global.Redis().Get(c, key.(string)).Result()
+		//	if err == nil {
+		//		c.String(200, result)
+		//		return
+		//	}
+		//}
 
 		results := method.Call([]reflect.Value{reflect.ValueOf(c), reflect.ValueOf(req)})
 		if len(results) > 0 {
@@ -78,15 +77,15 @@ func BinderMiddleware(method reflect.Value) gin.HandlerFunc {
 			}
 			if results[0].Interface() != nil {
 
-				if cacheKey != "" {
-					data, err := response.EncodeResponse(200, results[0].Interface(), "Success")
-					if err != nil {
-
-					}
-					global.Redis().Set(c,cacheKey,string(data),time.Minute*10)
-					c.String(200, string(data))
-					return
-				}
+				//if cacheKey != "" {
+				//	data, err := response.EncodeResponse(200, results[0].Interface(), "Success")
+				//	if err != nil {
+				//
+				//	}
+				//	global.Redis().Set(c,cacheKey,string(data),time.Minute*10)
+				//	c.String(200, string(data))
+				//	return
+				//}
 
 				response.Response(c, 200, 0, results[0].Interface(), "Success")
 				return

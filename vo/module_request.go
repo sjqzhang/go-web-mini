@@ -14,13 +14,13 @@ type ModuleResponse struct {
 	Pk           *string    `json:"pk" form:"pk"`                                   // 主键
 	ListFields   *string    `json:"list_fields" form:"list_fields"`                 // 查询字段
 	Remark       *string    `json:"remark" form:"remark"`                           // 备注
-	Sort         *int32     `json:"sort" form:"sort"`                               // ''排序''
-	IsSort       *int32     `json:"is_sort" form:"is_sort"`                         // ''排序字段''
-	IsStatus     *int32     `json:"is_status" form:"is_status"`                     // ''状态字段''
+	Sort         *int32     `json:"sort" form:"sort"`                               // '''排序'''
+	IsSort       *int32     `json:"is_sort" form:"is_sort"`                         // '''排序字段'''
+	IsStatus     *int32     `json:"is_status" form:"is_status"`                     // '''状态字段'''
 	TopButton    *string    `json:"top_button" form:"top_button"`                   // 顶部按钮
 	RightButton  *string    `json:"right_button" form:"right_button"`               // 右侧按钮
-	IsSingle     *int32     `json:"is_single" form:"is_single"`                     // ''单页模式''
-	ShowAll      *int32     `json:"show_all" form:"show_all"`                       // ''查看全部''
+	IsSingle     *int32     `json:"is_single" form:"is_single"`                     // '''单页模式'''
+	ShowAll      *int32     `json:"show_all" form:"show_all"`                       // '''查看全部'''
 	AddParam     *string    `json:"add_param" form:"add_param"`                     // 添加参数
 	CreatedAt    *time.Time `json:"created_at" form:"created_at"`                   // created_at
 	DeletedAt    *time.Time `json:"deleted_at" form:"deleted_at"`                   // deleted_at
@@ -39,13 +39,13 @@ type Module struct {
 	Pk           *string    `json:"pk" form:"pk"`                                   // 主键
 	ListFields   *string    `json:"list_fields" form:"list_fields"`                 // 查询字段
 	Remark       *string    `json:"remark" form:"remark"`                           // 备注
-	Sort         *int32     `json:"sort" form:"sort"`                               // ''排序''
-	IsSort       *int32     `json:"is_sort" form:"is_sort"`                         // ''排序字段''
-	IsStatus     *int32     `json:"is_status" form:"is_status"`                     // ''状态字段''
+	Sort         *int32     `json:"sort" form:"sort"`                               // '''排序'''
+	IsSort       *int32     `json:"is_sort" form:"is_sort"`                         // '''排序字段'''
+	IsStatus     *int32     `json:"is_status" form:"is_status"`                     // '''状态字段'''
 	TopButton    *string    `json:"top_button" form:"top_button"`                   // 顶部按钮
 	RightButton  *string    `json:"right_button" form:"right_button"`               // 右侧按钮
-	IsSingle     *int32     `json:"is_single" form:"is_single"`                     // ''单页模式''
-	ShowAll      *int32     `json:"show_all" form:"show_all"`                       // ''查看全部''
+	IsSingle     *int32     `json:"is_single" form:"is_single"`                     // '''单页模式'''
+	ShowAll      *int32     `json:"show_all" form:"show_all"`                       // '''查看全部'''
 	AddParam     *string    `json:"add_param" form:"add_param"`                     // 添加参数
 	CreatedAt    *time.Time `json:"created_at" form:"created_at"`                   // created_at
 	DeletedAt    *time.Time `json:"deleted_at" form:"deleted_at"`                   // deleted_at
@@ -72,13 +72,13 @@ type ListModuleRequest struct {
 	Pk           *string `json:"pk"  form:"pk"`                       // 主键
 	ListFields   *string `json:"list_fields"  form:"list_fields"`     // 查询字段
 	Remark       *string `json:"remark"  form:"remark"`               // 备注
-	Sort         *int32  `json:"sort"  form:"sort"`                   // ''排序''
-	IsSort       *int32  `json:"is_sort"  form:"is_sort"`             // ''排序字段''
-	IsStatus     *int32  `json:"is_status"  form:"is_status"`         // ''状态字段''
+	Sort         *int32  `json:"sort"  form:"sort"`                   // '''排序'''
+	IsSort       *int32  `json:"is_sort"  form:"is_sort"`             // '''排序字段'''
+	IsStatus     *int32  `json:"is_status"  form:"is_status"`         // '''状态字段'''
 	TopButton    *string `json:"top_button"  form:"top_button"`       // 顶部按钮
 	RightButton  *string `json:"right_button"  form:"right_button"`   // 右侧按钮
-	IsSingle     *int32  `json:"is_single"  form:"is_single"`         // ''单页模式''
-	ShowAll      *int32  `json:"show_all"  form:"show_all"`           // ''查看全部''
+	IsSingle     *int32  `json:"is_single"  form:"is_single"`         // '''单页模式'''
+	ShowAll      *int32  `json:"show_all"  form:"show_all"`           // '''查看全部'''
 	AddParam     *string `json:"add_param"  form:"add_param"`         // 添加参数
 
 	PageNum  *uint `json:"pageNum" form:"pageNum"`   //第几页
@@ -99,13 +99,13 @@ type CreateModuleRequest struct {
 	Pk           *string `json:"pk" form:"pk"`                       // 主键
 	ListFields   *string `json:"list_fields" form:"list_fields"`     // 查询字段
 	Remark       *string `json:"remark" form:"remark"`               // 备注
-	Sort         *int32  `json:"sort" form:"sort"`                   // ''排序''
-	IsSort       *int32  `json:"is_sort" form:"is_sort"`             // ''排序字段''
-	IsStatus     *int32  `json:"is_status" form:"is_status"`         // ''状态字段''
+	Sort         *int32  `json:"sort" form:"sort"`                   // '''排序'''
+	IsSort       *int32  `json:"is_sort" form:"is_sort"`             // '''排序字段'''
+	IsStatus     *int32  `json:"is_status" form:"is_status"`         // '''状态字段'''
 	TopButton    *string `json:"top_button" form:"top_button"`       // 顶部按钮
 	RightButton  *string `json:"right_button" form:"right_button"`   // 右侧按钮
-	IsSingle     *int32  `json:"is_single" form:"is_single"`         // ''单页模式''
-	ShowAll      *int32  `json:"show_all" form:"show_all"`           // ''查看全部''
+	IsSingle     *int32  `json:"is_single" form:"is_single"`         // '''单页模式'''
+	ShowAll      *int32  `json:"show_all" form:"show_all"`           // '''查看全部'''
 	AddParam     *string `json:"add_param" form:"add_param"`         // 添加参数
 
 }
@@ -125,13 +125,13 @@ type UpdateModuleRequest struct {
 	Pk           *string `json:"pk" form:"pk"`                       // 主键
 	ListFields   *string `json:"list_fields" form:"list_fields"`     // 查询字段
 	Remark       *string `json:"remark" form:"remark"`               // 备注
-	Sort         *int32  `json:"sort" form:"sort"`                   // ''排序''
-	IsSort       *int32  `json:"is_sort" form:"is_sort"`             // ''排序字段''
-	IsStatus     *int32  `json:"is_status" form:"is_status"`         // ''状态字段''
+	Sort         *int32  `json:"sort" form:"sort"`                   // '''排序'''
+	IsSort       *int32  `json:"is_sort" form:"is_sort"`             // '''排序字段'''
+	IsStatus     *int32  `json:"is_status" form:"is_status"`         // '''状态字段'''
 	TopButton    *string `json:"top_button" form:"top_button"`       // 顶部按钮
 	RightButton  *string `json:"right_button" form:"right_button"`   // 右侧按钮
-	IsSingle     *int32  `json:"is_single" form:"is_single"`         // ''单页模式''
-	ShowAll      *int32  `json:"show_all" form:"show_all"`           // ''查看全部''
+	IsSingle     *int32  `json:"is_single" form:"is_single"`         // '''单页模式'''
+	ShowAll      *int32  `json:"show_all" form:"show_all"`           // '''查看全部'''
 	AddParam     *string `json:"add_param" form:"add_param"`         // 添加参数
 
 }

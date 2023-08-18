@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/jinzhu/copier"
-	"{{.ModuleName}}/common"
+	"{{.ModuleName}}/global"
 	"{{.ModuleName}}/model"
 	"time"
 )
@@ -16,7 +16,7 @@ type {{.Table.TableName}}Repository struct {
 }
 
 func (r *{{.Table.TableName}}Repository) List(ctx context.Context, query *model.{{.Table.TableName}}Query) (*model.PagerModel, error) {
-	db := common.GetDB(ctx)
+	db := global.GetDB(ctx)
 	var list []*model.{{.Table.TableName}}
 	var obj model.{{.Table.TableName}}
 	copier.CopyWithOption(&obj, &query, copier.Option{IgnoreEmpty: true, DeepCopy: true})
@@ -39,13 +39,13 @@ func (r *{{.Table.TableName}}Repository) List(ctx context.Context, query *model.
 }
 
 func (r *{{.Table.TableName}}Repository) Create(ctx context.Context, obj *model.{{.Table.TableName}}) (*model.{{.Table.TableName}}, error) {
-	db := common.GetDB(ctx)
+	db := global.GetDB(ctx)
 	return obj, db.Create(obj).Error
 }
 
 
 func (r *{{.Table.TableName}}Repository) GetById(ctx context.Context,  id int64) (*model.{{.Table.TableName}}, error) {
-	db := common.GetDB(ctx)
+	db := global.GetDB(ctx)
 	var obj model.{{.Table.TableName}}
     err:=db.Model(obj).Where("id=?",id).First(&obj).Error
 	if err != nil {
@@ -57,7 +57,7 @@ func (r *{{.Table.TableName}}Repository) GetById(ctx context.Context,  id int64)
 
 
 func (r *{{.Table.TableName}}Repository) Update(ctx context.Context, obj *model.{{.Table.TableName}}) (*model.{{.Table.TableName}}, error) {
-	db := common.GetDB(ctx)
+	db := global.GetDB(ctx)
 	if obj.ID==0  {
 		return nil, fmt.Errorf("id is empty")
 	}
@@ -69,7 +69,7 @@ func (r *{{.Table.TableName}}Repository) Update(ctx context.Context, obj *model.
 }
 
 func (r *{{.Table.TableName}}Repository) Delete(ctx context.Context, ids []int64) (int64, error) {
-	db := common.GetDB(ctx)
+	db := global.GetDB(ctx)
 	//软删除
 	return db.Model(model.{{.Table.TableName}}{}).Where("id in (?)", ids).UpdateColumn("deleted_at", time.Now()).RowsAffected, nil
 }

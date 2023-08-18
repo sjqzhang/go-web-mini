@@ -1,44 +1,55 @@
 package middleware
 
 import (
-	"context"
-	"fmt"
+	"bytes"
 	"github.com/gin-gonic/gin"
+	"github.com/gomodule/redigo/redis"
 	"go-web-mini/global"
+	"strconv"
+	"sync"
 	"time"
 )
 
-const CACHE_KEY = "cache-key"
+type bodyWriter struct {
+	gin.ResponseWriter
+	bodyCache *bytes.Buffer
+}
 
-// CacheMiddleware 是缓存中间件
-func CacheMiddleware(expiration time.Duration) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		if c.Request.Method != "GET" {
-			c.Next()
-		} else {
-			cacheKey := generateCacheKey(c)
+// rewrite Write()
+func (w bodyWriter) Write(b []byte) (int, error) {
+	w.bodyCache.Write(b)
+	return w.ResponseWriter.Write(b)
+}
 
-			c.Set(CACHE_KEY, cacheKey)
+func CacheMiddleware(paramMap sync.Map) gin.HandlerFunc {
 
-			c.Next()
-		}
+	var ttl int64
 
-		// 如果需要缓存响应数据，可以在处理响应之后设置缓存
-		// response := c.Writer.Body.String()
-		// _ = setCache(cacheKey, response, expiration)
+	if v, ok := paramMap.Load("ttl"); ok {
+		ttl, _ = strconv.ParseInt(v.(string), 10, 64)
+	} else {
+		ttl = 10
 	}
-}
 
-func generateCacheKey(c *gin.Context) string {
-	return fmt.Sprintf("cache:%s:%s:%v", c.FullPath(), c.Request.Method, c.Request.URL.Query())
-}
+	//cache,err:=lru.New(100)
+	//if err!=nil{
+	//	global.Log.Error(err)
+	//}
 
-func setCache(key string, value interface{}, expiration time.Duration) error {
-	ctx := context.Background()
-	return global.Redis().Set(ctx, key, value, expiration).Err()
-}
+	return func(c *gin.Context) {
 
-func getCache(key string) (string, error) {
-	ctx := context.Background()
-	return global.Redis().Get(ctx, key).Result()
+
+
+		if val, err := redis.String(global.Redis().Get(c, c.Request.RequestURI).Result()); err == nil {
+			c.Writer.Write([]byte(val))
+			c.Abort()
+			return
+		}
+		c.Writer = &bodyWriter{bodyCache: bytes.NewBufferString(""), ResponseWriter: c.Writer}
+		c.Next()
+		if c.Writer.Status() < 300 {
+			global.Redis().Set(c, c.Request.RequestURI, c.Writer.(*bodyWriter).bodyCache.String(), time.Second*time.Duration(ttl))
+		}
+	}
+
 }
