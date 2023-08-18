@@ -14,7 +14,8 @@ import (
 // 全局日志变量
 //var Log *zap.Logger
 var Log *zap.SugaredLogger
-var AccessLog *zap.SugaredLogger
+var AccessLogger *zap.SugaredLogger
+var dataLogger *zap.SugaredLogger
 
 /**
  * 初始化日志
@@ -32,6 +33,7 @@ func InitLogger() {
 	infoLogFileName := fmt.Sprintf("%s/info/%04d-%02d-%02d.log", config.Conf.Logs.Path, now.Year(), now.Month(), now.Day())
 	errorLogFileName := fmt.Sprintf("%s/error/%04d-%02d-%02d.log", config.Conf.Logs.Path, now.Year(), now.Month(), now.Day())
 	accessLogFileName := fmt.Sprintf("%s/access/%04d-%02d-%02d.log", config.Conf.Logs.Path, now.Year(), now.Month(), now.Day())
+	dataLogFileName := fmt.Sprintf("%s/data/%04d-%02d-%02d.log", config.Conf.Logs.Path, now.Year(), now.Month(), now.Day())
 	var coreArr []zapcore.Core
 
 	// 获取编码器
@@ -64,14 +66,23 @@ func InitLogger() {
 	}
 	encoder := zapcore.NewConsoleEncoder(encoderConfig)
 
-	accessConfig:= zapcore.EncoderConfig{
-		MessageKey:    "msg",
+	accessConfig := zapcore.EncoderConfig{
+		MessageKey: "msg",
 		LineEnding: zapcore.DefaultLineEnding,
 		EncodeTime: func(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
 			enc.AppendString(t.Format("2006-01-02 15:04:05"))
 		},
 	}
-	accessEncoder:= zapcore.NewConsoleEncoder(accessConfig)
+	accessEncoder := zapcore.NewConsoleEncoder(accessConfig)
+
+	dataConfig := zapcore.EncoderConfig{
+		MessageKey: "msg",
+		LineEnding: zapcore.DefaultLineEnding,
+		EncodeTime: func(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
+			enc.AppendString(t.Format("2006-01-02 15:04:05"))
+		},
+	}
+	dataEncoder := zapcore.NewConsoleEncoder(dataConfig)
 
 	// 日志级别
 	highPriority := zap.LevelEnablerFunc(func(level zapcore.Level) bool {
@@ -110,14 +121,12 @@ func InitLogger() {
 		Compress:   config.Conf.Logs.Compress, //是否压缩处理
 	})
 
-
-
 	// 第三个及之后的参数为写入文件的日志级别,ErrorLevel模式只记录error级别的日志
 	errorFileCore := zapcore.NewCore(encoder, zapcore.NewMultiWriteSyncer(errorFileWriteSyncer, zapcore.AddSync(os.Stdout)), highPriority)
 
-// access文件writeSyncer
+	// access文件writeSyncer
 	accessFileWriteSyncer := zapcore.AddSync(&lumberjack.Logger{
-		Filename:   accessLogFileName,            //日志文件存放目录
+		Filename:   accessLogFileName,           //日志文件存放目录
 		MaxSize:    config.Conf.Logs.MaxSize,    //文件大小限制,单位MB
 		MaxAge:     config.Conf.Logs.MaxAge,     //日志文件保留天数
 		MaxBackups: config.Conf.Logs.MaxBackups, //最大保留日志文件数量
@@ -126,9 +135,24 @@ func InitLogger() {
 	})
 	accessFileCore := zapcore.NewCore(accessEncoder, zapcore.NewMultiWriteSyncer(accessFileWriteSyncer), lowPriority)
 
-	accessLog:= zap.New(zapcore.NewTee( accessFileCore), zap.AddCaller())
+	accessLog := zap.New(zapcore.NewTee(accessFileCore), zap.AddCaller())
 
-	AccessLog= accessLog.Sugar()
+	AccessLogger = accessLog.Sugar()
+
+	// data文件writeSyncer
+	dataFileWriteSyncer := zapcore.AddSync(&lumberjack.Logger{
+		Filename:   dataLogFileName,             //日志文件存放目录
+		MaxSize:    config.Conf.Logs.MaxSize,    //文件大小限制,单位MB
+		MaxAge:     config.Conf.Logs.MaxAge,     //日志文件保留天数
+		MaxBackups: config.Conf.Logs.MaxBackups, //最大保留日志文件数量
+		LocalTime:  false,
+		Compress:   config.Conf.Logs.Compress, //是否压缩处理
+	})
+	dataFileCore := zapcore.NewCore(dataEncoder, zapcore.NewMultiWriteSyncer(dataFileWriteSyncer), lowPriority)
+
+	dataLog := zap.New(zapcore.NewTee(dataFileCore), zap.AddCaller())
+
+	dataLogger = dataLog.Sugar()
 
 	coreArr = append(coreArr, infoFileCore)
 	coreArr = append(coreArr, errorFileCore)
@@ -138,9 +162,11 @@ func InitLogger() {
 	Log.Info("初始化zap日志完成!")
 }
 
-
-
 func TraceLog(ctx context.Context, msg interface{}) {
 
-	Log.With("trace_id", ctx.Value("X-Request-ID")).Info(fmt.Sprintf("%v", msg))
+	uri := ctx.Value("URI")
+	req := ctx.Value("REQ-INPUT")
+	traceId := ctx.Value("X-Request-ID")
+
+	Log.Infow(fmt.Sprintf("%v", msg), "uri", uri, "req", req, "traceId", traceId)
 }

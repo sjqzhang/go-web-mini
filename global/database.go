@@ -32,7 +32,8 @@ func GetDB(ctx context.Context) *gorm.DB {
 	return db.(*gorm.DB)
 }
 
-type CustomLogger struct{}
+type CustomLogger struct{
+}
 
 func (cl *CustomLogger) LogMode(logger.LogLevel) logger.Interface {
 	return cl
@@ -40,24 +41,25 @@ func (cl *CustomLogger) LogMode(logger.LogLevel) logger.Interface {
 
 func (cl *CustomLogger) Info(ctx context.Context, msg string, data ...interface{}) {
 	requestID := getRequestIDFromContext(ctx)
-	fmt.Printf("[INFO] [Request ID: %v] %svn", requestID, fmt.Sprintf(msg, data...))
+	dataLogger.Infof("[INFO] [Request ID: %v] %svn", requestID, fmt.Sprintf(msg, data...))
 }
 
 func (cl *CustomLogger) Warn(ctx context.Context, msg string, data ...interface{}) {
 	requestID := getRequestIDFromContext(ctx)
-	fmt.Printf("[WARN] [Request ID: %v] %v\n", requestID, fmt.Sprintf(msg, data...))
+	dataLogger.Infof("[WARN] [Request ID: %v] %v\n", requestID, fmt.Sprintf(msg, data...))
 }
 
 func (cl *CustomLogger) Error(ctx context.Context, msg string, data ...interface{}) {
 	requestID := getRequestIDFromContext(ctx)
-	fmt.Printf("[ERROR] [Request ID: %v] %v\n", requestID, fmt.Sprintf(msg, data...))
+	dataLogger.Infof("[ERROR] [Request ID: %v] %v\n", requestID, fmt.Sprintf(msg, data...))
 }
 
 func (cl *CustomLogger) Trace(ctx context.Context, begin time.Time, fc func() (string, int64), err error) {
 	requestID := getRequestIDFromContext(ctx)
 	elapsed := time.Since(begin)
 	sql, rows := fc()
-	fmt.Printf("[TRACE] [Request ID: %v] [%.3fms] %v[SQL]: %v [%v]\n", requestID, float64(elapsed.Microseconds())/1000, sql, rows,err)
+	//ctx= context.WithValue(ctx,"SQL",sql)
+	dataLogger.Infof("[TRACE] [Request ID: %v] [%.3fms] %v[SQL]: %v [%v]\n", requestID, float64(elapsed.Microseconds())/1000, sql, rows,err)
 }
 
 func getRequestIDFromContext(ctx context.Context) string {

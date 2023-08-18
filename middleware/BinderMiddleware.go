@@ -67,6 +67,9 @@ func BinderMiddleware(method reflect.Value) gin.HandlerFunc {
 		//	}
 		//}
 
+		c.Set("REQ-INPUT", req)
+		c.Set("URI", c.Request.RequestURI)
+
 		results := method.Call([]reflect.Value{reflect.ValueOf(c), reflect.ValueOf(req)})
 		if len(results) > 0 {
 			if len(results) == 2 {

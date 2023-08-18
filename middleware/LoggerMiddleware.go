@@ -23,7 +23,7 @@ func LoggerMiddleware() gin.HandlerFunc {
 		_=startTime
 		c.Next()
 
-		global.AccessLog.Infow("[TRACE-ID:"+rid+"]",
+		global.AccessLogger.Infow("[TRACE-ID:"+rid+"]",
 			"remote_addr", c.ClientIP(),
 			"time_local", startTime.Format("02/Jan/2006:15:04:05 -0700"),
 			"request", fmt.Sprintf("%s %s %s", c.Request.Method, c.Request.URL.Path, c.Request.Proto),
@@ -32,6 +32,7 @@ func LoggerMiddleware() gin.HandlerFunc {
 			"referer", c.Request.Referer(),
 			"user_agent", c.Request.UserAgent(),
 			"request_time", time.Since(startTime).Seconds(),
+			"user_id",c.Value("UserId"),
 		)
 	}
 }

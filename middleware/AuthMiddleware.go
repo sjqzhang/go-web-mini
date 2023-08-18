@@ -55,6 +55,7 @@ func payloadFunc(data interface{}) jwt.MapClaims {
 // 解析Claims
 func identityHandler(c *gin.Context) interface{} {
 	claims := jwt.ExtractClaims(c)
+	c.Set("UserId", claims[jwt.IdentityKey])
 	// 此处返回值类型map[string]interface{}与payloadFunc和authorizator的data类型必须一致, 否则会导致授权失败还不容易找到原因
 	return map[string]interface{}{
 		"IdentityKey": claims[jwt.IdentityKey],
