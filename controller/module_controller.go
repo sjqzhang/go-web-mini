@@ -19,19 +19,19 @@ type ModuleController struct {
 // @Produce      json
 //@param req    query  vo.ListModuleRequest  false  "入参req"
 //@success 200 {object} vo.ListModuleResponse
-//@middleware auth,transition
+//@middleware ;cache(ttl=3)
 // @router /module [get]
 func (c *ModuleController) List(ctx *gin.Context, req *vo.ListModuleRequest) (interface{}, error) {
 	return c.moduleService.List(ctx, req)
 }
 
-//@description 查询单个模块配置表列表
+//@description 查询单个模块配置表
 //@tags Module
 // @Accept       json
 // @Produce      json
 //@param req    query  vo.GetModuleRequest  false  "入参req"
 //@success 200 {object} vo.GetModuleResponse
-//@middleware auth,transition
+//@middleware ;cache(ttl=3)
 // @router /module/:id [get]
 func (c *ModuleController) GetById(ctx *gin.Context, req *vo.GetModuleRequest) (interface{}, error) {
 	return c.moduleService.GetById(ctx, req)
@@ -43,7 +43,7 @@ func (c *ModuleController) GetById(ctx *gin.Context, req *vo.GetModuleRequest) (
 // @Produce      json
 //@param req    body  vo.CreateModuleRequest  false "入参req"
 //@success 200 {object} vo.CreateModuleResponse
-//@middleware auth,transition
+//@middleware
 // @router /module [post]
 func (c *ModuleController) Create(ctx *gin.Context, req *vo.CreateModuleRequest) (interface{}, error) {
 	return c.moduleService.Create(ctx, req)
@@ -55,7 +55,7 @@ func (c *ModuleController) Create(ctx *gin.Context, req *vo.CreateModuleRequest)
 // @Produce      json
 //@param req    body  vo.DeleteModuleRequest  false  "入参req"
 //@success 200  {object} vo.DeleteModuleResponse
-//@middleware auth,transition
+//@middleware
 // @router /module [delete]
 func (c *ModuleController) DeleteBatch(ctx *gin.Context, req *vo.DeleteModuleRequest) (interface{}, error) {
 	return c.moduleService.Delete(ctx, req)
@@ -67,7 +67,7 @@ func (c *ModuleController) DeleteBatch(ctx *gin.Context, req *vo.DeleteModuleReq
 // @Produce      json
 //@param req    body  vo.UpdateModuleRequest  false  "入参req"
 //@success 200 {object} vo.UpdateModuleResponse
-//@middleware auth,transition
+//@middleware
 // @router /module/:id [put]
 func (c *ModuleController) Update(ctx *gin.Context, req *vo.UpdateModuleRequest) (interface{}, error) {
 	return c.moduleService.Update(ctx, req)

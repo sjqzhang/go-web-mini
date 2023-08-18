@@ -5,15 +5,15 @@ import (
 	"github.com/sjqzhang/gdi"
 	"go-web-mini/model"
 	"strings"
-	"time"
+	"sync"
 
 	//"fmt"
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"go-web-mini/global"
 	"go-web-mini/config"
 	_ "go-web-mini/docs"
+	"go-web-mini/global"
 	"go-web-mini/middleware"
 )
 
@@ -56,8 +56,7 @@ func InitRoutes() *gin.Engine {
 	// 启用全局跨域中间件
 	r.Use(middleware.CORSMiddleware())
 
-
-	r.Use(middleware.CacheMiddleware(time.Hour*5))
+	//r.Use(middleware.CacheMiddleware(time.Hour*5))
 
 	// 启用操作日志中间件
 	r.Use(middleware.OperationLogMiddleware())
@@ -86,6 +85,8 @@ func InitRoutes() *gin.Engine {
 
 	global.Log.Info("初始化路由完成！")
 
+	middlewaresMapFunc := make(map[string]func(sync.Map) gin.HandlerFunc)
+
 	middlewaresMaping := make(map[string]gin.HandlerFunc)
 
 	//middlewaresMaping["ratelimit"]=middleware.RateLimitMiddleware(time.Millisecond*time.Duration(config.Conf.RateLimit.FillInterval),config.Conf.RateLimit.Capacity)
@@ -98,6 +99,8 @@ func InitRoutes() *gin.Engine {
 	middlewaresMaping["auth"] = auth.MiddlewareFunc()
 	middlewaresMaping["casbin"] = middleware.CasbinMiddleware()
 	middlewaresMaping["transition"] = middleware.TransitionMiddleware()
+
+	middlewaresMapFunc["cache"] = middleware.CacheMiddleware
 
 	if err != nil {
 		fmt.Println(err)
@@ -137,11 +140,23 @@ func InitRoutes() *gin.Engine {
 			}
 
 			var mds []gin.HandlerFunc
-			for _, m := range v.Middlewares {
-				if f, ok := middlewaresMaping[m]; ok {
-					mds = append(mds, f)
+			for _, middleWare := range v.Middlewares {
+				count := 0
+				middleWare.Params.Range(func(key, value interface{}) bool {
+					count++
+					return true
+				})
+				if count > 0 {
+					if f, ok := middlewaresMapFunc[middleWare.Name]; ok {
+						mds = append(mds, f(middleWare.Params))
+					}
+				} else {
+					if f, ok := middlewaresMaping[middleWare.Name]; ok {
+						mds = append(mds, f)
+					}
 				}
 			}
+
 			api := model.Api{
 				Method:   v.Method,
 				Path:     strings.TrimPrefix(v.Uri, "/"+config.Conf.System.UrlPathPrefix),

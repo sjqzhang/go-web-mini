@@ -13,7 +13,7 @@ import (
 	p14 "go-web-mini/vo"
 )
 
-//go:embed docs generator repository response service util config global middleware model routes controller dto vo
+//go:embed controller docs model vo dto generator global middleware response service config util repository routes
 var gdiEmbedFiles embed.FS
 
 func init() {

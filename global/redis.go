@@ -1,6 +1,7 @@
 package global
 
 import (
+	"context"
 	"github.com/go-redis/redis/v8"
 	"go-web-mini/config"
 )
@@ -15,6 +16,11 @@ func InitRedis() {
 	opts.DB = config.Conf.Redis.DB
 	opts.Password = config.Conf.Redis.Password
 	redisClient = redis.NewClient(&opts)
+	if config.Conf.Redis.Enable {
+		if _, err := redisClient.Ping(context.Background()).Result(); err != nil {
+			panic(err)
+		}
+	}
 }
 
 func Redis() *redis.Client {

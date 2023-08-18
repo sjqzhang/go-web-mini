@@ -19,19 +19,19 @@ type BranchController struct {
 // @Produce      json
 //@param req    query  vo.ListBranchRequest  false  "入参req"
 //@success 200 {object} vo.ListBranchResponse
-//@middleware auth,transition
+//@middleware ;cache(ttl=3)
 // @router /branch [get]
 func (c *BranchController) List(ctx *gin.Context, req *vo.ListBranchRequest) (interface{}, error) {
 	return c.branchService.List(ctx, req)
 }
 
-//@description 查询单个branch列表
+//@description 查询单个branch
 //@tags Branch
 // @Accept       json
 // @Produce      json
 //@param req    query  vo.GetBranchRequest  false  "入参req"
 //@success 200 {object} vo.GetBranchResponse
-//@middleware auth,transition
+//@middleware ;cache(ttl=3)
 // @router /branch/:id [get]
 func (c *BranchController) GetById(ctx *gin.Context, req *vo.GetBranchRequest) (interface{}, error) {
 	return c.branchService.GetById(ctx, req)
@@ -43,7 +43,7 @@ func (c *BranchController) GetById(ctx *gin.Context, req *vo.GetBranchRequest) (
 // @Produce      json
 //@param req    body  vo.CreateBranchRequest  false "入参req"
 //@success 200 {object} vo.CreateBranchResponse
-//@middleware auth,transition
+//@middleware
 // @router /branch [post]
 func (c *BranchController) Create(ctx *gin.Context, req *vo.CreateBranchRequest) (interface{}, error) {
 	return c.branchService.Create(ctx, req)
@@ -55,7 +55,7 @@ func (c *BranchController) Create(ctx *gin.Context, req *vo.CreateBranchRequest)
 // @Produce      json
 //@param req    body  vo.DeleteBranchRequest  false  "入参req"
 //@success 200  {object} vo.DeleteBranchResponse
-//@middleware auth,transition
+//@middleware
 // @router /branch [delete]
 func (c *BranchController) DeleteBatch(ctx *gin.Context, req *vo.DeleteBranchRequest) (interface{}, error) {
 	return c.branchService.Delete(ctx, req)
@@ -67,7 +67,7 @@ func (c *BranchController) DeleteBatch(ctx *gin.Context, req *vo.DeleteBranchReq
 // @Produce      json
 //@param req    body  vo.UpdateBranchRequest  false  "入参req"
 //@success 200 {object} vo.UpdateBranchResponse
-//@middleware auth,transition
+//@middleware
 // @router /branch/:id [put]
 func (c *BranchController) Update(ctx *gin.Context, req *vo.UpdateBranchRequest) (interface{}, error) {
 	return c.branchService.Update(ctx, req)

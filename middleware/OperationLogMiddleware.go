@@ -2,10 +2,8 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/sjqzhang/gdi"
 	"go-web-mini/config"
 	"go-web-mini/model"
-	"go-web-mini/repository"
 	"strings"
 	"time"
 )
@@ -14,7 +12,7 @@ import (
 var OperationLogChan = make(chan *model.OperationLog, 30)
 
 func OperationLogMiddleware() gin.HandlerFunc {
-	apiRepository := gdi.Get(&repository.ApiRepository{}).(*repository.ApiRepository)
+	//apiRepository := gdi.Get(&repository.ApiRepository{}).(*repository.ApiRepository)
 	return func(c *gin.Context) {
 		// 开始时间
 		startTime := time.Now()
@@ -47,8 +45,9 @@ func OperationLogMiddleware() gin.HandlerFunc {
 
 		// 获取接口描述
 		//apiRepository :=repository.NewApiRepository()
-		apiDesc, _ := apiRepository.GetApiDescByPath(nil, path, method)
+		//apiDesc, _ := apiRepository.GetApiDescByPath(nil, path, method)
 
+		apiDesc := path
 		operationLog := model.OperationLog{
 			Username:   username,
 			Ip:         c.ClientIP(),
@@ -61,9 +60,10 @@ func OperationLogMiddleware() gin.HandlerFunc {
 			TimeCost:   timeCost,
 			//UserAgent:  c.Request.UserAgent(),
 		}
+		_ = operationLog
 
 		// 最好是将日志发送到rabbitmq或者kafka中
 		// 这里是发送到channel中，开启3个goroutine处理
-		OperationLogChan <- &operationLog
+		//OperationLogChan <- &operationLog
 	}
 }
