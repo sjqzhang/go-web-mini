@@ -20,7 +20,7 @@ func LoggerMiddleware() gin.HandlerFunc {
 		c.Set(headerXRequestID, rid)
 		c.Writer.Header().Set(headerXRequestID, rid)
 		startTime := time.Now()
-		_=startTime
+		_ = startTime
 		c.Next()
 
 		global.AccessLogger.Infow("[TRACE-ID:"+rid+"]",
@@ -32,7 +32,8 @@ func LoggerMiddleware() gin.HandlerFunc {
 			"referer", c.Request.Referer(),
 			"user_agent", c.Request.UserAgent(),
 			"request_time", time.Since(startTime).Seconds(),
-			"user_id",c.Value("UserId"),
+			"user_id", c.Value("UserId"),
+			"sql", c.Value("SQL"),
 		)
 	}
 }

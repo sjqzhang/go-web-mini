@@ -3,11 +3,13 @@ package global
 import (
 	"context"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"go-web-mini/config"
 	"go-web-mini/model"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+	"strings"
 	"time"
 )
 
@@ -32,7 +34,7 @@ func GetDB(ctx context.Context) *gorm.DB {
 	return db.(*gorm.DB)
 }
 
-type CustomLogger struct{
+type CustomLogger struct {
 }
 
 func (cl *CustomLogger) LogMode(logger.LogLevel) logger.Interface {
@@ -58,8 +60,19 @@ func (cl *CustomLogger) Trace(ctx context.Context, begin time.Time, fc func() (s
 	requestID := getRequestIDFromContext(ctx)
 	elapsed := time.Since(begin)
 	sql, rows := fc()
-	//ctx= context.WithValue(ctx,"SQL",sql)
-	dataLogger.Infof("[TRACE] [Request ID: %v] [%.3fms] %v[SQL]: %v [%v]\n", requestID, float64(elapsed.Microseconds())/1000, sql, rows,err)
+	if _, ok := ctx.(*gin.Context); ok {
+		sqls := ctx.(*gin.Context).Value("SQL")
+		if sqls != nil {
+			sqls = append(sqls.([]string), sql)
+			ctx.(*gin.Context).Set("SQL", sqls)
+		} else {
+			ctx.(*gin.Context).Set("SQL", []string{sql})
+		}
+	}
+	if strings.Contains(sql, "INSERT") || strings.Contains(sql, "UPDATE") || strings.Contains(sql, "DELETE") {
+		dataLogger.Infof("[TRACE] [Request ID: %v] [%.3fms] %v[SQL]: %v [%v]\n", requestID, float64(elapsed.Microseconds())/1000, sql, rows, err)
+	}
+
 }
 
 func getRequestIDFromContext(ctx context.Context) string {
@@ -118,7 +131,7 @@ func InitMysql() {
 	DB = db
 	// 自动迁移表结构
 	dbAutoMigrate()
-	db.Logger= &CustomLogger{}
+	db.Logger = &CustomLogger{}
 	Log.Infof("初始化mysql数据库完成! dsn: %s", showDsn)
 }
 
@@ -131,7 +144,6 @@ func dbAutoMigrate() {
 		&model.Api{},
 		&model.OperationLog{},
 		&model.News{},
-		&model.Branch{},
-		&model.Module{},
+		&model.TableMetadata{},
 	)
 }
