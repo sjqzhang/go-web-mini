@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/copier"
 
@@ -60,7 +59,6 @@ func (s *NewsService) Create(ctx *gin.Context, req *vo.CreateNewsRequest) (*vo.C
 		return nil, err
 	}
 	err = copier.Copy(&resp, &obj)
-	err=fmt.Errorf("bm error")
 	return &resp, err
 }
 

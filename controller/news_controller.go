@@ -19,7 +19,7 @@ type NewsController struct {
 // @Produce      json
 //@param req    query  vo.ListNewsRequest  false  "入参req"
 //@success 200 {object} vo.ListNewsResponse
-//@middleware ;cache(ttl=30)
+//@middleware
 // @router /news [get]
 func (c *NewsController) List(ctx *gin.Context, req *vo.ListNewsRequest) (interface{}, error) {
 	return c.newsService.List(ctx, req)
@@ -31,7 +31,7 @@ func (c *NewsController) List(ctx *gin.Context, req *vo.ListNewsRequest) (interf
 // @Produce      json
 //@param req    query  vo.GetNewsRequest  false  "入参req"
 //@success 200 {object} vo.GetNewsResponse
-//@middleware ;cache(ttl=3)
+//@middleware
 // @router /news/:id [get]
 func (c *NewsController) GetById(ctx *gin.Context, req *vo.GetNewsRequest) (interface{}, error) {
 	return c.newsService.GetById(ctx, req)
@@ -43,7 +43,7 @@ func (c *NewsController) GetById(ctx *gin.Context, req *vo.GetNewsRequest) (inte
 // @Produce      json
 //@param req    body  vo.CreateNewsRequest  false "入参req"
 //@success 200 {object} vo.CreateNewsResponse
-//@middleware transition
+//@middleware
 // @router /news [post]
 func (c *NewsController) Create(ctx *gin.Context, req *vo.CreateNewsRequest) (interface{}, error) {
 	return c.newsService.Create(ctx, req)

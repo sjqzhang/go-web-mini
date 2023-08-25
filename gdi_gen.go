@@ -14,7 +14,7 @@ import (
 	p14 "go-web-mini/vo"
 )
 
-//go:embed repository response config controller global service docs model vo dto generator middleware routes util
+//go:embed dto service util vo config docs generator middleware routes controller model response global repository
 var gdiEmbedFiles embed.FS
 
 func init() {
@@ -34,6 +34,7 @@ func init() {
 	gdi.PlaceHolder((*p2.NewsController)(nil))
 	gdi.PlaceHolder((*p2.OperationLogController)(nil))
 	gdi.PlaceHolder((*p2.RoleController)(nil))
+	gdi.PlaceHolder((*p2.TableMetadataController)(nil))
 	gdi.PlaceHolder((*p2.UserController)(nil))
 	gdi.PlaceHolder((*p4.ApiTreeDto)(nil))
 	gdi.PlaceHolder((*p4.UserInfoDto)(nil))
@@ -56,6 +57,8 @@ func init() {
 	gdi.PlaceHolder((*p8.NewsQuery)(nil))
 	gdi.PlaceHolder((*p8.OperationLog)(nil))
 	gdi.PlaceHolder((*p8.Role)(nil))
+	gdi.PlaceHolder((*p8.TableMetadata)(nil))
+	gdi.PlaceHolder((*p8.TableMetadataQuery)(nil))
 	gdi.PlaceHolder((*p8.User)(nil))
 	gdi.PlaceHolder((*p9.ApiRepository)(nil))
 	gdi.PlaceHolder((*p9.BranchRepository)(nil))
@@ -64,10 +67,12 @@ func init() {
 	gdi.PlaceHolder((*p9.NewsRepository)(nil))
 	gdi.PlaceHolder((*p9.OperationLogRepository)(nil))
 	gdi.PlaceHolder((*p9.RoleRepository)(nil))
+	gdi.PlaceHolder((*p9.TableMetadataRepository)(nil))
 	gdi.PlaceHolder((*p9.UserRepository)(nil))
 	gdi.PlaceHolder((*p12.BranchService)(nil))
 	gdi.PlaceHolder((*p12.ModuleService)(nil))
 	gdi.PlaceHolder((*p12.NewsService)(nil))
+	gdi.PlaceHolder((*p12.TableMetadataService)(nil))
 	gdi.PlaceHolder((*p14.ApiListRequest)(nil))
 	gdi.PlaceHolder((*p14.CreateApiRequest)(nil))
 	gdi.PlaceHolder((*p14.UpdateApiRequest)(nil))
@@ -119,6 +124,18 @@ func init() {
 	gdi.PlaceHolder((*p14.DeleteRoleRequest)(nil))
 	gdi.PlaceHolder((*p14.UpdateRoleMenusRequest)(nil))
 	gdi.PlaceHolder((*p14.UpdateRoleApisRequest)(nil))
+	gdi.PlaceHolder((*p14.TableMetadataResponse)(nil))
+	gdi.PlaceHolder((*p14.TableMetadata)(nil))
+	gdi.PlaceHolder((*p14.ListTableMetadataResponse)(nil))
+	gdi.PlaceHolder((*p14.ListTableMetadataRequest)(nil))
+	gdi.PlaceHolder((*p14.GetTableMetadataResponse)(nil))
+	gdi.PlaceHolder((*p14.CreateTableMetadataRequest)(nil))
+	gdi.PlaceHolder((*p14.CreateTableMetadataResponse)(nil))
+	gdi.PlaceHolder((*p14.UpdateTableMetadataRequest)(nil))
+	gdi.PlaceHolder((*p14.UpdateTableMetadataResponse)(nil))
+	gdi.PlaceHolder((*p14.DeleteTableMetadataRequest)(nil))
+	gdi.PlaceHolder((*p14.GetTableMetadataRequest)(nil))
+	gdi.PlaceHolder((*p14.DeleteTableMetadataResponse)(nil))
 	gdi.PlaceHolder((*p14.RegisterAndLoginRequest)(nil))
 	gdi.PlaceHolder((*p14.CreateUserRequest)(nil))
 	gdi.PlaceHolder((*p14.UserListRequest)(nil))

@@ -45,7 +45,7 @@ type Get{{.Table.TableName}}Response struct {
 
 // 创建{{.Table.TableName}} {{.Table.TableComment}}
 type Create{{.Table.TableName}}Request struct {
-    {{range .Fields}}{{if  checkField .ColumnName}}{{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }} form:"{{.ColumnName}}"` {{.ColumnComment}}
+    {{range .Fields}}{{if  checkField .ColumnName}}{{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }} form:"{{.ColumnName}}" validate:"{{.Validate}}"` {{.ColumnComment}}
     {{end}}{{end}}
 }
 
@@ -58,7 +58,7 @@ type Create{{.Table.TableName}}Response struct {
 // 更新{{.Table.TableName}} {{.Table.TableComment}}
 type Update{{.Table.TableName}}Request struct {
     ID      *int `json:""`
-    {{range .Fields}}{{if  checkField .ColumnName}}{{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }} form:"{{.ColumnName}}"` {{.ColumnComment}}
+    {{range .Fields}}{{if  checkField .ColumnName}}{{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }} validate:"{{.Validate}}" form:"{{.ColumnName}}"` {{.ColumnComment}}
     {{end}}{{end}}
 }
 

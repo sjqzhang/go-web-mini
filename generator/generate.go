@@ -28,6 +28,9 @@ type FieldResult struct {
 	VueTag               string
 	VueType              string
 	VueFunction          string
+	Validate             string
+	Title                string
+	Type                 string
 }
 
 type TableResult struct {
@@ -383,7 +386,35 @@ func convertField(con *gorm.DB, query *sql.Rows) []FieldResult {
 		if strings.TrimSpace(str.ColumnComment) == "" {
 			str.ColumnComment = str.ColumnName
 		}
-		str.ColumnCommentForView = str.ColumnComment
+		//comment 用json tag的格式进行存储，现在需要转换出validate,title,type
+		// 格式如下：title:"标题";type:"input";validate:"required:min=0,max=35"
+		if strings.TrimSpace(str.ColumnComment) != "" {
+			comments := strings.Split(str.ColumnComment, ";")
+			for _, comment := range comments {
+				comment = strings.TrimSpace(comment)
+				if strings.HasPrefix(comment, "title:") {
+					str.Title = strings.TrimPrefix(comment, "title:")
+					//还需要处理一下，去掉前后双引号
+					str.Title = strings.Trim(str.Title, "\"")
+
+				}
+				if strings.HasPrefix(comment, "type:") {
+					str.Type = strings.TrimPrefix(comment, "type:")
+					//还需要处理一下，去掉前后双引号
+					str.Type = strings.Trim(str.Type, "\"")
+				}
+				if strings.HasPrefix(comment, "validate:") {
+					str.Validate = strings.TrimPrefix(comment, "validate:")
+					//还需要处理一下，去掉前后双引号
+					str.Validate = strings.Trim(str.Validate, "\"")
+				}
+			}
+		}
+		if strings.TrimSpace(str.Title) == "" {
+			str.Title = str.ColumnName
+		}
+
+		str.ColumnCommentForView = str.Title
 		if strings.Index(strings.ToLower(str.DataType), "int") != -1 {
 			str.Value = "0"
 			str.VueType = "number"

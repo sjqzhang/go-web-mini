@@ -9,9 +9,9 @@ type NewsResponse struct {
 	CreatedAt *time.Time `json:"created_at" form:"created_at"`                   // created_at
 	UpdatedAt *time.Time `json:"updated_at" form:"updated_at"`                   // updated_at
 	DeletedAt *time.Time `json:"deleted_at" form:"deleted_at"`                   // deleted_at
-	Title     *string    `json:"title" form:"title"`                             // title:"标题";type:"input";validate:"required:min=0,max=35"
-	Content   *string    `json:"content" form:"content"`                         // content
-	Creator   *string    `json:"creator" form:"creator"`                         // creator
+	Title     *string    `json:"title" form:"title"`                             // title:"标题";type:"input";validate:"required,min=2,max=35"
+	Content   *string    `json:"content" form:"content"`                         // title:"内容";type:"input";validate:"
+	Creator   *string    `json:"creator" form:"creator"`                         // title:"创建人";type:"input";validate:"
 
 }
 
@@ -21,9 +21,9 @@ type News struct {
 	CreatedAt *time.Time `json:"created_at" form:"created_at"`                   // created_at
 	UpdatedAt *time.Time `json:"updated_at" form:"updated_at"`                   // updated_at
 	DeletedAt *time.Time `json:"deleted_at" form:"deleted_at"`                   // deleted_at
-	Title     *string    `json:"title" form:"title"`                             // title:"标题";type:"input";validate:"required:min=0,max=35"
-	Content   *string    `json:"content" form:"content"`                         // content
-	Creator   *string    `json:"creator" form:"creator"`                         // creator
+	Title     *string    `json:"title" form:"title"`                             // title:"标题";type:"input";validate:"required,min=2,max=35"
+	Content   *string    `json:"content" form:"content"`                         // title:"内容";type:"input";validate:"
+	Creator   *string    `json:"creator" form:"creator"`                         // title:"创建人";type:"input";validate:"
 
 }
 
@@ -38,9 +38,9 @@ type ListNewsResponse struct {
 
 // 查询News news
 type ListNewsRequest struct {
-	Title   *string `json:"title"  form:"title"`     // title:"标题";type:"input";validate:"required:min=0,max=35"
-	Content *string `json:"content"  form:"content"` // content
-	Creator *string `json:"creator"  form:"creator"` // creator
+	Title   *string `json:"title"  form:"title"`     // title:"标题";type:"input";validate:"required,min=2,max=35"
+	Content *string `json:"content"  form:"content"` // title:"内容";type:"input";validate:"
+	Creator *string `json:"creator"  form:"creator"` // title:"创建人";type:"input";validate:"
 
 	PageNum  *uint `json:"pageNum" form:"pageNum"`   //第几页
 	PageSize *uint `json:"pageSize" form:"pageSize"` //每页多少条
@@ -52,9 +52,9 @@ type GetNewsResponse struct {
 
 // 创建News news
 type CreateNewsRequest struct {
-	Title   *string `json:"title" form:"title"`     // title:"标题";type:"input";validate:"required:min=0,max=35"
-	Content *string `json:"content" form:"content"` // content
-	Creator *string `json:"creator" form:"creator"` // creator
+	Title   *string `json:"title" form:"title" validate:"required,min=2,max=35"` // title:"标题";type:"input";validate:"required,min=2,max=35"
+	Content *string `json:"content" form:"content" validate:""`                  // title:"内容";type:"input";validate:"
+	Creator *string `json:"creator" form:"creator" validate:""`                  // title:"创建人";type:"input";validate:"
 
 }
 
@@ -65,9 +65,9 @@ type CreateNewsResponse struct {
 // 更新News news
 type UpdateNewsRequest struct {
 	ID      *int    `json:""`
-	Title   *string `json:"title" form:"title"`     // title:"标题";type:"input";validate:"required:min=0,max=35"
-	Content *string `json:"content" form:"content"` // content
-	Creator *string `json:"creator" form:"creator"` // creator
+	Title   *string `json:"title" validate:"required,min=2,max=35" form:"title"` // title:"标题";type:"input";validate:"required,min=2,max=35"
+	Content *string `json:"content" validate:"" form:"content"`                  // title:"内容";type:"input";validate:"
+	Creator *string `json:"creator" validate:"" form:"creator"`                  // title:"创建人";type:"input";validate:"
 
 }
 

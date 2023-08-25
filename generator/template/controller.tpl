@@ -22,7 +22,7 @@ type {{.Table.TableName}}Controller struct {
 // @Produce      json
 //@param req    query  vo.List{{.Table.TableName}}Request  false  "入参req"
 //@success 200 {object} vo.List{{.Table.TableName}}Response
-//@middleware ;cache(ttl=3)
+//@middleware
 // @router /{{.Table.Uri}} [get]
 func (c *{{.Table.TableName}}Controller) List(ctx *gin.Context, req *vo.List{{.Table.TableName}}Request) (interface{}, error) {
 	return c.{{.Table.Uri}}Service.List(ctx, req)
@@ -36,7 +36,7 @@ func (c *{{.Table.TableName}}Controller) List(ctx *gin.Context, req *vo.List{{.T
 // @Produce      json
 //@param req    query  vo.Get{{.Table.TableName}}Request  false  "入参req"
 //@success 200 {object} vo.Get{{.Table.TableName}}Response
-//@middleware ;cache(ttl=3)
+//@middleware
 // @router /{{.Table.Uri}}/:id [get]
 func (c *{{.Table.TableName}}Controller) GetById(ctx *gin.Context, req *vo.Get{{.Table.TableName}}Request) (interface{}, error) {
 	return c.{{.Table.Uri}}Service.GetById(ctx, req)
