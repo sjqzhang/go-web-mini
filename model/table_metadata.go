@@ -8,8 +8,8 @@ import (
 type TableMetadata struct {
 	Model
 	//unique_index
-	TableAlias         string `gorm:"uniqueIndex:uniq_name;table_alias;type:varchar(255);comment:'table_alias'" validate:"" json:"table_alias"`                          // table_alias
-	ColumnName         string `gorm:"uniqueIndex:uniq_name;column_name;type:varchar(255);comment:'column_name'" validate:"" json:"column_name"`                          // column_name
+	TableAlias         string `gorm:"uniqueIndex:uniq_name;table_alias;type:varchar(255);comment:'table_alias'" validate:"" json:"table_alias"`    // table_alias
+	ColumnName         string `gorm:"uniqueIndex:uniq_name;column_name;type:varchar(255);comment:'column_name'" validate:"" json:"column_name"`    // column_name
 	ColumnComment      string `gorm:"column_comment;type:text;comment:'column_comment'" validate:"" json:"column_comment"`                         // column_comment
 	IsNullable         string `gorm:"is_nullable;type:varchar(3);comment:'is_nullable'" validate:"" json:"is_nullable"`                            // is_nullable
 	ColumnType         string `gorm:"column_type;type:varchar(128);comment:'column_type'" validate:"" json:"column_type"`                          // column_type
