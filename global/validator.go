@@ -24,7 +24,7 @@ func InitValidate() {
 	_ = ch_translations.RegisterDefaultTranslations(Validate, Trans)
 	_ = Validate.RegisterValidation("checkMobile", checkMobile)
 
-	Validate.RegisterTranslation("checkMobile",trans, func(ut ut.Translator) error {
+	Validate.RegisterTranslation("checkMobile", trans, func(ut ut.Translator) error {
 		return ut.Add("checkMobile", "{0} 必须是一个合法的手机号码", true)
 	}, func(ut ut.Translator, fe validator.FieldError) string {
 

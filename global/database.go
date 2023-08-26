@@ -4,8 +4,12 @@ import (
 	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/sjqzhang/gdi"
 	"go-web-mini/config"
-	"go-web-mini/model"
+
+	"reflect"
+
+	//"go-web-mini/model"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -137,13 +141,41 @@ func InitMysql() {
 
 // 自动迁移表结构
 func dbAutoMigrate() {
-	DB.AutoMigrate(
-		&model.User{},
-		&model.Role{},
-		&model.Menu{},
-		&model.Api{},
-		&model.OperationLog{},
-		&model.News{},
-		&model.TableMetadata{},
-	)
+	//DB.AutoMigrate(
+	//	&model.User{},
+	//	&model.Role{},
+	//	&model.Menu{},
+	//	&model.Api{},
+	//	&model.OperationLog{},
+	//	&model.News{},
+	//	&model.TableMetadata{},
+	//)
+	models, err := gdi.GetAllTypesByPackName("model*")
+
+	if err != nil {
+		Log.Panicf("自动注册model失败: %v", err)
+	}
+	for _, mt := range models {
+		// 从model类型，反射创建对象
+		if mt.Kind() != reflect.Ptr {
+			continue
+		}
+		if mt.Elem().Kind() != reflect.Struct {
+			continue
+		}
+		m := reflect.New(mt.Elem()).Interface()
+		//如果有TableName方法，就调用
+		if _, ok := m.(interface{ TableName() string }); ok {
+			t := fmt.Sprintf("%T", m)
+			fmt.Println("自动注册model:", t)
+			if strings.HasPrefix(t, "*model.") {
+				DB.AutoMigrate(m)
+			}
+		}
+
+		// 自动迁移表结构
+		//DB.AutoMigrate(m)
+
+		//fmt.Println(DB.AutoMigrate(model).Error())
+	}
 }

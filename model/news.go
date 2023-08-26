@@ -7,9 +7,9 @@ import (
 // News news
 type News struct {
 	Model
-	Title   string `gorm:"title;type:longtext;comment:'标题'" validate:"required,checkMobile" json:"title"` // title:"标题";type:"input";validate:"required,checkMobile"
-	Content string `gorm:"content;type:longtext;comment:'content'" validate:"" json:"content"`            // '内容001'
-	Creator string `gorm:"creator;type:longtext;comment:'创建人'" validate:"" json:"creator"`                // title:"创建人";type:"input";validate:"
+	Title   string `gorm:"title;type:varchar(50);comment:标题" validate:"required" json:"title"`                       // title:"标题";type:"input";validate:"required"
+	Content string `gorm:"content;type:varchar(50);comment:content" validate:"min=1,max=4294967295" json:"content"`  // title:"content";type:"input";validate:"min=1,max=4294967295"
+	Creator string `gorm:"creator;type:varchar(100);comment:creator" validate:"min=1,max=4294967295" json:"creator"` // title:"creator";type:"input";validate:"min=1,max=4294967295"
 
 }
 
@@ -19,9 +19,9 @@ type NewsQuery struct {
 	CreatedAt *time.Time `json:"created_at"`                           // created_at
 	UpdatedAt *time.Time `json:"updated_at"`                           // updated_at
 	DeletedAt *time.Time `json:"deleted_at"`                           // deleted_at
-	Title     *string    `json:"title"`                                // title:"标题";type:"input";validate:"required,checkMobile"
-	Content   *string    `json:"content"`                              // '内容001'
-	Creator   *string    `json:"creator"`                              // title:"创建人";type:"input";validate:"
+	Title     *string    `json:"title"`                                // title:"标题";type:"input";validate:"required"
+	Content   *string    `json:"content"`                              // title:"content";type:"input";validate:"min=1,max=4294967295"
+	Creator   *string    `json:"creator"`                              // title:"creator";type:"input";validate:"min=1,max=4294967295"
 	PageNum   int        `json:"-" form:"pageNum"`
 	PageSize  int        `json:"-" form:"pageSize"`
 }
