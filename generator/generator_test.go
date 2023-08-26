@@ -4,8 +4,10 @@ import "testing"
 
 func TestGenerate(t *testing.T) {
 
+
+
 	conf := Config{
-		DSN:         "root:root@tcp(127.0.0.1)/go_web_mini?tls=false",
+		DSN:         "root:root@tcp(127.0.0.1)/dms?tls=false",
 		ModuleName:  "go-web-mini",
 		Tables:      []string{"news"},
 		WebRoot:     "/Users/junqiang.zhang/repo/js/go-web-mini-ui",
@@ -14,6 +16,10 @@ func TestGenerate(t *testing.T) {
 		TableSuffix: "_tab",
 	}
 	InitConfig(conf)
+
+
+	tables:=getAllTableNames(nil,"dms")
+	conf.Tables=tables
 
 	DoGenerate()
 }

@@ -66,8 +66,11 @@ type Config struct {
 }
 
 var cfg Config
+var db *gorm.DB
+
 
 func InitConfig(conf Config) {
+	db,_=connect(conf.DSN)
 	cfg = conf
 }
 
@@ -210,6 +213,19 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 	// 创建文件
 	createFiles(object, tableName)
 }
+
+// get All table names
+func getAllTableNames(con *gorm.DB, database string) []string {
+	var tableNames []string
+	if con==nil{
+		con=db
+	}
+	con.Raw("select TABLE_NAME from information_schema.TABLES where table_schema = ?;", database).Pluck("TABLE_NAME", &tableNames)
+	return tableNames
+}
+
+
+
 
 func mergeIndex(fields []FieldResult, indexes []IndexResult) {
 	for i, field := range fields {
