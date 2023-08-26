@@ -175,6 +175,19 @@ func InitData() {
 			Roles:     roles[:2],
 			Creator:   "系统",
 		},
+
+		{
+			Model:     gorm.Model{ID: 8},
+			Name:      "Business",
+			Title:     "业务表管理",
+			Icon:      &documentationStr,
+			Path:      "/business",
+			Component: "Layout",
+			Sort:      22,
+			ParentId:  &uint0,
+			Roles:     roles[:2],
+			Creator:   "系统",
+		},
 	}
 	for _, menu := range menus {
 		err := DB.First(&menu, menu.ID).Error
