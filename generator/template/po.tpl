@@ -10,7 +10,7 @@ import (
 // {{.Table.TableName}} {{.Table.TableComment}}
 type {{.Table.TableName}} struct {
     Model
-    {{range .Fields}}{{if  checkField .ColumnName}}{{.CamelField}} {{.RealType}} `gorm:"{{.ColumnName}};type:{{.ColumnType}};comment:'{{.ColumnCommentForView}}'" validate:"{{.Validate}}" json:"{{.ColumnName}}"{{.KeyStr }}` {{.ColumnComment}}
+    {{range .Fields}}{{if  checkField .ColumnName}}{{.CamelField}} {{.RealType}} `gorm:"{{.ColumnName}};type:{{.ColumnType}};comment:{{.ColumnCommentForView}}" validate:"{{.Validate}}" json:"{{.ColumnName}}"{{.KeyStr }}` {{.ColumnComment}}
     {{end}}{{end}}
 }
 
