@@ -18,3 +18,7 @@ type OperationLog struct {
 	TimeCost   int64     `gorm:"type:int(6);comment:'请求耗时(ms)'" json:"timeCost"`
 	UserAgent  string    `gorm:"type:varchar(20);comment:'浏览器标识'" json:"userAgent"`
 }
+
+func (o OperationLog) TableName() string {
+	return "operation_logs"
+}

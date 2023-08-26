@@ -7,9 +7,9 @@ import (
 // News news
 type News struct {
 	Model
-	Title   string `gorm:"title;type:varchar(50);comment:标题" validate:"required" json:"title"`                       // title:"标题";type:"input";validate:"required"
-	Content string `gorm:"content;type:varchar(50);comment:content" validate:"min=1,max=4294967295" json:"content"`  // title:"content";type:"input";validate:"min=1,max=4294967295"
-	Creator string `gorm:"creator;type:varchar(100);comment:creator" validate:"min=1,max=4294967295" json:"creator"` // title:"creator";type:"input";validate:"min=1,max=4294967295"
+	Title   string `gorm:"uniqueIndex:unq_ix;title;type:varchar(50);comment:title" validate:"min=1,max=50" json:"title"`       // title:"title";validate:"min=1,max=50"
+	Content string `gorm:"uniqueIndex:unq_ix;content;type:varchar(50);comment:content" validate:"min=1,max=50" json:"content"` // title:"content";validate:"min=1,max=50"
+	Creator string `gorm:"creator;type:varchar(100);comment:creator" validate:"min=1,max=100" json:"creator"`                  // title:"creator";validate:"min=1,max=100"
 
 }
 
@@ -19,9 +19,9 @@ type NewsQuery struct {
 	CreatedAt *time.Time `json:"created_at"`                           // created_at
 	UpdatedAt *time.Time `json:"updated_at"`                           // updated_at
 	DeletedAt *time.Time `json:"deleted_at"`                           // deleted_at
-	Title     *string    `json:"title"`                                // title:"标题";type:"input";validate:"required"
-	Content   *string    `json:"content"`                              // title:"content";type:"input";validate:"min=1,max=4294967295"
-	Creator   *string    `json:"creator"`                              // title:"creator";type:"input";validate:"min=1,max=4294967295"
+	Title     *string    `json:"title"`                                // title:"title";validate:"min=1,max=50"
+	Content   *string    `json:"content"`                              // title:"content";validate:"min=1,max=50"
+	Creator   *string    `json:"creator"`                              // title:"creator";validate:"min=1,max=100"
 	PageNum   int        `json:"-" form:"pageNum"`
 	PageSize  int        `json:"-" form:"pageSize"`
 }

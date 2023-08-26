@@ -10,3 +10,7 @@ type Api struct {
 	Desc     string `gorm:"type:varchar(100);comment:'说明'" json:"desc"`
 	Creator  string `gorm:"type:varchar(20);comment:'创建人'" json:"creator"`
 }
+
+func (t Api) TableName() string {
+	return "apis"
+}
