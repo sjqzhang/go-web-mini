@@ -9,9 +9,9 @@ type NewsResponse struct {
 	CreatedAt *time.Time `json:"created_at" form:"created_at"`                   // created_at
 	UpdatedAt *time.Time `json:"updated_at" form:"updated_at"`                   // updated_at
 	DeletedAt *time.Time `json:"deleted_at" form:"deleted_at"`                   // deleted_at
-	Title     *string    `json:"title" form:"title"`                             // title:"标题";type:"input";validate:"required"
-	Content   *string    `json:"content" form:"content"`                         // title:"content";type:"input";validate:"min=1,max=4294967295"
-	Creator   *string    `json:"creator" form:"creator"`                         // title:"creator";type:"input";validate:"min=1,max=4294967295"
+	Title     *string    `json:"title" form:"title"`                             // title:"title";validate:"min=1,max=50"
+	Content   *string    `json:"content" form:"content"`                         // title:"content";validate:"min=1,max=50"
+	Creator   *string    `json:"creator" form:"creator"`                         // title:"creator";validate:"min=1,max=100"
 
 }
 
@@ -21,9 +21,9 @@ type News struct {
 	CreatedAt *time.Time `json:"created_at" form:"created_at"`                   // created_at
 	UpdatedAt *time.Time `json:"updated_at" form:"updated_at"`                   // updated_at
 	DeletedAt *time.Time `json:"deleted_at" form:"deleted_at"`                   // deleted_at
-	Title     *string    `json:"title" form:"title"`                             // title:"标题";type:"input";validate:"required"
-	Content   *string    `json:"content" form:"content"`                         // title:"content";type:"input";validate:"min=1,max=4294967295"
-	Creator   *string    `json:"creator" form:"creator"`                         // title:"creator";type:"input";validate:"min=1,max=4294967295"
+	Title     *string    `json:"title" form:"title"`                             // title:"title";validate:"min=1,max=50"
+	Content   *string    `json:"content" form:"content"`                         // title:"content";validate:"min=1,max=50"
+	Creator   *string    `json:"creator" form:"creator"`                         // title:"creator";validate:"min=1,max=100"
 
 }
 
@@ -38,9 +38,9 @@ type ListNewsResponse struct {
 
 // 查询News news
 type ListNewsRequest struct {
-	Title   *string `json:"title"  form:"title"`     // title:"标题";type:"input";validate:"required"
-	Content *string `json:"content"  form:"content"` // title:"content";type:"input";validate:"min=1,max=4294967295"
-	Creator *string `json:"creator"  form:"creator"` // title:"creator";type:"input";validate:"min=1,max=4294967295"
+	Title   *string `json:"title"  form:"title"`     // title:"title";validate:"min=1,max=50"
+	Content *string `json:"content"  form:"content"` // title:"content";validate:"min=1,max=50"
+	Creator *string `json:"creator"  form:"creator"` // title:"creator";validate:"min=1,max=100"
 
 	PageNum  *uint `json:"pageNum" form:"pageNum"`   //第几页
 	PageSize *uint `json:"pageSize" form:"pageSize"` //每页多少条
@@ -52,9 +52,9 @@ type GetNewsResponse struct {
 
 // 创建News news
 type CreateNewsRequest struct {
-	Title   *string `json:"title" form:"title" validate:"required"`                 // title:"标题";type:"input";validate:"required"
-	Content *string `json:"content" form:"content" validate:"min=1,max=4294967295"` // title:"content";type:"input";validate:"min=1,max=4294967295"
-	Creator *string `json:"creator" form:"creator" validate:"min=1,max=4294967295"` // title:"creator";type:"input";validate:"min=1,max=4294967295"
+	Title   *string `json:"title" form:"title" validate:"min=1,max=50"`      // title:"title";validate:"min=1,max=50"
+	Content *string `json:"content" form:"content" validate:"min=1,max=50"`  // title:"content";validate:"min=1,max=50"
+	Creator *string `json:"creator" form:"creator" validate:"min=1,max=100"` // title:"creator";validate:"min=1,max=100"
 
 }
 
@@ -65,9 +65,9 @@ type CreateNewsResponse struct {
 // 更新News news
 type UpdateNewsRequest struct {
 	ID      *int    `json:""`
-	Title   *string `json:"title" validate:"required" form:"title"`                 // title:"标题";type:"input";validate:"required"
-	Content *string `json:"content" validate:"min=1,max=4294967295" form:"content"` // title:"content";type:"input";validate:"min=1,max=4294967295"
-	Creator *string `json:"creator" validate:"min=1,max=4294967295" form:"creator"` // title:"creator";type:"input";validate:"min=1,max=4294967295"
+	Title   *string `json:"title" validate:"min=1,max=50" form:"title"`      // title:"title";validate:"min=1,max=50"
+	Content *string `json:"content" validate:"min=1,max=50" form:"content"`  // title:"content";validate:"min=1,max=50"
+	Creator *string `json:"creator" validate:"min=1,max=100" form:"creator"` // title:"creator";validate:"min=1,max=100"
 
 }
 

@@ -13,3 +13,7 @@ type Role struct {
 	Users   []*User `gorm:"many2many:user_roles" json:"users"`
 	Menus   []*Menu `gorm:"many2many:role_menus;" json:"menus"` // 角色菜单多对多关系
 }
+
+func (r Role) TableName() string {
+	return "roles"
+}

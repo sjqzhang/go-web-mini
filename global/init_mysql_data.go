@@ -163,6 +163,18 @@ func InitData() {
 			Roles:     roles[:2],
 			Creator:   "系统",
 		},
+		{
+			Model:     gorm.Model{ID: 8},
+			Name:      "TableMeta",
+			Title:     "元数据管理",
+			Icon:      &documentationStr,
+			Path:      "table_metadata",
+			Component: "/system/table_metadata/index",
+			Sort:      22,
+			ParentId:  &uint1,
+			Roles:     roles[:2],
+			Creator:   "系统",
+		},
 	}
 	for _, menu := range menus {
 		err := DB.First(&menu, menu.ID).Error
@@ -461,6 +473,41 @@ func InitData() {
 			Path:     "/log/operation/delete/batch",
 			Category: "log",
 			Desc:     "批量删除操作日志",
+			Creator:  "系统",
+		},
+		{
+			Method:   "PUT",
+			Path:     "/tableMetadata/:id",
+			Category: "tablemetadata",
+			Desc:     "更新table_metadata",
+			Creator:  "系统",
+		},
+		{
+			Method:   "GET",
+			Path:     "/tableMetadata",
+			Category: "tablemetadata",
+			Desc:     "查询table_metadata",
+			Creator:  "系统",
+		},
+		{
+			Method:   "GET",
+			Path:     "/tableMetadata/:id",
+			Category: "tablemetadata",
+			Desc:     "查询单个table_metadata",
+			Creator:  "系统",
+		},
+		{
+			Method:   "DELETE",
+			Path:     "/tableMetadata",
+			Category: "tablemetadata",
+			Desc:     "批量删除table_metadata",
+			Creator:  "系统",
+		},
+		{
+			Method:   "POST",
+			Path:     "/tableMetadata",
+			Category: "tablemetadata",
+			Desc:     "创建table_metadata",
 			Creator:  "系统",
 		},
 	}

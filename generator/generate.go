@@ -13,6 +13,7 @@ import (
 )
 
 type FieldResult struct {
+	TableName            string
 	ColumnName           string
 	ColumnType           string
 	CamelField           string
@@ -31,6 +32,9 @@ type FieldResult struct {
 	Validate             string
 	Title                string
 	Type                 string
+	IsUnique             bool
+	IndexName            string
+	NonUnique            int
 }
 
 type TableResult struct {
@@ -130,6 +134,7 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 
 	// 查询属性信息
 	fieldQuery, _ := con.Raw("select "+
+		"TABLE_NAME as TableName ,"+
 		"COLUMN_NAME as ColumnName ,"+
 		"COLUMN_TYPE AS ColumnType,"+
 		"COLUMN_DEFAULT as ColumnDefault ,"+
@@ -142,6 +147,24 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 		"information_schema.columns "+
 		"where "+
 		"table_schema = ? and table_name = ?;", database, tableName).Rows()
+	// 查询索引信息
+	indexQuery, _ := con.Raw("select "+
+		"TABLE_NAME as TableName,"+
+		"INDEX_NAME as IndexName,"+
+		"COLUMN_NAME as ColumnName,"+
+		"NON_UNIQUE as NonUnique "+
+		"from "+
+		"information_schema.statistics "+
+		"where "+
+		"table_schema = ? and table_name = ?;", database, tableName).Rows()
+
+	defer func(indexQuery *sql.Rows) {
+		err := indexQuery.Close()
+		if err != nil {
+			fmt.Println(err)
+			panic("failed to close")
+		}
+	}(indexQuery)
 
 	defer func(fieldQuery *sql.Rows) {
 		err := fieldQuery.Close()
@@ -155,6 +178,11 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 	tables := convertTable(con, tableQuery)
 	// 表中的属性信息转换到切片中
 	fields := convertField(con, fieldQuery)
+	// 索引信息转换到切片中
+	indexes := convertIndex(con, indexQuery)
+
+	// 将索引信息合并到属性中
+	mergeIndex(fields, indexes)
 
 	// 校验表是否存在
 	if len(tables) == 0 {
@@ -183,6 +211,48 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 	createFiles(object, tableName)
 }
 
+func mergeIndex(fields []FieldResult, indexes []IndexResult) {
+	for i, field := range fields {
+		for _, index := range indexes {
+			if field.ColumnName == index.ColumnName && field.TableName == index.TableName {
+				fields[i].IndexName = index.IndexName
+				fields[i].NonUnique = index.NonUnique
+				if index.NonUnique == 0 {
+					fields[i].IsUnique = true
+					fields[i].IndexName = "uniqueIndex:" + index.IndexName + ";"
+				} else if index.IndexName != "" {
+					fields[i].IsUnique = false
+					fields[i].IndexName = "index:" + index.IndexName + ";"
+				}
+
+			}
+		}
+	}
+
+}
+
+type IndexResult struct {
+	TableName  string
+	IndexName  string
+	ColumnName string
+	NonUnique  int
+}
+
+func convertIndex(con *gorm.DB, query *sql.Rows) []IndexResult {
+	var indexes []IndexResult
+	for query.Next() {
+		var index IndexResult
+		err := query.Scan(&index.TableName, &index.IndexName, &index.ColumnName, &index.NonUnique)
+		if err != nil {
+			fmt.Println(err)
+			panic("failed to scan")
+		}
+		indexes = append(indexes, index)
+	}
+	return indexes
+
+}
+
 // 检查指定的filed 是否在指定的fields中
 func checkField(field string) bool {
 	fields := []string{"id", "created_at", "updated_at", "deleted_at"}
@@ -192,6 +262,10 @@ func checkField(field string) bool {
 		}
 	}
 	return true
+}
+
+func notEmpty(str string) bool {
+	return str != ""
 }
 
 // 创建文件
@@ -302,7 +376,7 @@ func createGoFile(obj CommonObject, tableName string, filename string, path stri
 	t := template.New("template")
 
 	t = t.Funcs(template.FuncMap{"checkField": checkField, "isNumber": isNumber,
-		"isString": isString, "isInteger": isInteger, "isDate": isDate, "isTime": isTime})
+		"isString": isString, "isInteger": isInteger, "isDate": isDate, "isTime": isTime, "notEmpty": notEmpty})
 
 	// 校验是否存在po模板
 	t = template.Must(t.ParseGlob(templatePath))

@@ -14,3 +14,7 @@ type User struct {
 	Creator      string  `gorm:"type:varchar(20);" json:"creator"`
 	Roles        []*Role `gorm:"many2many:user_roles" json:"roles"`
 }
+
+func (u User) TableName() string {
+	return "users"
+}

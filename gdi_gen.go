@@ -14,7 +14,7 @@ import (
 	p14 "go-web-mini/vo"
 )
 
-//go:embed generator global model repository service controller docs middleware config routes util vo dto response
+//go:embed vo docs service util global middleware repository dto response model routes config controller generator
 var gdiEmbedFiles embed.FS
 
 func init() {
@@ -41,6 +41,7 @@ func init() {
 	gdi.PlaceHolder((*p5.TableResult)(nil))
 	gdi.PlaceHolder((*p5.CommonObject)(nil))
 	gdi.PlaceHolder((*p5.Config)(nil))
+	gdi.PlaceHolder((*p5.IndexResult)(nil))
 	gdi.PlaceHolder((*p6.CustomLogger)(nil))
 	gdi.PlaceHolder((*p8.Api)(nil))
 	gdi.PlaceHolder((*p8.RoleCasbin)(nil))

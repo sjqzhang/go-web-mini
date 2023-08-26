@@ -102,7 +102,8 @@ ORDER BY
 // 利用上面的sql语句，将数据库中的表结构信息导入到表中，忽略已经存在的数据
 func (r *TableMetadataRepository) Import(ctx context.Context) error {
 	db := global.GetDB(ctx)
-	sql := `truncate table table_metadata;INSERT IGNORE INTO table_metadata (table_alias, column_name, column_comment,column_type, is_nullable, data_type, character_max_length)
+	db.Exec("truncate table table_metadata")
+	sql := `INSERT IGNORE INTO table_metadata (table_alias, column_name, column_comment,column_type, is_nullable, data_type, character_max_length)
 SELECT
 
     TABLE_NAME AS 'table_alias',

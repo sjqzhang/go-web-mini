@@ -12,7 +12,6 @@ import (
 // CORS跨域中间件
 func BinderMiddleware(method reflect.Value) gin.HandlerFunc {
 
-	fmt.Println("%v", method)
 	return func(c *gin.Context) {
 
 		if method.Type().NumIn() != 2 {
