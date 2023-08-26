@@ -19,7 +19,9 @@ func TestGenerate(t *testing.T) {
 
 
 	tables:=getAllTableNames(nil,"dms")
+	
 	conf.Tables=tables
+
 
 	DoGenerate()
 }

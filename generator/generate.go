@@ -68,9 +68,8 @@ type Config struct {
 var cfg Config
 var db *gorm.DB
 
-
 func InitConfig(conf Config) {
-	db,_=connect(conf.DSN)
+	db, _ = connect(conf.DSN)
 	cfg = conf
 }
 
@@ -217,15 +216,12 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 // get All table names
 func getAllTableNames(con *gorm.DB, database string) []string {
 	var tableNames []string
-	if con==nil{
-		con=db
+	if con == nil {
+		con = db
 	}
 	con.Raw("select TABLE_NAME from information_schema.TABLES where table_schema = ?;", database).Pluck("TABLE_NAME", &tableNames)
 	return tableNames
 }
-
-
-
 
 func mergeIndex(fields []FieldResult, indexes []IndexResult) {
 	for i, field := range fields {
@@ -271,7 +267,7 @@ func convertIndex(con *gorm.DB, query *sql.Rows) []IndexResult {
 
 // 检查指定的filed 是否在指定的fields中
 func checkField(field string) bool {
-	fields := []string{"id", "created_at", "updated_at", "deleted_at"}
+	fields := []string{"id", "created_at", "updated_at", "deleted_at", "ctime", "mtime", "dtime", "is_deleted"}
 	for _, v := range fields {
 		if v == field {
 			return false
