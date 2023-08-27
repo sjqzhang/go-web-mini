@@ -6,6 +6,8 @@ import (
 
 )
 
+var _=time.Now()
+
 
 // {{.Table.TableName}} {{.Table.TableComment}}
 type {{.Table.TableName}} struct {

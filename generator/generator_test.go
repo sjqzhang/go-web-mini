@@ -4,8 +4,6 @@ import "testing"
 
 func TestGenerate(t *testing.T) {
 
-
-
 	conf := Config{
 		DSN:         "root:root@tcp(127.0.0.1)/dms?tls=false",
 		ModuleName:  "go-web-mini",
@@ -17,11 +15,16 @@ func TestGenerate(t *testing.T) {
 	}
 	InitConfig(conf)
 
+	var tmpTables []string
+	tables := getAllTableNames(nil, "dms")
+	for _, table := range tables {
+		if table == "users" || table == "roles" || table == "user_roles" || table == "role_permissions" || table == "user" {
+			continue
+		}
+		tmpTables = append(tmpTables, table)
+	}
 
-	tables:=getAllTableNames(nil,"dms")
-	
-	conf.Tables=tables
+	conf.Tables = tmpTables
 
-
-	DoGenerate()
+	DoGenerate(&conf)
 }

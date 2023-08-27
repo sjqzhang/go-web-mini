@@ -81,8 +81,11 @@ func generate(url string, tableNames []string, moduleName string) {
 	generateCode(db, database, tableNames, moduleName)
 }
 
-func DoGenerate() {
+func DoGenerate(c *Config) {
 
+	if c != nil {
+		cfg = *c
+	}
 	if cfg.DSN == "" {
 		panic(fmt.Sprintf("please InitConfig First!"))
 	}
@@ -219,7 +222,19 @@ func getAllTableNames(con *gorm.DB, database string) []string {
 	if con == nil {
 		con = db
 	}
-	con.Raw("select TABLE_NAME from information_schema.TABLES where table_schema = ?;", database).Pluck("TABLE_NAME", &tableNames)
+	tableQuery, _ := con.Raw("select TABLE_NAME from information_schema.TABLES where table_schema = ?;", database).Rows()
+	defer func(tableQuery *sql.Rows) {
+		err := tableQuery.Close()
+		if err != nil {
+			fmt.Println(err)
+			panic("failed to close")
+		}
+	}(tableQuery)
+	for tableQuery.Next() {
+		var tableName string
+		tableQuery.Scan(&tableName)
+		tableNames = append(tableNames, tableName)
+	}
 	return tableNames
 }
 
