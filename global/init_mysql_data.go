@@ -177,13 +177,13 @@ func InitData() {
 		},
 
 		{
-			Model:     gorm.Model{ID: 8},
+			Model:     gorm.Model{ID: 9},
 			Name:      "Business",
 			Title:     "业务表管理",
 			Icon:      &documentationStr,
 			Path:      "/business",
 			Component: "Layout",
-			Sort:      22,
+			Sort:      23,
 			ParentId:  &uint0,
 			Roles:     roles[:2],
 			Creator:   "系统",
