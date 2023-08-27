@@ -18,7 +18,8 @@ func TestGenerate(t *testing.T) {
 	var tmpTables []string
 	tables := getAllTableNames(nil, "dms")
 	for _, table := range tables {
-		if table == "users" || table == "roles" || table == "user_roles" || table == "role_permissions" || table == "user" {
+		if table == "users" || table == "roles" || table == "user_roles" || table == "role_permissions" || table == "user"||
+			table=="user_tab"{
 			continue
 		}
 		tmpTables = append(tmpTables, table)
