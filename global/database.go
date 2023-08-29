@@ -73,9 +73,10 @@ func (cl *CustomLogger) Trace(ctx context.Context, begin time.Time, fc func() (s
 			ctx.(*gin.Context).Set("SQL", []string{sql})
 		}
 	}
-	if strings.Contains(sql, "INSERT") || strings.Contains(sql, "UPDATE") || strings.Contains(sql, "DELETE") {
-		dataLogger.Infof("[TRACE] [Request ID: %v] [%.3fms] %v[SQL]: %v [%v]\n", requestID, float64(elapsed.Microseconds())/1000, sql, rows, err)
-	}
+	//if strings.Contains(sql, "INSERT") || strings.Contains(sql, "UPDATE") || strings.Contains(sql, "DELETE") {
+	//dataLogger.Infof("[TRACE] [Request ID: %v] [%.3fms] %v[SQL]: %v [%v]\n", requestID, float64(elapsed.Microseconds())/1000, sql, rows, err)
+	//}
+	dataLogger.Infof("[TRACE] [Request ID: %v] [%.3fms] %v[SQL]: %v [%v]\n", requestID, float64(elapsed.Microseconds())/1000, sql, rows, err)
 
 }
 
@@ -172,10 +173,5 @@ func dbAutoMigrate() {
 				DB.AutoMigrate(m)
 			}
 		}
-
-		// 自动迁移表结构
-		//DB.AutoMigrate(m)
-
-		//fmt.Println(DB.AutoMigrate(model).Error())
 	}
 }
