@@ -161,7 +161,7 @@ func InitRoutes() *gin.Engine {
 			}
 
 			if o.Method(i).Type().NumIn() == 2 {
-				if o.Method(i).Type().In(0).String() != "*gin.Context" {
+				if o.Method(i).Type().In(0).String() != "*gin.Context" && o.Method(i).Type().In(0).String() != "context.Context" {
 					continue
 				}
 			}
