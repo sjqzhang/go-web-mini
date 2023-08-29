@@ -3,7 +3,6 @@
 import (
 
     "context"
-    "github.com/gin-gonic/gin"
     "github.com/jinzhu/copier"
 
     "{{.ModuleName}}/model"
@@ -48,7 +47,7 @@ func (s *{{.Table.TableName}}Service) GetById(ctx context.Context, req *vo.Get{{
     return &resp, err
 }
 
-func (s *{{.Table.TableName}}Service) Create(ctx *gin.Context, req *vo.Create{{.Table.TableName}}Request) (*vo.Create{{.Table.TableName}}Response, error) {
+func (s *{{.Table.TableName}}Service) Create(ctx context.Context, req *vo.Create{{.Table.TableName}}Request) (*vo.Create{{.Table.TableName}}Response, error) {
 	var obj model.{{.Table.TableName}}
 	err := copier.Copy(&obj, req)
 	if err != nil {
@@ -64,7 +63,7 @@ func (s *{{.Table.TableName}}Service) Create(ctx *gin.Context, req *vo.Create{{.
 }
 
 
-func (s *{{.Table.TableName}}Service) Update(ctx *gin.Context, req *vo.Update{{.Table.TableName}}Request) (*vo.Update{{.Table.TableName}}Response, error) {
+func (s *{{.Table.TableName}}Service) Update(ctx context.Context, req *vo.Update{{.Table.TableName}}Request) (*vo.Update{{.Table.TableName}}Response, error) {
 	//var obj model.{{.Table.TableName}}
     obj,err:=s.{{.Table.Uri}}Repository.GetById(ctx, int64(*req.ID))
 	if err != nil {
@@ -81,7 +80,7 @@ func (s *{{.Table.TableName}}Service) Update(ctx *gin.Context, req *vo.Update{{.
 }
 
 
-func (s *{{.Table.TableName}}Service) Delete(ctx *gin.Context, req *vo.Delete{{.Table.TableName}}Request) (int64, error) {
+func (s *{{.Table.TableName}}Service) Delete(ctx context.Context, req *vo.Delete{{.Table.TableName}}Request) (int64, error) {
 	return s.{{.Table.Uri}}Repository.Delete(ctx, req.Ids)
 }
 

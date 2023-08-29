@@ -2,7 +2,6 @@
 
 import (
 	"context"
-    "github.com/gin-gonic/gin"
     "{{.ModuleName}}/vo"
     "{{.ModuleName}}/service"
 
