@@ -26,30 +26,30 @@ func InitRoutes() *gin.Engine {
 
 	restInfo, _ := gdi.GetRestInfo("controller")
 
-	var unit9 uint=9
+	var unit9 uint = 9
 	for _, info := range restInfo {
 
 		// 通过restInfo生成系统后台菜单
 
-		if info.Description==""{
+		if info.Description == "" {
 			continue
 		}
-		name:= strings.ReplaceAll(info.Controller, "Controller", "")
+		name := strings.ReplaceAll(info.Controller, "Controller", "")
 		var menu model.Menu
-		component:= fmt.Sprintf("/business/%v/index",util.ToUnderlineCase(name))
-		err:=global.DB.First(&menu, "component = ?", component).Error
-		if err!=nil && err==gorm.ErrRecordNotFound{
-			menu:=model.Menu{
-			//Model:     gorm.Model{ID: 9},
-				Name:      "Business",
-				Title:     info.Description,
+		component := fmt.Sprintf("/business/%v/index", util.ToUnderlineCase(name))
+		err := global.DB.First(&menu, "component = ?", component).Error
+		if err != nil && err == gorm.ErrRecordNotFound {
+			menu := model.Menu{
+				//Model:     gorm.Model{ID: 9},
+				Name:  "Business",
+				Title: info.Description,
 				//Icon:     "table",
-				Path: strings.ToLower(name),
+				Path:      strings.ToLower(name),
 				Component: component,
 				Sort:      23,
 				ParentId:  &unit9,
 				//Roles:     roles[:2],
-				Creator:   "系统",
+				Creator: "系统",
 			}
 			global.DB.Create(&menu)
 		}
