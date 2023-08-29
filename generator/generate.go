@@ -120,7 +120,7 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 	defer wg.Done()
 
 	// 查询表信息
-	tableQuery, _ := con.Raw("select "+
+	tableQuery, err := con.Raw("select "+
 		"TABLE_NAME as TableName,"+
 		"TABLE_COMMENT as TableComment ,"+
 		"'' as TableNameOrigin "+
@@ -129,6 +129,9 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 		"where "+
 		"table_schema = ? and table_name = ?;", database, tableName).Rows()
 
+	if err != nil {
+		panic(err)
+	}
 	defer func(tableQuery *sql.Rows) {
 		err := tableQuery.Close()
 		if err != nil {
@@ -138,7 +141,7 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 	}(tableQuery)
 
 	// 查询属性信息
-	fieldQuery, _ := con.Raw("select "+
+	fieldQuery, err := con.Raw("select "+
 		"TABLE_NAME as TableName ,"+
 		"COLUMN_NAME as ColumnName ,"+
 		"COLUMN_TYPE AS ColumnType,"+
@@ -152,8 +155,11 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 		"information_schema.columns "+
 		"where "+
 		"table_schema = ? and table_name = ?;", database, tableName).Rows()
+	if err != nil {
+		panic(err)
+	}
 	// 查询索引信息
-	indexQuery, _ := con.Raw("select "+
+	indexQuery, err := con.Raw("select "+
 		"TABLE_NAME as TableName,"+
 		"INDEX_NAME as IndexName,"+
 		"COLUMN_NAME as ColumnName,"+
@@ -162,6 +168,9 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 		"information_schema.statistics "+
 		"where "+
 		"table_schema = ? and table_name = ?;", database, tableName).Rows()
+	if err != nil {
+		panic(err)
+	}
 
 	defer func(indexQuery *sql.Rows) {
 		err := indexQuery.Close()
@@ -172,10 +181,12 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 	}(indexQuery)
 
 	defer func(fieldQuery *sql.Rows) {
-		err := fieldQuery.Close()
-		if err != nil {
-			fmt.Println(err)
-			panic("failed to close")
+		if fieldQuery != nil {
+			err := fieldQuery.Close()
+			if err != nil {
+				fmt.Println(err)
+				panic("failed to close")
+			}
 		}
 	}(fieldQuery)
 

@@ -24,7 +24,7 @@ type {{.Table.TableName}}Controller struct {
 //@success 200 {object} vo.List{{.Table.TableName}}Response
 //@middleware
 // @router /{{.Table.Uri}} [get]
-func (c *{{.Table.TableName}}Controller) List(ctx *gin.Context, req *vo.List{{.Table.TableName}}Request) (interface{}, error) {
+func (c *{{.Table.TableName}}Controller) List(ctx *gin.Context, req *vo.List{{.Table.TableName}}Request) (*vo.List{{.Table.TableName}}Response, error) {
 	return c.{{.Table.Uri}}Service.List(ctx, req)
 }
 
@@ -38,7 +38,7 @@ func (c *{{.Table.TableName}}Controller) List(ctx *gin.Context, req *vo.List{{.T
 //@success 200 {object} vo.Get{{.Table.TableName}}Response
 //@middleware
 // @router /{{.Table.Uri}}/:id [get]
-func (c *{{.Table.TableName}}Controller) GetById(ctx *gin.Context, req *vo.Get{{.Table.TableName}}Request) (interface{}, error) {
+func (c *{{.Table.TableName}}Controller) GetById(ctx *gin.Context, req *vo.Get{{.Table.TableName}}Request) (*vo.{{.Table.TableName}}Response, error) {
 	return c.{{.Table.Uri}}Service.GetById(ctx, req)
 }
 
@@ -52,7 +52,7 @@ func (c *{{.Table.TableName}}Controller) GetById(ctx *gin.Context, req *vo.Get{{
 //@success 200 {object} vo.Create{{.Table.TableName}}Response
 //@middleware
 // @router /{{.Table.Uri}} [post]
-func (c *{{.Table.TableName}}Controller) Create(ctx *gin.Context, req *vo.Create{{.Table.TableName}}Request) (interface{}, error) {
+func (c *{{.Table.TableName}}Controller) Create(ctx *gin.Context, req *vo.Create{{.Table.TableName}}Request) (*vo.Create{{.Table.TableName}}Response, error) {
 	return c.{{.Table.Uri}}Service.Create(ctx, req)
 }
 
@@ -66,7 +66,7 @@ func (c *{{.Table.TableName}}Controller) Create(ctx *gin.Context, req *vo.Create
 //@success 200  {object} vo.Delete{{.Table.TableName}}Response
 //@middleware
 // @router /{{.Table.Uri}} [delete]
-func (c *{{.Table.TableName}}Controller) DeleteBatch(ctx *gin.Context, req *vo.Delete{{.Table.TableName}}Request) (interface{}, error) {
+func (c *{{.Table.TableName}}Controller) DeleteBatch(ctx *gin.Context, req *vo.Delete{{.Table.TableName}}Request) (int64, error) {
 	return c.{{.Table.Uri}}Service.Delete(ctx, req)
 }
 
@@ -80,7 +80,7 @@ func (c *{{.Table.TableName}}Controller) DeleteBatch(ctx *gin.Context, req *vo.D
 //@success 200 {object} vo.Update{{.Table.TableName}}Response
 //@middleware
 // @router /{{.Table.Uri}}/:id [put]
-func (c *{{.Table.TableName}}Controller) Update(ctx *gin.Context, req *vo.Update{{.Table.TableName}}Request) (interface{}, error) {
+func (c *{{.Table.TableName}}Controller) Update(ctx *gin.Context, req *vo.Update{{.Table.TableName}}Request) (*vo.Update{{.Table.TableName}}Response, error) {
 	return c.{{.Table.Uri}}Service.Update(ctx, req)
 }
 
