@@ -199,7 +199,7 @@ func (mc MenuController) BatchDeleteMenuByIds(c *gin.Context) {
 
 //@tags menu
 // 根据用户ID获取用户的可访问菜单列表
-//@router /access/list/user/:userId [get]
+//@router /menu/access/list/:userId [get]
 func (mc MenuController) GetUserMenusByUserId(c *gin.Context) {
 	// 获取路径中的userId
 	userId, _ := strconv.Atoi(c.Param("userId"))

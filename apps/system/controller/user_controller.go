@@ -137,7 +137,7 @@ func (uc UserController) ChangePwd(c *gin.Context) {
 
 //@tags user
 // 创建用户
-//@router /user [post]
+//@router /user/create [post]
 func (uc UserController) CreateUser(c *gin.Context) {
 	var req vo.CreateUserRequest
 	// 参数绑定
