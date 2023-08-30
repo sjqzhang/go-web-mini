@@ -34,8 +34,8 @@ type List{{.Table.TableName}}Response struct {
 
 // 查询{{.Table.TableName}} {{.Table.TableComment}}
 type List{{.Table.TableName}}Request struct {
-    {{range .Fields}}{{if  checkField .ColumnName}}{{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }}  form:"{{.ColumnName}}"` {{.ColumnComment}}
-    {{end}}{{end}}
+    {{range .Fields}}{{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }}  form:"{{.ColumnName}}"` {{.ColumnComment}}
+    {{end}}
      PageNum  *uint   `json:"pageNum" form:"pageNum"` //第几页
      PageSize *uint   `json:"pageSize" form:"pageSize"` //每页多少条
 }

@@ -170,7 +170,10 @@ func dbAutoMigrate() {
 			t := fmt.Sprintf("%T", m)
 			fmt.Println("自动注册model:", t)
 			if strings.HasPrefix(t, "*model.") {
-				DB.AutoMigrate(m)
+				err:=DB.AutoMigrate(m)
+				if err!=nil{
+					Log.Panicf("自动注册model失败: %v", err)
+				}
 			}
 		}
 	}

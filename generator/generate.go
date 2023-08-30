@@ -52,6 +52,7 @@ type CommonObject struct {
 	Fields     []FieldResult
 	Table      TableResult
 	ModuleName string
+	AppName    string
 }
 
 type Config struct {
@@ -63,6 +64,7 @@ type Config struct {
 	TablePrefix string
 	TableSuffix string
 	IsAuth      bool
+	AppName     string
 }
 
 var cfg Config
@@ -101,7 +103,7 @@ func DoGenerate(c *Config) {
 func generateCode(con *gorm.DB, database string, tableNames []string, moduleName string) {
 
 	// 创建所需的文件夹
-	createDirs("..")
+	//createDirs("..")
 
 	// 循环生成
 	for _, tableName := range tableNames {
@@ -222,6 +224,7 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 	object.Table = tableInfo
 	object.Fields = fields
 	object.ModuleName = moduleName
+	object.AppName= cfg.AppName
 
 	// 创建文件
 	createFiles(object, tableName)
@@ -293,7 +296,8 @@ func convertIndex(con *gorm.DB, query *sql.Rows) []IndexResult {
 
 // 检查指定的filed 是否在指定的fields中
 func checkField(field string) bool {
-	fields := []string{"id", "created_at", "updated_at", "deleted_at", "ctime", "mtime", "dtime", "is_deleted"}
+	fields := []string{"id", "created_at", "updated_at", "deleted_at", "ctime", "mtime", "dtime", "is_deleted",
+		"create_time","update_time", "delete_time", "is_delete"}
 	for _, v := range fields {
 		if v == field {
 			return false
@@ -328,7 +332,7 @@ func createFiles(obj CommonObject, tableName string) {
 	//createGoFile(obj, tableName, "Router.go", "./router", "./template/router.tpl", "router")
 
 	// 创建service
-	createGoFile(obj, tableName, fmt.Sprintf("%v_service.go", tableName), "../service", "./template/service.tpl", "service")
+	createGoFile(obj, tableName, fmt.Sprintf("%v_service.go", tableName), fmt.Sprintf("%v/service", cfg.ServerRoot), "./template/service.tpl", "service")
 
 	// 创建service
 	createGoFile(obj, tableName, "index.vue", fmt.Sprintf("%v/src/views/business/%v", cfg.WebRoot, tableName), "./template/index.vue", "index.vue")
@@ -341,16 +345,16 @@ func createFiles(obj CommonObject, tableName string) {
 func createDirs(modulePath string) {
 
 	// 创建 po 目录
-	createDir(modulePath, "/model")
-
-	// 创建 vo 目录
-	createDir(modulePath, "/vo")
-
-	// 创建 dto 目录
-	createDir(modulePath, "/dto")
-
-	// 创建 controller 目录
-	createDir(modulePath, "/controller")
+	//createDir(modulePath, "/model")
+	//
+	//// 创建 vo 目录
+	//createDir(modulePath, "/vo")
+	//
+	//// 创建 dto 目录
+	//createDir(modulePath, "/dto")
+	//
+	//// 创建 controller 目录
+	//createDir(modulePath, "/controller")
 	//
 	//// 创建 service 目录
 	//createDir(modulePath, "/service")
@@ -523,7 +527,11 @@ func convertField(con *gorm.DB, query *sql.Rows) []FieldResult {
 			}
 		}
 		if strings.TrimSpace(str.Title) == "" {
-			str.Title = str.ColumnName
+			if strings.TrimSpace(str.ColumnComment) != "" {
+				str.Title = str.ColumnComment
+			} else {
+				str.Title = str.ColumnName
+			}
 		}
 
 		str.ColumnCommentForView = str.Title

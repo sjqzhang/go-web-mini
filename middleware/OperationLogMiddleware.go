@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
+	"go-web-mini/apps/system/model"
 	"go-web-mini/config"
-	"go-web-mini/model"
 	"strings"
 	"time"
 )
