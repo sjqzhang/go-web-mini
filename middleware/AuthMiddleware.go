@@ -5,13 +5,13 @@ import (
 	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/gin-gonic/gin"
 	"github.com/sjqzhang/gdi"
+	"go-web-mini/apps/system/model"
+	"go-web-mini/apps/system/repository"
+	"go-web-mini/apps/system/vo"
 	"go-web-mini/config"
 	"go-web-mini/global"
-	"go-web-mini/model"
-	"go-web-mini/repository"
 	"go-web-mini/response"
 	"go-web-mini/util"
-	"go-web-mini/vo"
 	"time"
 )
 

@@ -6,10 +6,11 @@ func TestGenerate(t *testing.T) {
 
 	conf := Config{
 		DSN:         "root:root@tcp(127.0.0.1)/go_web_mini?tls=false",
+		AppName:     "cms",
 		ModuleName:  "go-web-mini",
-		Tables:      []string{"news"},
+		Tables:      []string{"article"},
 		WebRoot:     "/Users/junqiang.zhang/repo/js/go-web-mini-ui",
-		ServerRoot:  "/Users/junqiang.zhang/repo/go/go-web-mini",
+		ServerRoot:  "/Users/junqiang.zhang/repo/go/go-web-mini/apps/cms",
 		TablePrefix: "",
 		TableSuffix: "_tab",
 	}

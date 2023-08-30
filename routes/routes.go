@@ -3,7 +3,7 @@ package routes
 import (
 	"fmt"
 	"github.com/sjqzhang/gdi"
-	"go-web-mini/model"
+	"go-web-mini/apps/system/model"
 	"go-web-mini/util"
 	"gorm.io/gorm"
 	"strings"
@@ -22,9 +22,9 @@ import (
 // 初始化
 func InitRoutes() *gin.Engine {
 
-	routerMap, _ := gdi.GetRouterInfo("controller")
+	routerMap, _ := gdi.GetRouterInfoByPatten(".*controller")
 
-	restInfo, _ := gdi.GetRestInfo("controller")
+	restInfo, _ := gdi.GetRestInfoByPatten(".*controller")
 
 	var unit9 uint = 9
 	for _, info := range restInfo {
@@ -136,6 +136,8 @@ func InitRoutes() *gin.Engine {
 
 	for _, o := range ctrls { //自动绑定路由
 		ctrlName := o.Elem().Type().Name()
+		packName:=o.Elem().Type().PkgPath()
+		packName=strings.Join(strings.Split(packName,"/")[1:],"/")
 
 		for i := 0; i < o.NumMethod(); i++ {
 			if o.NumMethod() == 0 {
@@ -147,7 +149,7 @@ func InitRoutes() *gin.Engine {
 			var v gdi.RouterInfo
 			var ok bool
 			methodName := o.Type().Method(i).Name
-			key := fmt.Sprintf("%v.%v", ctrlName, methodName)
+			key := fmt.Sprintf("%v.%v.%v",packName, ctrlName, methodName)
 			if v, ok = routerMap[key]; !ok {
 				v.Method = "POST"
 				v.Uri = fmt.Sprintf("/%v/%v", ctrlName, methodName)

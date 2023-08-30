@@ -5,9 +5,9 @@ import (
     "context"
     "github.com/jinzhu/copier"
 
-    "{{.ModuleName}}/model"
-    "{{.ModuleName}}/repository"
-    "go-web-mini/vo"
+    "{{.ModuleName}}/apps/{{.AppName}}/model"
+    "{{.ModuleName}}/apps/{{.AppName}}/repository"
+    "{{.ModuleName}}/apps/{{.AppName}}/vo"
 )
 
 /*

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/jinzhu/copier"
 	"{{.ModuleName}}/global"
-	"{{.ModuleName}}/model"
+	"{{.ModuleName}}/apps/{{.AppName}}/model"
 	"time"
 )
 

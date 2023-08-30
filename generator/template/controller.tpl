@@ -2,8 +2,8 @@
 
 import (
 	"context"
-    "{{.ModuleName}}/vo"
-    "{{.ModuleName}}/service"
+    "{{.ModuleName}}/apps/{{.AppName}}/vo"
+    "{{.ModuleName}}/apps/{{.AppName}}/service"
 
 )
 

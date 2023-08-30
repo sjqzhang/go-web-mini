@@ -3,9 +3,9 @@ package middleware
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/sjqzhang/gdi"
+	"go-web-mini/apps/system/repository"
 	"go-web-mini/config"
 	"go-web-mini/global"
-	"go-web-mini/repository"
 	"go-web-mini/response"
 	"strings"
 	"sync"
