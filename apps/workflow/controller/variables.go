@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-//@Description 变量信息
+//@description 变量信息
 //@router /bpmn/api
 type VariablesController struct{
 

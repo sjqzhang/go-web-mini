@@ -9,23 +9,6 @@ import (
 )
 
 
-//api.POST("/instance", CreateInstance)
-//api.GET("/instance/:instance_id", GetInstance)
-//api.GET("/instance/:instance_id/variables", GetInstanceVariables)
-//api.POST("/instance/:instance_id/variables", SetInstanceVariables)
-//api.GET("/instance/:instance_id/commands", GetAvailableCommands)
-//api.POST("/instance/available/commands/batch", GetInsListAvailableCommands)
-//api.POST("/instance/:instance_id/command", CommandExecution)
-//api.POST("/instance/command/optimize/run", CommandExecutionOptimize)
-//api.POST("/instance/command/batch/run", CommandExecutionBatch)
-//api.GET("/instance/:instance_id/transitions", GetInstanceTransitions)
-//api.POST("/instance/command", GetInstanceCommand)
-//api.POST("/instance/tasks", GetInstanceTasks)
-//api.POST("/instance/schemacode", GetInstanceSchemaCode)
-//api.POST("/instance/schemacode/set", SetInstanceSchemaCode)
-
-//引用上面的注释，可以看到这里的路由和上面的注释是一一对应的，这里的路由就是对应的上面的注释的路由
-
 //@description 创建一个流程实例
 //@router /apibpmn
 type InstanceController struct{
@@ -207,7 +190,7 @@ func (cc *InstanceController)GetInstanceCommand(c *gin.Context) {
 }
 
 //@description 获取实例流转记录
-//@router /instance/:instance_id/transitions [post]
+//@router /instance/:instance_id/transitions [get]
 func (cc *InstanceController)GetInstanceTransitions(c *gin.Context) {
 	ctx := c.Request.Context()
 	var req vo.GetInstanceTransitions

@@ -159,12 +159,15 @@ func InitRoutes() *gin.Engine {
 			x := o.Method(i).Interface()
 
 			if o.Method(i).Type().NumIn() > 2 {
+				global.Log.Warn(fmt.Sprintf("方法:%s的参数个数过多,请检查", key))
 				continue
 			}
 
 			if o.Method(i).Type().NumIn() == 2 {
 				if o.Method(i).Type().In(0).String() != "*gin.Context" && o.Method(i).Type().In(0).String() != "context.Context" {
+					global.Log.Info(fmt.Sprintf("方法:%s的第一个参数必须是gin.Context或者context.Context", key))
 					continue
+
 				}
 			}
 
@@ -199,11 +202,13 @@ func InitRoutes() *gin.Engine {
 			switch x.(type) {
 			case func(*gin.Context):
 				{
+				    //global.Log.Info(fmt.Sprintf("URL:%s 绑定方法:%s",v.Uri, key))
 					mds = append(mds, x.(func(*gin.Context)))
 					r.Handle(v.Method, v.Uri, mds...)
 
 				}
 			default:
+				//global.Log.Info(fmt.Sprintf("URL2:%s 绑定方法:%s",v.Uri, key))
 				mds = append(mds, middleware.BinderMiddleware(o.Method(i)))
 				r.Handle(v.Method, v.Uri, mds...)
 			}

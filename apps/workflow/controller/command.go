@@ -91,7 +91,7 @@ func (cc *CommandController)GetInsListAvailableCommands(c *gin.Context) {
 }
 //@description 执行命令
 //@router /instance/:instance_id/command [post]
-func (cc *CommandController)CommandExecution(c *gin.Context) {
+func (cc *CommandController) CommandExecution(c *gin.Context) {
 	ctx := c.Request.Context()
 	var req vo.CommandExecution
 	if err := easyBind(c, &req); err != nil {
