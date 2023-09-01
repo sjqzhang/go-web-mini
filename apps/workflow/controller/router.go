@@ -1,4 +1,4 @@
-package adapter
+package controller
 
 import (
 	"github.com/gin-gonic/gin"
@@ -39,12 +39,24 @@ func GetRouters() *gin.Engine {
 		c.String(http.StatusOK, "pong")
 	})
 
-	api.POST("/instance", CreateInstance)
-	api.GET("/instance/:instance_id", GetInstance)
-	api.GET("/instance/:instance_id/variables", GetInstanceVariables)
-	api.POST("/instance/:instance_id/variables", SetInstanceVariables)
+	//api.POST("/instance", CreateInstance)
+	//api.GET("/instance/:instance_id", GetInstance)
+	//api.GET("/instance/:instance_id/variables", GetInstanceVariables)
+	//api.POST("/instance/:instance_id/variables", SetInstanceVariables)
 	//api.GET("/instance/:instance_id/commands", GetAvailableCommands)
+	//api.POST("/instance/available/commands/batch", GetInsListAvailableCommands)
 	//api.POST("/instance/:instance_id/command", CommandExecution)
-	api.GET("/instance/:instance_id/transitions", GetInstanceTransitions)
+	//api.POST("/instance/command/optimize/run", CommandExecutionOptimize)
+	//api.POST("/instance/command/batch/run", CommandExecutionBatch)
+	//api.GET("/instance/:instance_id/transitions", GetInstanceTransitions)
+	//api.POST("/instance/command", GetInstanceCommand)
+	//api.POST("/instance/tasks", GetInstanceTasks)
+	//api.POST("/instance/schemacode", GetInstanceSchemaCode)
+	//api.POST("/instance/schemacode/set", SetInstanceSchemaCode)
+	//api.POST("/schema/infos", GetSchemaInfos)
+	//api.POST("/transitions/ids", GetInstanceTransitionsByIds)
+	//api.POST("/schema/upload", UploadSchemaFile)
+	//api.POST("/schema/reset", ResetInstanceSchemaCode)
+	router.MaxMultipartMemory = 50 << 20 //50MB
 	return router
 }

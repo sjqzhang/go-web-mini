@@ -11,20 +11,20 @@ import (
 
 	//"fmt"
 	"github.com/gin-gonic/gin"
-	swaggerfiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 	"go-web-mini/config"
 	_ "go-web-mini/docs"
 	"go-web-mini/global"
 	"go-web-mini/middleware"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 // 初始化
 func InitRoutes() *gin.Engine {
 
-	routerMap, _ := gdi.GetRouterInfoByPatten(".*controller")
+	routerMap, _ := gdi.GetRouterInfoByPatten(".*/controller")
 
-	restInfo, _ := gdi.GetRestInfoByPatten(".*controller")
+	restInfo, _ := gdi.GetRestInfoByPatten(".*/controller")
 
 	var unit9 uint = 9
 	for _, info := range restInfo {
@@ -55,7 +55,7 @@ func InitRoutes() *gin.Engine {
 		}
 	}
 
-	ctrls, err := gdi.AutoRegisterByPackagePatten(`controller*`)
+	ctrls, err := gdi.AutoRegisterByPackagePatten(`.*controller.*`)
 
 	gdi.Init() //初始化对象池
 
@@ -133,11 +133,11 @@ func InitRoutes() *gin.Engine {
 		fmt.Println(err)
 		panic(err)
 	}
-
+	pkgPrefix:= gdi.GetAppModuleName()
 	for _, o := range ctrls { //自动绑定路由
 		ctrlName := o.Elem().Type().Name()
-		packName:=o.Elem().Type().PkgPath()
-		packName=strings.Join(strings.Split(packName,"/")[1:],"/")
+		packName := o.Elem().Type().PkgPath()
+		packName = strings.TrimPrefix(packName,pkgPrefix+"/")
 
 		for i := 0; i < o.NumMethod(); i++ {
 			if o.NumMethod() == 0 {
@@ -149,7 +149,7 @@ func InitRoutes() *gin.Engine {
 			var v gdi.RouterInfo
 			var ok bool
 			methodName := o.Type().Method(i).Name
-			key := fmt.Sprintf("%v.%v.%v",packName, ctrlName, methodName)
+			key := fmt.Sprintf("%v.%v.%v", packName, ctrlName, methodName)
 			if v, ok = routerMap[key]; !ok {
 				v.Method = "POST"
 				v.Uri = fmt.Sprintf("/%v/%v", ctrlName, methodName)

@@ -18,8 +18,7 @@ type CaughtEventsDBRepo struct{}
 
 func (c CaughtEventsDBRepo) QueryByInstanceId(ctx context.Context, instanceId int) ([]model.CaughtEventsTab, error) {
 	var events []model.CaughtEventsTab
-
-	db := global.GetDB(ctx).Where("instance_id = ?", instanceId).Find(&events)
+	db := global.Context(ctx).Where("instance_id = ?", instanceId).Find(&events)
 	return events, db.Error
 }
 
@@ -27,12 +26,12 @@ func (c CaughtEventsDBRepo) New(ctx context.Context, event *model.CaughtEventsTa
 	now := int(time.Now().Unix())
 	event.Ctime = now
 	event.Mtime = now
-	db :=global.GetDB(ctx).Create(event)
+	db := global.Context(ctx).Create(event)
 	return db.Error
 }
 
 func (c CaughtEventsDBRepo) Update(ctx context.Context, event *model.CaughtEventsTab) error {
 	event.Mtime = int(time.Now().Unix())
-	db := global.GetDB(ctx).Save(event)
+	db := global.Context(ctx).Save(event)
 	return db.Error
 }

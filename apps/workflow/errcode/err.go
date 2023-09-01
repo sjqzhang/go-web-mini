@@ -5,11 +5,12 @@ import (
 )
 
 var (
-	OK                 = New(http.StatusOK, "ok")
+	OK                 = New(0, "ok")
 	RequestIllegal     = New(http.StatusBadRequest, "request is illegal")
 	CommandIsAvailable = New(http.StatusConflict, "command is available")
 	LockFail           = New(http.StatusConflict, "lock fail")
 	DBError            = New(http.StatusInternalServerError, "db error")
+	UploadFileError    = New(http.StatusInternalServerError, "upload file error")
 	ServiceError       = New(http.StatusInternalServerError, "service error")
 	EngineError        = New(http.StatusInternalServerError, "engine error")
 )

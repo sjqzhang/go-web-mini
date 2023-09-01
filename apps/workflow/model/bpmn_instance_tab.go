@@ -5,7 +5,7 @@ import "encoding/json"
 type InstanceTab struct {
 	Id            int    `gorm:"column:id;type:bigint(20) unsigned;primary_key;AUTO_INCREMENT" json:"id"`
 	SchemeCode    string `gorm:"column:scheme_code;type:varchar(128);NOT NULL" json:"scheme_code"`
-	State         string `gorm:"column:state;type:tinyint(4) unsigned;NOT NULL" json:"state"`
+	State         string `gorm:"column:state;type:varchar(64) unsigned;NOT NULL" json:"state"`
 	Vars          string `gorm:"column:vars;type:text" json:"vars"`
 	CurrentTaskId string `gorm:"column:current_task_id;type:varchar(128);NOT NULL" json:"current_task_id"`
 	Ctime         int    `gorm:"column:ctime;type:int(10) unsigned;NOT NULL" json:"ctime"`

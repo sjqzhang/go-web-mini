@@ -8,7 +8,6 @@ type CommResp struct {
 	Data    interface{} `json:"data"`
 }
 
-
 func NewResp(e errcode.Exception, data interface{}) CommResp {
 	if e == nil {
 		e = errcode.OK
