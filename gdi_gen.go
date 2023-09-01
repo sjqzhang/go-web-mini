@@ -27,7 +27,7 @@ import (
 	p26 "go-web-mini/global"
 )
 
-//go:embed apps/system/controller apps/system/model apps/workflow/repository apps/workflow/spec/BPMN20/activity config apps/cms/controller apps/cms/service apps/system/service apps/workflow/vo apps/cms/vo apps/system/repository apps/workflow/listener apps/workflow/model apps/workflow/service generator global middleware apps/cms/model apps/workflow/controller docs apps/workflow/errcode apps/workflow/spec/BPMN20 apps/workflow/bpmn_engine response apps/cms/repository apps/system/vo apps/workflow/spec/BPMN20/process_instance routes apps/system/dto util
+//go:embed apps/workflow/model apps/workflow/listener apps/workflow/spec/BPMN20/activity docs util apps/system/service apps/system/model apps/system/vo middleware apps/cms/controller apps/system/controller apps/workflow/bpmn_engine apps/workflow/controller apps/workflow/service routes apps/cms/model apps/workflow/repository apps/workflow/spec/BPMN20/process_instance response apps/cms/service apps/workflow/errcode apps/workflow/vo config global apps/system/dto apps/cms/vo apps/system/repository apps/workflow/spec/BPMN20 generator apps/cms/repository
 var gdiEmbedFiles embed.FS
 
 func init() {

@@ -7,6 +7,7 @@ import (
 	"go-web-mini/apps/system/model"
 	"go-web-mini/config"
 	"go-web-mini/global"
+	"gorm.io/gorm/clause"
 	"time"
 )
 
@@ -102,23 +103,29 @@ ORDER BY
 // 利用上面的sql语句，将数据库中的表结构信息导入到表中，忽略已经存在的数据
 func (r *TableMetadataRepository) Import(ctx context.Context) error {
 	db := global.GetDB(ctx)
-	db.Exec("truncate table table_metadata")
-	sql := `INSERT IGNORE INTO table_metadata (table_alias, column_name, column_comment,column_type, is_nullable, data_type, character_max_length)
-SELECT
+	// 清空表数据
+	//if err := db.Delete(&model.TableMetadata{}).Error; err != nil {
+	//	global.Log.Error(err)
+	//	return err
+	//}
+	var results []model.TableMetadata
+	query := db.
+		Model(&model.TableMetadata{}).
+		Select("TABLE_NAME AS table_alias, COLUMN_NAME AS column_name, COLUMN_COMMENT AS column_comment, COLUMN_TYPE AS column_type, IS_NULLABLE AS is_nullable, DATA_TYPE AS data_type, CHARACTER_MAXIMUM_LENGTH AS character_max_length").
+		Table("INFORMATION_SCHEMA.COLUMNS").
+		Where("TABLE_SCHEMA = ?", config.Conf.Mysql.Database).
+		Order("TABLE_NAME, ORDINAL_POSITION")
+	// 执行查询并插入数据
+	if err := query.Find(&results).Error; err != nil {
+		global.Log.Error(err)
+		return err
+	}
 
-    TABLE_NAME AS 'table_alias',
-    COLUMN_NAME AS 'column_name',
-    COLUMN_COMMENT AS 'column_comment',
- 	COLUMN_TYPE as 'column_type',
-    IS_NULLABLE as 'is_nullable',
-    DATA_TYPE as 'data_type',
-    CHARACTER_MAXIMUM_LENGTH 'character_max_length'
-FROM
-    INFORMATION_SCHEMA.COLUMNS
-WHERE
-    TABLE_SCHEMA = '%s'
-ORDER BY
-    TABLE_NAME,
-    ORDINAL_POSITION;`
-	return db.Exec(fmt.Sprintf(sql, config.Conf.Mysql.Database)).Error
+	if err := db.Clauses(clause.OnConflict{
+		DoNothing: true,
+	}).CreateInBatches(&results, len(results)).Error; err != nil {
+		fmt.Println(err)
+	}
+
+	return nil
 }

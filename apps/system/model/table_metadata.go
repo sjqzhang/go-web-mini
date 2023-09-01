@@ -36,5 +36,5 @@ type TableMetadataQuery struct {
 }
 
 func (t TableMetadata) TableName() string {
-	return "table_metadata"
+	return "sys_table_metadata"
 }

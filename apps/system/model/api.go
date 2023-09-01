@@ -12,5 +12,5 @@ type Api struct {
 }
 
 func (t Api) TableName() string {
-	return "apis"
+	return "sys_apis"
 }
