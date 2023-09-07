@@ -35,13 +35,21 @@ func InitRoutes() *gin.Engine {
 			continue
 		}
 		name := strings.ReplaceAll(info.Controller, "Controller", "")
+		if info.Uri == "" {
+			continue
+		}
+		uris:=strings.Split( strings.Trim( info.Uri,"/ "),"/")
+		if len(uris) < 2 {
+			continue
+		}
+		app:= strings.ToLower(uris[1])
 		var menu model.Menu
-		component := fmt.Sprintf("/business/%v/index", util.ToUnderlineCase(name))
+		component := fmt.Sprintf("/%v/%v/index", app, util.ToUnderlineCase(name))
 		err := global.DB.First(&menu, "component = ?", component).Error
 		if err != nil && err == gorm.ErrRecordNotFound {
 			menu := model.Menu{
 				//Model:     gorm.Model{ID: 9},
-				Name:  "Business",
+				Name: app,
 				Title: info.Description,
 				//Icon:     "table",
 				Path:      strings.ToLower(name),
@@ -52,6 +60,9 @@ func InitRoutes() *gin.Engine {
 				Creator: "系统",
 			}
 			global.DB.Create(&menu)
+		} else {
+			global.DB.Model(&menu).Update("title", info.Description)
+
 		}
 	}
 
@@ -69,6 +80,7 @@ func InitRoutes() *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Recovery())
 	r.Use(middleware.LoggerMiddleware())
+	r.Use(middleware.BindGormMiddleware())
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler, ginSwagger.URL("/swagger/doc.json"),
 		ginSwagger.DeepLinking(true), ginSwagger.PersistAuthorization(true),
 		ginSwagger.DefaultModelsExpandDepth(5),

@@ -42,30 +42,12 @@ func BinderMiddleware(method reflect.Value) gin.HandlerFunc {
 				return
 			}
 		}
-		//if strings.Index(c.FullPath(), ":") > 0 {
-		//	err = c.ShouldBindUri(req)
-		//	if err != nil {
-		//		fmt.Println(req)
-		//		c.JSON(400, gin.H{"message": "请求参数错误"})
-		//		return
-		//	}
-		//}
 		err = global.Validate.Struct(req)
 		if err != nil {
 			errStr := err.(validator.ValidationErrors)[0].Translate(global.Trans)
 			response.Fail(c, nil, errStr)
 			return
 		}
-		//var cacheKey string
-		//if key, ok := c.Get(CACHE_KEY); ok {
-		//	cacheKey = key.(string)
-		//	result, err := global.Redis().Get(c, key.(string)).Result()
-		//	if err == nil {
-		//		c.String(200, result)
-		//		return
-		//	}
-		//}
-
 		c.Set("REQ-INPUT", req)
 		c.Set("URI", c.Request.RequestURI)
 
@@ -78,16 +60,6 @@ func BinderMiddleware(method reflect.Value) gin.HandlerFunc {
 				}
 			}
 			if results[0].Interface() != nil {
-
-				//if cacheKey != "" {
-				//	data, err := response.EncodeResponse(200, results[0].Interface(), "Success")
-				//	if err != nil {
-				//
-				//	}
-				//	global.Redis().Set(c,cacheKey,string(data),time.Minute*10)
-				//	c.String(200, string(data))
-				//	return
-				//}
 
 				response.Response(c, 200, 0, results[0].Interface(), "Success")
 				return

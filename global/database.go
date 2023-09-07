@@ -22,11 +22,9 @@ var DB *gorm.DB
 var dbKey = "db"
 var GinContextKey = "ginContext"
 
-//func BindContext(ctx context.Context, db *gorm.DB) context.Context {
-//	//if db == nil {
-//	//	panic("db is nil")
-//	//}
-//	//return context.WithValue(ctx, , db)
+//func BindContextForGorm(ctx context.Context) context.Context {
+//	db:=GetDB(ctx)
+//	return context.WithValue(ctx, dbKey, db)
 //}
 func GetDB(ctx context.Context) *gorm.DB {
 	db := ctx.Value("db")
