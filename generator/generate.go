@@ -1,6 +1,7 @@
 package generator
 
 import (
+	"bytes"
 	"database/sql"
 	"fmt"
 	"gorm.io/driver/mysql"
@@ -13,28 +14,29 @@ import (
 )
 
 type FieldResult struct {
-	TableName            string
-	ColumnName           string
-	ColumnType           string
-	CamelField           string
-	DataType             string
-	RealType             string
-	ColumnKey            string
-	KeyStr               string
-	Extra                string
-	ColumnDefault        string
-	ColumnComment        string
-	ColumnCommentForView string
-	Value                string
-	VueTag               string
-	VueType              string
-	VueFunction          string
-	Validate             string
-	Title                string
-	Type                 string
-	IsUnique             bool
-	IndexName            string
-	NonUnique            int
+	TableName              string
+	ColumnName             string
+	ColumnType             string
+	CamelField             string
+	DataType               string
+	RealType               string
+	ColumnKey              string
+	KeyStr                 string
+	Extra                  string
+	ColumnDefault          string
+	ColumnComment          string
+	ColumnCommentForView   string
+	CharacterMaximumLength int64
+	Value                  string
+	VueTag                 string
+	VueType                string
+	VueFunction            string
+	Validate               string
+	Title                  string
+	Type                   string
+	IsUnique               bool
+	IndexName              string
+	NonUnique              int
 }
 
 type TableResult struct {
@@ -152,8 +154,9 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 		"COLUMN_KEY as ColumnKey,"+
 		"EXTRA as Extra,"+
 		"COLUMN_COMMENT as ColumnComment ,"+
-		"'' as ColumnCommentForView "+
-		"from "+
+		"'' as ColumnCommentForView ,"+
+		" CASE\n        WHEN CHARACTER_MAXIMUM_LENGTH IS NULL THEN 0\n        ELSE CHARACTER_MAXIMUM_LENGTH\n    END AS CharacterMaximumLength "+
+		" from "+
 		"information_schema.columns "+
 		"where "+
 		"table_schema = ? and table_name = ?;", database, tableName).Rows()
@@ -224,10 +227,49 @@ func doGenerate(con *gorm.DB, database string, tableName string, moduleName stri
 	object.Table = tableInfo
 	object.Fields = fields
 	object.ModuleName = moduleName
-	object.AppName= cfg.AppName
+	object.AppName = cfg.AppName
 
 	// 创建文件
 	createFiles(object, tableName)
+}
+
+var elementsTemplateMap = make(map[string]string)
+
+func init() {
+
+	elementsTemplateMap["input"] = `<el-input v-model.trim="dialogFormData.{{.ColumnName}}"  :placeholder="` + `{{.ColumnCommentForView}}` + `"></el-input>`
+	elementsTemplateMap["select"] = `<el-select v-model="dialogFormData.{{.ColumnName}}" :placeholder="` + `{{.ColumnCommentForView}}` + `"></el-select>`
+	elementsTemplateMap["checkbox"] = `<el-checkbox-group v-model="dialogFormData.{{.ColumnName}}"><el-checkbox :label="1">是</el-checkbox><el-checkbox :label="0">否</el-checkbox> </el-checkbox-group>`
+	elementsTemplateMap["radio"] = `<el-radio-group v-model="dialogFormData.{{.ColumnName}}"><el-radio :label="1">是</el-radio><el-radio :label="0">否</el-radio> </el-radio-group>`
+	elementsTemplateMap["date"] = `<el-date-picker v-model="dialogFormData.{{.ColumnName}}" type="date" :placeholder="` + `{{.ColumnCommentForView}}` + `"></el-date-picker>`
+	elementsTemplateMap["time"] = `<el-date-picker v-model="dialogFormData.{{.ColumnName}}" type="time" :placeholder="` + `{{.ColumnCommentForView}}` + `"></el-date-picker>`
+	elementsTemplateMap["datetime"] = `<el-date-picker v-model="dialogFormData.{{.ColumnName}}" type="datetime" :placeholder="` + `{{.ColumnCommentForView}}` + `"></el-date-picker>`
+	elementsTemplateMap["switch"] = `<el-switch v-model="dialogFormData.{{.ColumnName}}" :active-value="1" :inactive-value="0"></el-switch>`
+	// use vue-quill-editor as editor
+	elementsTemplateMap["editor"] = `<quill-editor v-model="dialogFormData.{{.ColumnName}}"></quill-editor>`
+	// textarea
+	elementsTemplateMap["textarea"] = `<el-input type="textarea" v-model="dialogFormData.{{.ColumnName}}" :placeholder="` + `{{.ColumnCommentForView}}` + `"></el-input>`
+	elementsTemplateMap["integer"] = `<el-input type="number" oninput="value=value.replace(/[^0-9]/g,'')" v-model="dialogFormData.{{.ColumnName}}" :placeholder="` + `{{.ColumnCommentForView}}` + `"></el-input>`
+	elementsTemplateMap["float"] = `<el-input type="number" oninput="value=value.replace(/[^0-9.]/g,'')" v-model="dialogFormData.{{.ColumnName}}" :placeholder="` + `{{.ColumnCommentForView}}` + `"></el-input>`
+}
+
+func renderElement(object FieldResult) string {
+	//  获取模板,并渲染
+	templateString, ok := elementsTemplateMap[object.Type]
+	if !ok {
+		panic("cannot find the template: " + object.Type)
+	}
+	tpl, err := template.New("").Parse(templateString)
+	if err != nil {
+		panic(err)
+	}
+	out := bytes.NewBufferString("")
+	err = tpl.Execute(out, object)
+	if err != nil {
+		panic(err)
+	}
+	return out.String()
+
 }
 
 // get All table names
@@ -297,7 +339,7 @@ func convertIndex(con *gorm.DB, query *sql.Rows) []IndexResult {
 // 检查指定的filed 是否在指定的fields中
 func checkField(field string) bool {
 	fields := []string{"id", "created_at", "updated_at", "deleted_at", "ctime", "mtime", "dtime", "is_deleted",
-		"create_time","update_time", "delete_time", "is_delete"}
+		"create_time", "update_time", "delete_time", "is_delete"}
 	for _, v := range fields {
 		if v == field {
 			return false
@@ -335,9 +377,9 @@ func createFiles(obj CommonObject, tableName string) {
 	createGoFile(obj, tableName, fmt.Sprintf("%v_service.go", tableName), fmt.Sprintf("%v/service", cfg.ServerRoot), "./template/service.tpl", "service")
 
 	// 创建service
-	createGoFile(obj, tableName, "index.vue", fmt.Sprintf("%v/src/views/business/%v", cfg.WebRoot, tableName), "./template/index.vue", "index.vue")
+	createGoFile(obj, tableName, "index.vue", fmt.Sprintf("%v/src/views/%v/%v", cfg.WebRoot, cfg.AppName, tableName), "./template/index.vue", "index.vue")
 
-	createGoFile(obj, tableName, fmt.Sprintf("%v.js", tableName), fmt.Sprintf("%v/src/api/business", cfg.WebRoot), "./template/api.js", "api")
+	createGoFile(obj, tableName, fmt.Sprintf("%v.js", tableName), fmt.Sprintf("%v/src/api/%v", cfg.WebRoot,cfg.AppName), "./template/api.js", "api")
 
 }
 
@@ -392,7 +434,20 @@ func isString(fieldType string) bool {
 }
 
 func isInteger(fieldType string) bool {
-	return fieldType == "int" || fieldType == "tinyint" || fieldType == "bigint"
+	return fieldType == "int" || fieldType == "bigint"
+}
+
+func isFloat(fieldType string) bool {
+	return fieldType == "float" || fieldType == "double"
+}
+
+func isBool (fieldType string) bool {
+
+	return fieldType == "tinyint" || fieldType=="boolean"
+}
+
+func isEditor(fieldType string) bool {
+	return fieldType == "longtext" || fieldType == "mediumtext"
 }
 
 func isDate(fieldType string) bool {
@@ -418,7 +473,8 @@ func createGoFile(obj CommonObject, tableName string, filename string, path stri
 	t := template.New("template")
 
 	t = t.Funcs(template.FuncMap{"checkField": checkField, "isNumber": isNumber,
-		"isString": isString, "isInteger": isInteger, "isDate": isDate, "isTime": isTime, "notEmpty": notEmpty})
+		"isString": isString, "isInteger": isInteger, "isDate": isDate, "isTime": isTime, "notEmpty": notEmpty,
+		"renderElement": renderElement,"isEditor": isEditor, "isFloat": isFloat, "isBool": isBool})
 
 	// 校验是否存在po模板
 	t = template.Must(t.ParseGlob(templatePath))
@@ -531,6 +587,40 @@ func convertField(con *gorm.DB, query *sql.Rows) []FieldResult {
 				str.Title = str.ColumnComment
 			} else {
 				str.Title = str.ColumnName
+			}
+		}
+		if str.Type == "" {
+
+
+			if isDate(str.DataType) {
+				str.Type = "datetime"
+			}
+			if isTime(str.DataType) {
+				str.Type = "time"
+			}
+
+			if isBool(str.DataType){
+				str.Type = "switch"
+			}
+
+			if isInteger(str.DataType) {
+				str.Type = "integer"
+			}
+
+			if isFloat(str.DataType) {
+				str.Type = "float"
+			}
+
+			if isEditor(str.DataType) {
+				str.Type = "editor"
+			}
+
+			if isString(str.DataType) && str.CharacterMaximumLength >= 128 {
+				str.Type = "textarea"
+			}
+
+			if str.Type == "" {
+				str.Type = "input"
 			}
 		}
 

@@ -8,10 +8,10 @@ func TestGenerate(t *testing.T) {
 		DSN:         "root:root@tcp(127.0.0.1)/go_web_mini?tls=false",
 		AppName:     "cms",
 		ModuleName:  "go-web-mini",
-		Tables:      []string{"article"},
+		Tables:      []string{"cms_dictionary_type","cms_dictionary"},
 		WebRoot:     "/Users/junqiang.zhang/repo/js/go-web-mini-ui",
 		ServerRoot:  "/Users/junqiang.zhang/repo/go/go-web-mini/apps/cms",
-		TablePrefix: "",
+		TablePrefix: "cms_",
 		TableSuffix: "_tab",
 	}
 	InitConfig(conf)

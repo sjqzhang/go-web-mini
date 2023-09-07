@@ -10,7 +10,7 @@ import (
 //@description {{.Table.TableComment}}管理
 {{if .Table.IsAuth}}
 //@middleware auth{{end}}
-//@router /api
+//@router /api/{{.AppName}}
 type {{.Table.TableName}}Controller struct {
    {{.Table.Uri}}Service service.{{.Table.TableName}}Service
 }

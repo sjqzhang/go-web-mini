@@ -25,6 +25,10 @@
         <el-table-column show-overflow-tooltip sortable prop="{{.ColumnName}}" label="{{.ColumnCommentForView}}" />{{end}}{{end}}
         <el-table-column fixed="right" label="操作" align="center" width="120">
           <template slot-scope="scope">
+            <el-tooltip content="复制" effect="dark" placement="top">
+              <el-button size="mini" icon="el-icon-copy-document" circle type="primary" @click="copy(scope.row)" />
+            </el-tooltip>
+
             <el-tooltip content="编辑" effect="dark" placement="top">
               <el-button size="mini" icon="el-icon-edit" circle type="primary" @click="update(scope.row)" />
             </el-tooltip>
@@ -51,7 +55,7 @@
       <el-dialog :title="dialogFormTitle" :visible.sync="dialogFormVisible">
         <el-form ref="dialogForm" size="small" :model="dialogFormData" :rules="dialogFormRules" label-width="120px">
           {{range .Fields}}{{if  checkField .ColumnName}}<el-form-item label="{{.ColumnCommentForView}}" prop="{{.ColumnName}}">
-            <{{.VueTag}} type="{{.VueType}}" v-model.trim="dialogFormData.{{.ColumnName}}" placeholder="{{.ColumnCommentForView}}" />
+        {{renderElement .}}
           </el-form-item>{{end}}{{end}}
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -65,7 +69,7 @@
 </template>
 
 <script>
-import { get{{.Table.TableName}}, create{{.Table.TableName}}, update{{.Table.TableName}}, delete{{.Table.TableName}} } from '@/api/business/{{.Table.TableNameTrim}}'
+import { get{{.Table.TableName}}, create{{.Table.TableName}}, update{{.Table.TableName}}, delete{{.Table.TableName}} } from '@/api/{{.AppName}}/{{.Table.TableNameTrim}}'
 
 export default {
   name: '{{.Table.TableName}}',
@@ -176,6 +180,16 @@ export default {
       {{end}}{{end}}
       this.dialogFormTitle = '修改'
       this.dialogType = 'update'
+      this.dialogFormVisible = true
+    },
+
+    // 复制
+    copy(row) {
+      //this.dialogFormData.id = row.id
+      {{range .Fields}}{{if  checkField .ColumnName}}this.dialogFormData.{{.ColumnName}} = row.{{.ColumnName}}
+      {{end}}{{end}}
+      this.dialogFormTitle = '复制'
+      this.dialogType = 'create'
       this.dialogFormVisible = true
     },
 
