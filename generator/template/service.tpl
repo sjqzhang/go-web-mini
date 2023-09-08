@@ -57,7 +57,9 @@ func (s *{{.Table.TableName}}Service) List(ctx context.Context, req *vo.List{{.T
     if err != nil {
         return nil, err
     }
-    err = copier.Copy(&resp, objs)
+    if err = copier.Copy(&resp.List, objs); err != nil {
+        return nil, err
+    }
     return &resp, err
 }
 

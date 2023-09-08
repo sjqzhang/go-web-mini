@@ -44,6 +44,8 @@ type ListForPager{{.Table.TableName}}Request struct {
 type List{{.Table.TableName}}Request struct {
     {{range .Fields}}{{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }}  form:"{{.ColumnName}}"` {{.ColumnComment}}
     {{end}}
+    PageNum  *uint `json:"pageNum" form:"pageNum"`   //第几页
+    PageSize *uint `json:"pageSize" form:"pageSize"` //每页多少条
 }
 
 

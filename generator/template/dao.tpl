@@ -68,6 +68,8 @@ func (r *{{.Table.TableName}}Repository) List(ctx context.Context, query *model.
 	where, values, _ := model.BuildWhere(obj)
 	if query.PageSize>1000 {
 		query.PageSize=1000
+	} else if query.PageSize<=0 {
+		query.PageSize=100
 	}
 	err= db.Model(&obj).Where(where,values...).Where("deleted_at is null").Offset((query.PageNum-1) * query.PageSize).Limit(query.PageSize).Find(&list).Error
 	if err != nil {
