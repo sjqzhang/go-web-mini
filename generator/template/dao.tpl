@@ -10,23 +10,42 @@ import (
 )
 
 
+type I{{.Table.TableName}}Repository interface {
+	ListForPager(ctx context.Context, query *model.{{.Table.TableName}}Query) (*model.PagerModel, error)
+	List(ctx context.Context, query *model.{{.Table.TableName}}Query) ([]*model.{{.Table.TableName}}, error)
+	Create(ctx context.Context, obj *model.{{.Table.TableName}}) (*model.{{.Table.TableName}}, error)
+	GetById(ctx context.Context,  id int64) (*model.{{.Table.TableName}}, error)
+	Update(ctx context.Context, obj *model.{{.Table.TableName}}) (*model.{{.Table.TableName}}, error)
+	Delete(ctx context.Context, ids []int64) (int64, error)
+}
+
+
 
 
 type {{.Table.TableName}}Repository struct {
 }
 
-func (r *{{.Table.TableName}}Repository) List(ctx context.Context, query *model.{{.Table.TableName}}Query) (*model.PagerModel, error) {
+
+
+
+func (r *{{.Table.TableName}}Repository) ListForPager(ctx context.Context, query *model.{{.Table.TableName}}Query) (*model.PagerModel, error) {
 	db := global.GetDB(ctx)
 	var list []*model.{{.Table.TableName}}
 	var obj model.{{.Table.TableName}}
-	copier.CopyWithOption(&obj, &query, copier.Option{IgnoreEmpty: true, DeepCopy: true})
-	var total int64
-	where,values,_:=model.BuildWhere(obj)
-	err := db.Debug().Model(&obj).Where(where,values...).Where("deleted_at is null").Count(&total).Error
+	err:=copier.CopyWithOption(&obj, &query, copier.Option{IgnoreEmpty: true, DeepCopy: true})
 	if err != nil {
 		return nil, err
 	}
-	err = db.Model(&obj).Debug().Where(where,values...).Where("deleted_at is null").Offset((query.PageNum-1) * query.PageSize).Limit(query.PageSize).Find(&list).Error
+	var total int64
+	where,values,_:=model.BuildWhere(obj)
+	err = db.Model(&obj).Where(where,values...).Where("deleted_at is null").Count(&total).Error
+	if err != nil {
+		return nil, err
+	}
+	if query.PageSize>1000 {
+		query.PageSize=1000
+	}
+	err = db.Model(&obj).Where(where,values...).Where("deleted_at is null").Offset((query.PageNum-1) * query.PageSize).Limit(query.PageSize).Find(&list).Error
 	if err != nil {
 		return nil, err
 	}
@@ -36,6 +55,25 @@ func (r *{{.Table.TableName}}Repository) List(ctx context.Context, query *model.
 	pagerModel.PageNum=query.PageNum
 	pagerModel.PageSize=query.PageSize
 	return &pagerModel, err
+}
+
+func (r *{{.Table.TableName}}Repository) List(ctx context.Context, query *model.{{.Table.TableName}}Query) ([]*model.{{.Table.TableName}}, error)	 {
+	db := global.GetDB(ctx)
+	var list []*model.{{.Table.TableName}}
+	var obj model.{{.Table.TableName}}
+	err:=copier.CopyWithOption(&obj, &query, copier.Option{IgnoreEmpty: true, DeepCopy: true})
+	if err != nil {
+		return nil, err
+	}
+	where, values, _ := model.BuildWhere(obj)
+	if query.PageSize>1000 {
+		query.PageSize=1000
+	}
+	err= db.Model(&obj).Where(where,values...).Where("deleted_at is null").Offset((query.PageNum-1) * query.PageSize).Limit(query.PageSize).Find(&list).Error
+	if err != nil {
+		return nil, err
+	}
+	return list,nil
 }
 
 func (r *{{.Table.TableName}}Repository) Create(ctx context.Context, obj *model.{{.Table.TableName}}) (*model.{{.Table.TableName}}, error) {

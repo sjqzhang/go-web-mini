@@ -23,10 +23,25 @@ type {{.Table.TableName}}Controller struct {
 //@param req    query  vo.List{{.Table.TableName}}Request  false  "入参req"
 //@success 200 {object} vo.List{{.Table.TableName}}Response
 //@middleware
+// @router /{{.Table.Uri}}/pager [get]
+func (c *{{.Table.TableName}}Controller) ListForPager(ctx context.Context, req *vo.ListForPager{{.Table.TableName}}Request) (*vo.ListForPager{{.Table.TableName}}Response, error) {
+	return c.{{.Table.Uri}}Service.ListForPager(ctx, req)
+}
+
+
+//@description 查询{{.Table.TableComment}}
+//@tags {{.Table.TableName}}{{if .Table.IsAuth}}
+// @Security JWT{{end}}
+// @Accept       json
+// @Produce      json
+//@param req    query  vo.List{{.Table.TableName}}Request  false  "入参req"
+//@success 200 {object} vo.List{{.Table.TableName}}Response
+//@middleware
 // @router /{{.Table.Uri}} [get]
 func (c *{{.Table.TableName}}Controller) List(ctx context.Context, req *vo.List{{.Table.TableName}}Request) (*vo.List{{.Table.TableName}}Response, error) {
 	return c.{{.Table.Uri}}Service.List(ctx, req)
 }
+
 
 
 //@description 查询单个{{.Table.TableComment}}

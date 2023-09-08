@@ -2,6 +2,15 @@
 import request from '@/utils/request'
 
 // 获取{{.Table.TableComment}}列表
+export function get{{.Table.TableName}}Pager(params) {
+  return request({
+    url: '/api/{{.AppName}}/{{.Table.Uri}}/pager',
+    method: 'get',
+    params
+  })
+}
+
+// 获取{{.Table.TableComment}}列表
 export function get{{.Table.TableName}}(params) {
   return request({
     url: '/api/{{.AppName}}/{{.Table.Uri}}',
@@ -9,6 +18,7 @@ export function get{{.Table.TableName}}(params) {
     params
   })
 }
+
 
 // 创建{{.Table.TableComment}}
 export function create{{.Table.TableName}}(data) {

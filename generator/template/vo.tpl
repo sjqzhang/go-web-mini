@@ -22,7 +22,7 @@ type {{.Table.TableName}} struct {
 }
 
 // 查询{{.Table.TableName}} {{.Table.TableComment}}
-type List{{.Table.TableName}}Response struct {
+type ListForPager{{.Table.TableName}}Response struct {
 	Total    int64                  `json:"total"` //总数
 	List     []{{.Table.TableName}}          `json:"list"` //列表
 	PageNum  int                    `json:"pageNum" form:"pageNum"`  //第几页
@@ -32,13 +32,27 @@ type List{{.Table.TableName}}Response struct {
 
 
 
-// 查询{{.Table.TableName}} {{.Table.TableComment}}
-type List{{.Table.TableName}}Request struct {
+// 分页查询{{.Table.TableName}} {{.Table.TableComment}}
+type ListForPager{{.Table.TableName}}Request struct {
     {{range .Fields}}{{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }}  form:"{{.ColumnName}}"` {{.ColumnComment}}
     {{end}}
      PageNum  *uint   `json:"pageNum" form:"pageNum"` //第几页
      PageSize *uint   `json:"pageSize" form:"pageSize"` //每页多少条
 }
+
+// 查询{{.Table.TableName}} {{.Table.TableComment}}
+type List{{.Table.TableName}}Request struct {
+    {{range .Fields}}{{.CamelField}} *{{.RealType}} `json:"{{.ColumnName}}"{{.KeyStr }}  form:"{{.ColumnName}}"` {{.ColumnComment}}
+    {{end}}
+}
+
+
+// 查询{{.Table.TableName}} {{.Table.TableComment}}
+type List{{.Table.TableName}}Response struct {
+    List     []{{.Table.TableName}}          `json:"list"` //列表
+}
+
+
 
 type Get{{.Table.TableName}}Response struct {
     {{.Table.TableName}}Response
