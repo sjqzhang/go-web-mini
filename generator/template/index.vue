@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { get{{.Table.TableName}}, create{{.Table.TableName}}, update{{.Table.TableName}}, delete{{.Table.TableName}} } from '@/api/{{.AppName}}/{{.Table.TableNameTrim}}'
+import { get{{.Table.TableName}}, get{{.Table.TableName}}Pager, create{{.Table.TableName}}, update{{.Table.TableName}}, delete{{.Table.TableName}} } from '@/api/{{.AppName}}/{{.Table.TableNameTrim}}'
 
 export default {
   name: '{{.Table.TableName}}',
@@ -158,7 +158,7 @@ export default {
         {{range .Fields}}{{if  checkField .ColumnName}}{{if isString .DataType}}{{.ColumnName}} : 'like %'+ this.params.{{.ColumnName}}+'%',
           {{end}}{{end}}{{end}}
         }
-        const { data } = await get{{.Table.TableName}}(searchParams)
+        const { data } = await get{{.Table.TableName}}Pager(searchParams)
         this.tableData = data.list
         this.total = data.total
       } finally {
