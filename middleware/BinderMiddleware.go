@@ -27,7 +27,7 @@ func BinderMiddleware(method reflect.Value) gin.HandlerFunc {
 			err := c.ShouldBindQuery(req)
 			if err != nil {
 				fmt.Println(req)
-				c.JSON(400, gin.H{"message": "请求参数错误"})
+				c.JSON(400, gin.H{"message": fmt.Sprintf("请求参数错误%v",err)})
 				return
 			}
 		}

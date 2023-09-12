@@ -176,6 +176,43 @@ func InitData() {
 			Roles:     roles[:2],
 			Creator:   "系统",
 		},
+		/*
+				INSERT INTO `sys_menus` (`id`, `created_at`, `updated_at`, `deleted_at`, `name`, `title`, `icon`, `path`, `redirect`, `component`, `sort`, `status`, `hidden`, `no_cache`, `always_show`, `breadcrumb`, `active_menu`, `parent_id`, `creator`)
+				  VALUES
+				  	(11, '2023-09-08 15:31:59.004', '2023-09-08 15:32:56.576', NULL, 'system', '字典管理', NULL, 'dictionary', NULL, '/system/dictionary/index', 23, 1, 2, 2, 2, 1, NULL, 9, '系统');
+
+			      INSERT INTO `sys_menus` (`id`, `created_at`, `updated_at`, `deleted_at`, `name`, `title`, `icon`, `path`, `redirect`, `component`, `sort`, `status`, `hidden`, `no_cache`, `always_show`, `breadcrumb`, `active_menu`, `parent_id`, `creator`)
+				  VALUES
+				  	(14, '2023-09-08 15:31:59.011', '2023-09-08 15:32:56.578', NULL, 'system', '字典类型管理', NULL, 'dictionarytype', NULL, '/system/dictionary_type/index', 23, 1, 2, 2, 2, 1, NULL, 9, '系统');
+
+		*/
+
+		// 2.写入系统菜单
+
+		{
+			Model:     gorm.Model{ID: 10},
+			Name:      "Dictionary",
+			Title:     "字典管理",
+			Icon:      &documentationStr,
+			Path:      "Dictionary",
+			Component: "/system/dictionary/index",
+			Sort:      23,
+			ParentId:  &uint1,
+			Roles:     roles[:2],
+			Creator:   "系统",
+		},
+		{
+			Model:     gorm.Model{ID: 11},
+			Name:      "DictionaryType",
+			Title:     "字典类型管理",
+			Icon:      &documentationStr,
+			Path:      "DictionaryType",
+			Component: "/system/dictionary_type/index",
+			Sort:      23,
+			ParentId:  &uint1,
+			Roles:     roles[:2],
+			Creator:   "系统",
+		},
 
 		{
 			Model:     gorm.Model{ID: 9},

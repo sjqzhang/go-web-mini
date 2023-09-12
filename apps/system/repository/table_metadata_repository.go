@@ -103,12 +103,8 @@ ORDER BY
 // 利用上面的sql语句，将数据库中的表结构信息导入到表中，忽略已经存在的数据
 func (r *TableMetadataRepository) Import(ctx context.Context) error {
 	db := global.GetDB(ctx)
-	// 清空表数据
-	//if err := db.Delete(&model.TableMetadata{}).Error; err != nil {
-	//	global.Log.Error(err)
-	//	return err
-	//}
 	var results []model.TableMetadata
+
 	query := db.
 		Model(&model.TableMetadata{}).
 		Select("TABLE_NAME AS table_alias, COLUMN_NAME AS column_name, COLUMN_COMMENT AS column_comment, COLUMN_TYPE AS column_type, IS_NULLABLE AS is_nullable, DATA_TYPE AS data_type, CHARACTER_MAXIMUM_LENGTH AS character_max_length").

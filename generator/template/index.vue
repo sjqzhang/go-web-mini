@@ -23,7 +23,7 @@
         <el-table-column type="selection" width="55" align="center" />
         {{range .Fields}}{{if  checkField .ColumnName}}
         <el-table-column show-overflow-tooltip sortable prop="{{.ColumnName}}" label="{{.ColumnCommentForView}}" />{{end}}{{end}}
-        <el-table-column fixed="right" label="操作" align="center" width="120">
+        <el-table-column fixed="right" label="操作" align="center" width="160">
           <template slot-scope="scope">
             <el-tooltip content="复制" effect="dark" placement="top">
               <el-button size="mini" icon="el-icon-copy-document" circle type="primary" @click="copy(scope.row)" />
@@ -70,6 +70,8 @@
 
 <script>
 import { get{{.Table.TableName}}, get{{.Table.TableName}}Pager, create{{.Table.TableName}}, update{{.Table.TableName}}, delete{{.Table.TableName}} } from '@/api/{{.AppName}}/{{.Table.TableNameTrim}}'
+import CommonSelect from '@/components/CommonSelect/CommonSelect'
+import { getDictionaryType } from '@/api/system/dictionary_type'
 
 export default {
   name: '{{.Table.TableName}}',
@@ -92,6 +94,8 @@ export default {
   },
   data() {
     return {
+
+      dictTypeOptions: [],
       // 查询参数
       params: {
       {{range .Fields}}{{if  checkField .ColumnName}}{{.ColumnName}}: {{.Value}},
@@ -143,6 +147,18 @@ export default {
     this.getTableData()
   },
   methods: {
+
+    loadDictionaryType() {
+      getDictionaryType().then(res => {
+        this.dictTypeOptions = res.data?.list
+      })
+    },
+    changeType(val) {
+      this.dialogFormData.dict_type_id = val
+    },
+    formatType(row, column) {
+      return row.dict_type.dict_name
+    },
     // 查询
     search() {
       this.params.pageNum = 1
@@ -164,6 +180,7 @@ export default {
       } finally {
         this.loading = false
       }
+      loadDictionaryType()
     },
 
     // 新增
