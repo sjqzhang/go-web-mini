@@ -23,7 +23,7 @@ require (
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/senseyeio/duration v0.0.0-20180430131211-7c2a214ada46
 	github.com/sirupsen/logrus v1.9.0
-	github.com/sjqzhang/gdi v1.3.5
+	github.com/sjqzhang/gdi v1.3.7
 	github.com/spf13/viper v1.7.1
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.0
@@ -94,7 +94,7 @@ require (
 	golang.org/x/sys v0.11.0 // indirect
 	golang.org/x/text v0.12.0 // indirect
 	golang.org/x/tools v0.12.0 // indirect
-	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
+	golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/ini.v1 v1.62.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
@@ -103,4 +103,4 @@ require (
 	gorm.io/driver/sqlserver v1.5.1 // indirect
 )
 
-//replace github.com/sjqzhang/gdi v1.3.4 => /Users/junqiang.zhang/repo/go/gdi
+//replace github.com/sjqzhang/gdi v1.3.4 => /Volumes/Data/repo/gdi

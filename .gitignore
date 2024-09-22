@@ -6,7 +6,10 @@
 *.dylib
 .idea
 logs
-
+main
+web
+gdi_gen
+server
 # Test binary, built with `go test -c`
 *.test
 

@@ -2,11 +2,14 @@ package main
 
 import (
 	"context"
+	"embed"
 	"fmt"
 	"github.com/sjqzhang/gdi"
 	"go-web-mini/config"
 	"go-web-mini/global"
 	"go-web-mini/routes"
+	"io"
+	"io/fs"
 	"net/http"
 	"os"
 	"os/signal"
@@ -20,12 +23,13 @@ import (
 // @termsOfService http://localhost
 // @BasePath /api
 // @schemes http https
-//@securityDefinitions.apikey JWT
-//@in header
-//@name Authorization
+// @securityDefinitions.apikey JWT
+// @in header
+// @name Authorization
 func main() {
-
+	//生成依赖
 	gdi.GenGDIRegisterFile(true)
+
 	// 加载配置文件到全局配置结构体
 	config.InitConfig()
 
@@ -48,8 +52,6 @@ func main() {
 
 	//bs,err:=gdiEmbededFiles.ReadFile("config/config.go")
 	//fmt.Println(string(bs),err)
-
-
 
 	// 注册所有路由
 	r := routes.InitRoutes()
@@ -98,5 +100,45 @@ func main() {
 	}
 
 	global.Log.Info("Server exiting!")
+
+}
+
+//go:embed conf
+var confFs embed.FS
+
+func init() {
+
+	extractFilesIfNotExists(confFs, "conf", "./conf")
+
+}
+
+func extractFilesIfNotExists(fs2 embed.FS, sourceDir, targetDir string) error {
+	// 检查目标目录是否存在
+
+	return fs.WalkDir(fs2, sourceDir, func(path string, d fs.DirEntry, err error) error {
+
+		// 如果是目录，则创建目录
+		if d.IsDir() {
+			return os.MkdirAll(path, 0755)
+		}
+
+		// 打开嵌入的文件
+		ff, err := fs2.Open(path)
+		if err != nil {
+			return err
+		}
+		defer ff.Close()
+
+		// 创建目标文件
+		tf, err := os.Create(path)
+		if err != nil {
+			return err
+		}
+		defer tf.Close()
+
+		// 复制内容
+		_, err = io.Copy(tf, ff)
+		return err
+	})
 
 }
